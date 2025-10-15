@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Baseball Speed System – 4 Week Plan</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      padding: 20px;
+      max-width: 1200px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .box {
+      background-color: #ffffff;
+      border: 2px solid #006400;
+      border-radius: 8px;
+      padding: 20px;
+      text-align: center;
+      text-decoration: none;
+      color: #333;
+      font-size: 1.2em;
+      font-weight: bold;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .box:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+    h1, h2, h3 {
+      text-align: center;
+      color: #006400;
+    }
+    h1 { margin: 20px 0; font-size: 2em; }
+    h2 { margin-top: 40px; }
+    h3 { margin-top: 20px; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    a {
+      color: #006400;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    @media (max-width: 600px) {
+      .container {
+        grid-template-columns: 1fr;
+        padding: 10px;
+      }
+      .box {
+        font-size: 1em;
+        padding: 15px;
+      }
+      h1 {
+        font-size: 1.5em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Baseball Speed System – 4 Week Plan</h1>
+  <div class="container">
+    <a href="#week1" class="box">Week 1</a>
+    <a href="#week2" class="box">Week 2</a>
+    <a href="#week3" class="box">Week 3</a>
+    <a href="#week4" class="box">Week 4</a>
+  </div>
+
+  <!-- TEMPLATE FOR EACH WEEK -->
+  <div id="week1">
+    <h2>Week 1</h2>
+    <h3>Day 1 – Acceleration Mechanics</h3>
+    <table>
+      <thead>
+        <tr><th>Exercise</th><th>Sets</th><th>Notes</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><a href="https://vimeo.com/644931839/b7fadee8a4" target="_blank">A-March</a></td><td>2</td><td>15 yds each</td></tr>
+        <tr><td><a href="https://vimeo.com/134976732" target="_blank">A-Skip</a></td><td>2</td><td>15 yds each</td></tr>
+        <tr><td><a href="https://youtu.be/COZ2Vc6_7x4?si=LH3Ufv7uh2f7bUj9" target="_blank">Wall Drill 3-Step</a></td><td>3</td><td>Form focus</td></tr>
+        <tr><td><a href="https://vimeo.com/644924239/17c035dd43" target="_blank">Falling Start Sprint</a></td><td>5</td><td>10–15 yds</td></tr>
+        <tr><td><a href="https://vimeo.com/647431037/3fd402e188" target="_blank">Hurdle Hop → Sprint-Out</a></td><td>3</td><td>Single leg (l/r), 2 leg 10 yds each</td></tr>
+        <tr><td><strong>Live Reaction Steal Drill</strong></td><td>5</td><td>12 ft lead; reaction off mound cue</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Day 2 – Elastic Power & COD</h3>
+    <table>
+      <thead>
+        <tr><th>Exercise</th><th>Sets</th><th>Notes</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><a href="https://vimeo.com/644930648/cf4757bf3e" target="_blank">Hurdle Hop Series (Linear/Lateral)</a></td><td>3</td><td>Low hurdles, focus rhythm</td></tr>
+        <tr><td><a href="https://vimeo.com/644932136/9fd4ad8f4c" target="_blank">1-2 Pause Drill</a></td><td>3</td><td>Ground stiffness & control</td></tr>
+        <tr><td><a href="https://vimeo.com/644932255/53a5ee57fc" target="_blank">3-Hop Drill</a></td><td>3</td><td>Power & balance</td></tr>
+        <tr><td><a href="https://vimeo.com/644927206/8c926b6c0e" target="_blank">T-Drill</a></td><td>4</td><td>Agility & COD speed</td></tr>
+        <tr><td><strong>Live Reaction Steal Drill</strong></td><td>4</td><td>Reaction off mound; 12 ft lead</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div id="week2">
+    <h2>Week 2</h2>
+    <h3>Day 1 – Sprint Starts & Accel</h3>
+    <table>
+      <thead>
+        <tr><th>Exercise</th><th>Sets</th><th>Notes</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><a href="https://vimeo.com/644931839/b7fadee8a4" target="_blank">A-March</a></td><td>2</td><td>Warm-up & posture</td></tr>
+        <tr><td><a href="https://vimeo.com/134976732" target="_blank">A-Skip</a></td><td>2</td><td>Coordination</td></tr>
+        <tr><td><a href="https://youtu.be/COZ2Vc6_7x4?si=LH3Ufv7uh2f7bUj9" target="_blank">Wall Drill 3-Step</a></td><td>3</td><td>Acceleration setup</td></tr>
+        <tr><td><a href="https://vimeo.com/644924239/17c035dd43" target="_blank">Falling Start Sprint</a></td><td>6</td><td>10–15 yds</td></tr>
+        <tr><td><strong>Live Reaction Steal Drill</strong></td><td>5</td><td>Simulate steal jump to 2nd base</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Day 2 – COD & Elastic Force</h3>
+    <table>
+      <thead>
+        <tr><th>Exercise</th><th>Sets</th><th>Notes</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><a href="https://vimeo.com/644930648/cf4757bf3e" target="_blank">Hurdle Hop Series (Linear/Lateral)</a></td><td>3</td><td>Reactive hops</td></tr>
+        <tr><td><a href="https://vimeo.com/644932255/53a5ee57fc" target="_blank">3-Hop Drill</a></td><td>3</td><td>Triple extension</td></tr>
+        <tr><td><a href="https://vimeo.com/644927206/8c926b6c0e" target="_blank">T-Drill</a></td><td>4</td><td>COD focus</td></tr>
+        <tr><td><strong>Live Reaction Steal Drill</strong></td><td>4</td><td>End session with game-speed steals</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div id="week3">
+    <h2>Week 3</h2>
+    <h3>Day 1 – First Step Quickness</h3>
+    <table>
+      <thead>
+        <tr><th>Exercise</th><th>Sets</th><th>Notes</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><a href="https://vimeo.com/644931839/b7fadee8a4" target="_blank">A-March</a></td><td>2</td><td>Mechanics warm-up</td></tr>
+        <tr><td><a href="https://vimeo.com/134976732" target="_blank">A-Skip</a></td><td>2</td><td>Rhythm</td></tr>
+        <tr><td><a href="https://youtu.be/COZ2Vc6_7x4?si=LH3Ufv7uh2f7bUj9" target="_blank">Wall Drill 3-Step</a></td><td>3</td><td>Posture work</td></tr>
+        <tr><td><a href="https://vimeo.com/644924239/17c035dd43" target="_blank">Falling Start Sprint</a></td><td>5</td><td>Explosive lean</td></tr>
+        <tr><td><strong>Live Reaction Steal Drill</strong></td><td>5</td><td>Off mound cue, sprint to 2nd</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Day 2 – Reactive Strength & COD</h3>
+    <table>
+      <thead>
+        <tr><th>Exercise</th><th>Sets</th><th>Notes</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><a href="https://vimeo.com/644930648/cf4757bf3e" target="_blank">Hurdle Hop Series (Linear/Lateral)</a></td><td>3</td><td>Quick hops</td></tr>
+        <tr><td><a href="https://vimeo.com/644932136/9fd4ad8f4c" target="_blank">1-2 Pause Drill</a></td><td>3</td><td>Control/stiffness</td></tr>
+        <tr><td><a href="https://vimeo.com/644927206/8c926b6c0e" target="_blank">T-Drill</a></td><td>4</td><td>Race variation optional</td></tr>
+        <tr><td><strong>Live Reaction Steal Drill</strong></td><td>4</td><td>Finish with game-speed jump</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div id="week4">
+    <h2>Week 4</h2>
+    <h3>Day 1 – Power & Accel Blend</h3>
+    <table>
+      <thead>
+        <tr><th>Exercise</th><th>Sets</th><th>Notes</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><a href="https://vimeo.com/644931839/b7fadee8a4" target="_blank">A-March</a></td><td>2</td><td>Form tune-up</td></tr>
+        <tr><td><a href="https://vimeo.com/134976732" target="_blank">A-Skip</a></td><td>2</td><td>Coordination</td></tr>
+        <tr><td><a href="https://youtu.be/COZ2Vc6_7x4?si=LH3Ufv7uh2f7bUj9" target="_blank">Wall Drill 3-Step</a></td><td>3</td><td>Final week refinement</td></tr>
+        <tr><td><a href="https://vimeo.com/644924239/17c035dd43" target="_blank">Falling Start Sprint</a></td><td>6</td><td>Max effort 10 yd</td></tr>
+        <tr><td><strong>Live Reaction Steal Drill</strong></td><td>5</td><td>Full speed to 2nd base</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Day 2 – Test & Apply Speed</h3>
+    <table>
+      <thead>
+        <tr><th>Exercise</th><th>Sets</th><th>Notes</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><a href="https://vimeo.com/644930648/cf4757bf3e" target="_blank">Hurdle Hop Series (Linear/Lateral)</a></td><td>3</td><td>Reactive warm-up</td></tr>
+        <tr><td><a href="https://vimeo.com/644932255/53a5ee57fc" target="_blank">3-Hop Drill</a></td><td>3</td><td>Explosiveness</td></tr>
+        <tr><td><strong>Full 60-Yard Dash</strong></td><td>6</td><td>Walk back = rest; max effort</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</body>
+</html>
