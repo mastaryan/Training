@@ -17,10 +17,10 @@
   --canvas: #F1F5F9;
   --green: #0F766E;
   --red: #B91C1C;
-  --bl-bg: #FEE2E2;      /* Barrel Loaded - red tint */
-  --hl-bg: #D9F99D;      /* Hand/End Loaded - lime */
-  --u-bg: #BAE6FD;       /* Underload - baby blue */
-  --r-bg: #F1F5F9;       /* Regular - neutral */
+  --bl-bg: #FEE2E2;
+  --hl-bg: #D9F99D;
+  --u-bg: #BAE6FD;
+  --r-bg: #F1F5F9;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body {
@@ -93,7 +93,6 @@ body {
 .month-header {
   background: var(--navy); color: #fff; padding: 11px 14px;
   border-radius: 9px; font-weight: 800; font-size: 14px;
-  display: flex; justify-content: space-between; align-items: center;
 }
 .week {
   background: var(--paper); border-radius: 10px; margin-top: 9px;
@@ -102,9 +101,10 @@ body {
 .week-header {
   padding: 12px 14px; font-weight: 700; font-size: 13px;
   border-bottom: 1px solid var(--line);
-  display: flex; justify-content: space-between; align-items: center;
 }
-.day { border-top: 1px solid var(--line); }
+.days-container { display: flex; flex-direction: column; }
+.day { border-top: 1px solid var(--line); transition: opacity .25s; }
+.day.completed-day { opacity: .55; }
 .day-header {
   padding: 12px 14px; display: flex; justify-content: space-between; align-items: center;
   cursor: pointer; background: #F8FAFC;
@@ -117,6 +117,7 @@ body {
 .tag-mod { background: #E0F2FE; color: #0369A1; }
 .tag-heavy { background: var(--gold-light); color: #854D0E; }
 .tag-off { background: #E2E8F0; color: #475569; }
+.tag-done { background: #D1FAE5; color: #065F46; }
 .day-body { display: none; padding: 0 12px 16px; }
 .day.open .day-body { display: block; }
 
@@ -171,6 +172,12 @@ body {
 .exercise.done .btn-complete, .exercise.skipped .btn-complete,
 .exercise.done .btn-skip, .exercise.skipped .btn-skip { display: none; }
 .exercise.done .btn-edit, .exercise.skipped .btn-edit { display: block; }
+
+.complete-day-btn {
+  width: 100%; margin-top: 16px; padding: 12px;
+  background: var(--navy); color: #fff; border: none;
+  border-radius: 9px; font-weight: 800; font-size: 14px; cursor: pointer;
+}
 
 .progress-wrap { margin: 11px 0 4px; }
 .progress-label { font-size: 11px; font-weight: 700; color: var(--muted); margin-bottom: 3px; }
@@ -240,7 +247,7 @@ body {
 
 <main class="wrap">
 
-<details class="glossary" open>
+<details class="glossary">
   <summary>Glossary • Abbreviations • Machine Settings</summary>
   <div class="glossary-grid">
     <div><strong>BL</strong> – Barrel-Loaded overload bat</div>
@@ -282,554 +289,1234 @@ body {
   <div>
     <div class="week">
       <div class="week-header">Aug 17 – 23 • Week 1</div>
+      <div class="days-container" id="daysContainer">
 
-      <!-- ==================== MON AUG 17 ==================== -->
-      <div class="day open" data-date="2026-08-17" data-training="1">
-        <div class="day-header" onclick="this.parentElement.classList.toggle('open')">
-          <div><strong>Monday, Aug 17</strong><div style="font-size:11.5px;color:var(--muted)">Class Day • Moderate</div></div>
-          <span class="tag tag-mod">Moderate</span>
+        <!-- ===================== MONDAY AUG 17 ===================== -->
+        <div class="day" data-date="2026-08-17" data-training="1">
+          <div class="day-header" onclick="this.parentElement.classList.toggle('open')">
+            <div><strong>Monday, Aug 17</strong><div style="font-size:11.5px;color:var(--muted)">Class Day • Moderate</div></div>
+            <span class="tag tag-mod" id="tag-2026-08-17">Moderate</span>
+          </div>
+          <div class="day-body">
+            <div class="weight-box">
+              <div style="font-size:12.5px;font-weight:700;">Body Weight (lbs)</div>
+              <input type="number" id="wt-2026-08-17" placeholder="210" onchange="saveWeight('2026-08-17',this.value)" />
+              <div style="font-size:11px;color:var(--muted)">Every Monday</div>
+            </div>
+            <div class="progress-wrap">
+              <div class="progress-label">Daily Progress <span id="prog-2026-08-17">0%</span></div>
+              <div class="bar"><div class="bar-fill" id="bar-2026-08-17" style="width:0%"></div></div>
+            </div>
+            <div class="swing-box">
+              <div style="font-size:12px;font-weight:700;">Today’s Swings</div>
+              <div class="num" id="daily-swings-2026-08-17">0</div>
+            </div>
+
+            <div class="section">
+              <div class="section-title">1. Warm-Up</div>
+              <div class="exercise" data-id="0817-wu1">
+                <div class="ex-name"><a href="https://player.vimeo.com/video/862985494" target="_blank">Everyday Dynamic Warm-up</a></div>
+                <div class="equip">Bodyweight • 10–12 min</div>
+                <div class="ex-presc">Full movement prep. Move athletically.</div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
+              <div class="exercise" data-id="0817-wu2">
+                <div class="ex-name"><a href="https://vimeo.com/457008259" target="_blank">World’s Greatest Stretch</a></div>
+                <div class="equip">Bodyweight</div>
+                <div class="ex-presc">2 × 6–8 each side.</div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
+              <div class="exercise" data-id="0817-wu3">
+                <div class="ex-name"><a href="https://player.vimeo.com/video/851488026" target="_blank">Band Pull-Aparts</a></div>
+                <div class="equip">Light band</div>
+                <div class="ex-presc">2 × 12.</div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
+              <div class="exercise" data-id="0817-wu4">
+                <div class="ex-name">Shoulder CARs</div>
+                <div class="equip">Bodyweight</div>
+                <div class="ex-presc">6–8 slow Controlled Articular Rotations each direction per shoulder.</div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
+            </div>
+
+            <div class="section">
+              <div class="section-title">2. Speed Mechanics</div>
+              <div class="exercise" data-id="0817-sp1">
+                <div class="ex-name"><a href="https://player.vimeo.com/video/814750520" target="_blank">A-Skip</a></div>
+                <div class="equip">Open field</div>
+                <div class="ex-presc">2 × 15 yd.</div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
+              <div class="exercise" data-id="0817-sp2">
+                <div class="ex-name"><a href="https://player.vimeo.com/video/814750520" target="_blank">B-Skip</a></div>
+                <div class="equip">Open field</div>
+                <div class="ex-presc">2 × 15 yd.</div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
+              <div class="exercise" data-id="0817-sp3">
+                <div class="ex-name"><a href="https://player.vimeo.com/video/714737550" target="_blank">Falling Starts → 10 yd Sprint</a></div>
+                <div class="equip">Open space</div>
+                <div class="ex-presc">4–5 reps. Full recovery.</div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
+            </div>
+
+            <div class="section">
+              <div class="section-title">3. Strength Maintenance</div>
+              <div class="exercise" data-id="0817-st1">
+                <div class="ex-name"><a href="https://player.vimeo.com/video/863301232" target="_blank">Goblet Squat</a></div>
+                <div class="equip">DB or KB</div>
+                <div class="ex-presc">3 × 8 @ 2–3 RIR.</div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
+              <div class="exercise" data-id="0817-st2">
+                <div class="ex-name"><a href="https://player.vimeo.com/video/863272147" target="_blank">Single-Arm DB Row</a></div>
+                <div class="equip">Dumbbell + bench</div>
+                <div class="ex-presc">3 × 8 each arm @ 2 RIR.</div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
+              <div class="exercise" data-id="0817-st3">
+                <div class="ex-name"><a href="https://player.vimeo.com/video/863300945" target="_blank">Half-Kneeling Press</a></div>
+                <div class="equip">Landmine or DB</div>
+                <div class="ex-presc">3 × 8 each side @ 2 RIR.</div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
+            </div>
+
+            <div class="section">
+              <div class="section-title">4. Hitting</div>
+
+              <div class="exercise" data-id="0817-hit1">
+                <div class="ex-name"><a href="https://www.youtube.com/watch?v=9BsRj3u5HQs" target="_blank">Walk-Through Drill</a></div>
+                <div class="equip">Tee</div>
+                <div class="ex-presc">3 swings each bat = 12 total.</div>
+                <div class="bat-row">
+                  <div class="bat-label">Swings</div>
+                  <div class="bat-header bat-bl">BL</div>
+                  <div class="bat-header bat-hl">HL</div>
+                  <div class="bat-header bat-u">U</div>
+                  <div class="bat-header bat-r">R</div>
+                </div>
+                <div class="bat-row">
+                  <div></div>
+                  <input type="number" min="0" data-bat="BL" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="HL" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="U" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="R" onchange="updateSwings(this)" placeholder="0">
+                </div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
+
+              <div class="exercise" data-id="0817-hit2">
+                <div class="ex-name"><a href="https://www.youtube.com/watch?v=r3wazOZE-MQ" target="_blank">Rocker Drill</a></div>
+                <div class="equip">Tee</div>
+                <div class="ex-presc">3 swings each bat = 12 total.</div>
+                <div class="bat-row">
+                  <div class="bat-label">Swings</div>
+                  <div class="bat-header bat-bl">BL</div>
+                  <div class="bat-header bat-hl">HL</div>
+                  <div class="bat-header bat-u">U</div>
+                  <div class="bat-header bat-r">R</div>
+                </div>
+                <div class="bat-row">
+                  <div></div>
+                  <input type="number" min="0" data-bat="BL" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="HL" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="U" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="R" onchange="updateSwings(this)" placeholder="0">
+                </div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
+
+              <div class="exercise" data-id="0817-hit3">
+                <div class="ex-name">Tee – Middle (Round 1)</div>
+                <div class="equip">Tee</div>
+                <div class="ex-presc">3 swings each bat.</div>
+                <div class="bat-row">
+                  <div class="bat-label">Swings</div>
+                  <div class="bat-header bat-bl">BL</div>
+                  <div class="bat-header bat-hl">HL</div>
+                  <div class="bat-header bat-u">U</div>
+                  <div class="bat-header bat-r">R</div>
+                </div>
+                <div class="bat-row">
+                  <div></div>
+                  <input type="number" min="0" data-bat="BL" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="HL" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="U" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="R" onchange="updateSwings(this)" placeholder="0">
+                </div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
+
+              <div class="exercise" data-id="0817-hit4">
+                <div class="ex-name">Tee – Middle (Round 2)</div>
+                <div class="equip">Tee</div>
+                <div class="ex-presc">3 swings each bat.</div>
+                <div class="bat-row">
+                  <div class="bat-label">Swings</div>
+                  <div class="bat-header bat-bl">BL</div>
+                  <div class="bat-header bat-hl">HL</div>
+                  <div class="bat-header bat-u">U</div>
+                  <div class="bat-header bat-r">R</div>
+                </div>
+                <div class="bat-row">
+                  <div></div>
+                  <input type="number" min="0" data-bat="BL" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="HL" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="U" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="R" onchange="updateSwings(this)" placeholder="0">
+                </div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
+
+              <div class="exercise" data-id="0817-hit5">
+                <div class="ex-name">Front Toss – Middle</div>
+                <div class="equip">Soft Toss</div>
+                <div class="ex-presc">3–4 swings each bat.</div>
+                <div class="bat-row">
+                  <div class="bat-label">Swings</div>
+                  <div class="bat-header bat-bl">BL</div>
+                  <div class="bat-header bat-hl">HL</div>
+                  <div class="bat-header bat-u">U</div>
+                  <div class="bat-header bat-r">R</div>
+                </div>
+                <div class="bat-row">
+                  <div></div>
+                  <input type="number" min="0" data-bat="BL" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="HL" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="U" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="R" onchange="updateSwings(this)" placeholder="0">
+                </div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
+
+              <div class="exercise" data-id="0817-hit6">
+                <div class="ex-name">Front Toss – Away</div>
+                <div class="equip">Soft Toss</div>
+                <div class="ex-presc">3–4 swings each bat.</div>
+                <div class="bat-row">
+                  <div class="bat-label">Swings</div>
+                  <div class="bat-header bat-bl">BL</div>
+                  <div class="bat-header bat-hl">HL</div>
+                  <div class="bat-header bat-u">U</div>
+                  <div class="bat-header bat-r">R</div>
+                </div>
+                <div class="bat-row">
+                  <div></div>
+                  <input type="number" min="0" data-bat="BL" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="HL" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="U" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="R" onchange="updateSwings(this)" placeholder="0">
+                </div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
+
+              <div class="exercise" data-id="0817-hit7">
+                <div class="ex-name">Machine – Fastball + Curve Mix</div>
+                <div class="equip">Jr. Hack Attack</div>
+                <div class="machine-card" style="margin:6px 0;font-size:11.5px;">
+                  FB 7.5 / 7.5 / 10<br>
+                  RH Curve 5 / 10 / 3<br>
+                  LH Curve 10 / 5 / 3
+                </div>
+                <div class="ex-presc">Regular bat. 8–10 FB + 8–10 Curve.</div>
+                <div class="bat-row">
+                  <div class="bat-label">Swings</div>
+                  <div class="bat-header bat-bl">BL</div>
+                  <div class="bat-header bat-hl">HL</div>
+                  <div class="bat-header bat-u">U</div>
+                  <div class="bat-header bat-r">R</div>
+                </div>
+                <div class="bat-row">
+                  <div></div>
+                  <input type="number" min="0" data-bat="BL" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="HL" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="U" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="R" onchange="updateSwings(this)" placeholder="0">
+                </div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
+            </div>
+
+            <div class="section">
+              <div class="section-title">5. Recovery + Notes</div>
+              <div class="exercise" data-id="0817-rec1">
+                <div class="ex-name"><a href="https://player.vimeo.com/video/851488108" target="_blank">Band External Rotations</a></div>
+                <div class="equip">Band</div>
+                <div class="ex-presc">2 × 12 each arm.</div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
+              <div class="exercise" data-id="0817-rec2">
+                <div class="ex-name">Dead Hang</div>
+                <div class="equip">Pull-up bar</div>
+                <div class="ex-presc">20–40 seconds.</div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
+              <div style="margin-top:9px;">
+                <div style="font-size:12px;font-weight:700;margin-bottom:4px;">Day Notes</div>
+                <textarea id="notes-2026-08-17" placeholder="How did it feel?" onchange="saveNotes('2026-08-17',this.value)"></textarea>
+              </div>
+            </div>
+
+            <button class="complete-day-btn" onclick="completeDay('2026-08-17')">Complete Day</button>
+          </div>
         </div>
-        <div class="day-body">
-          <div class="weight-box">
-            <div style="font-size:12.5px;font-weight:700;">Body Weight (lbs)</div>
-            <input type="number" id="wt-2026-08-17" placeholder="210" onchange="saveWeight('2026-08-17',this.value)" />
-            <div style="font-size:11px;color:var(--muted)">Every Monday</div>
+
+        <!-- ===================== TUESDAY AUG 18 ===================== -->
+        <div class="day" data-date="2026-08-18" data-training="1">
+          <div class="day-header" onclick="this.parentElement.classList.toggle('open')">
+            <div><strong>Tuesday, Aug 18</strong><div style="font-size:11.5px;color:var(--muted)">No Class • Heavy</div></div>
+            <span class="tag tag-heavy" id="tag-2026-08-18">Heavy</span>
           </div>
-          <div class="progress-wrap">
-            <div class="progress-label">Daily Progress <span id="prog-2026-08-17">0%</span></div>
-            <div class="bar"><div class="bar-fill" id="bar-2026-08-17" style="width:0%"></div></div>
+          <div class="day-body">
+            <div class="progress-wrap">
+              <div class="progress-label">Daily Progress <span id="prog-2026-08-18">0%</span></div>
+              <div class="bar"><div class="bar-fill" id="bar-2026-08-18" style="width:0%"></div></div>
+            </div>
+            <div class="swing-box">
+              <div style="font-size:12px;font-weight:700;">Today’s Swings</div>
+              <div class="num" id="daily-swings-2026-08-18">0</div>
+            </div>
+
+            <div class="section">
+              <div class="section-title">1. Warm-Up</div>
+              <div class="exercise" data-id="0818-wu1">
+                <div class="ex-name"><a href="https://player.vimeo.com/video/862985494" target="_blank">Everyday Dynamic Warm-up</a></div>
+                <div class="equip">Bodyweight</div>
+                <div class="ex-presc">12 min.</div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
+              <div class="exercise" data-id="0818-wu2">
+                <div class="ex-name">Hip CARs</div>
+                <div class="equip">Bodyweight</div>
+                <div class="ex-presc">6–8 slow Controlled Articular Rotations each direction per hip.</div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
+              <div class="exercise" data-id="0818-wu3">
+                <div class="ex-name"><a href="https://vimeo.com/457008259" target="_blank">World’s Greatest Stretch</a></div>
+                <div class="equip">Bodyweight</div>
+                <div class="ex-presc">2 × 6–8 each side.</div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
+            </div>
+
+            <div class="section">
+              <div class="section-title">2. Acceleration + Power</div>
+              <div class="exercise" data-id="0818-sp1">
+                <div class="ex-name"><a href="https://player.vimeo.com/video/714737550" target="_blank">Falling Sprint Starts</a></div>
+                <div class="equip">Open field</div>
+                <div class="ex-presc">6 × 15–20 yd. Full recovery.</div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
+              <div class="exercise" data-id="0818-sp2">
+                <div class="ex-name"><a href="https://player.vimeo.com/video/641277377" target="_blank">Med-Ball Overhead Toss for Height</a></div>
+                <div class="equip">6–10 lb med ball</div>
+                <div class="ex-presc">3 × 5. Max intent.</div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
+              <div class="exercise" data-id="0818-sp3">
+                <div class="ex-name"><a href="https://player.vimeo.com/video/863229762" target="_blank">Broad Jump</a></div>
+                <div class="equip">Open space</div>
+                <div class="ex-presc">4 × 3. Stick the landing.</div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
+            </div>
+
+            <div class="section">
+              <div class="section-title">3. Strength Cluster (Heavy)</div>
+              <div class="exercise" data-id="0818-st1">
+                <div class="ex-name"><a href="https://player.vimeo.com/video/863271987" target="_blank">Trap Bar or Goblet Squat</a></div>
+                <div class="equip">Trap bar or heavy DB/KB</div>
+                <div class="ex-presc">4 × 6 @ 2 RIR.</div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
+              <div class="exercise" data-id="0818-st2">
+                <div class="ex-name"><a href="https://player.vimeo.com/video/863274606" target="_blank">Romanian Deadlift (RDL)</a></div>
+                <div class="equip">Dumbbell (DB) or Barbell (BB)</div>
+                <div class="ex-presc">3 × 8 @ 2 RIR. Soft knee, push hips back.</div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
+              <div class="exercise" data-id="0818-st3">
+                <div class="ex-name"><a href="https://player.vimeo.com/video/863300945" target="_blank">Dumbbell Bench Press</a></div>
+                <div class="equip">Dumbbells</div>
+                <div class="ex-presc">4 × 6–8 @ 2 RIR.</div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
+              <div class="exercise" data-id="0818-st4">
+                <div class="ex-name"><a href="https://player.vimeo.com/video/812800937" target="_blank">Chest-Supported Row</a></div>
+                <div class="equip">Incline bench + DBs</div>
+                <div class="ex-presc">3 × 8 @ 2 RIR.</div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
+            </div>
+
+            <div class="section">
+              <div class="section-title">4. Hitting – Curve Focus</div>
+
+              <div class="exercise" data-id="0818-hit1">
+                <div class="ex-name"><a href="https://www.youtube.com/watch?v=9BsRj3u5HQs" target="_blank">Walk-Through Drill</a></div>
+                <div class="equip">Tee</div>
+                <div class="ex-presc">3 swings each bat.</div>
+                <div class="bat-row">
+                  <div class="bat-label">Swings</div>
+                  <div class="bat-header bat-bl">BL</div>
+                  <div class="bat-header bat-hl">HL</div>
+                  <div class="bat-header bat-u">U</div>
+                  <div class="bat-header bat-r">R</div>
+                </div>
+                <div class="bat-row">
+                  <div></div>
+                  <input type="number" min="0" data-bat="BL" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="HL" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="U" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="R" onchange="updateSwings(this)" placeholder="0">
+                </div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
+
+              <div class="exercise" data-id="0818-hit2">
+                <div class="ex-name"><a href="https://www.youtube.com/watch?v=r3wazOZE-MQ" target="_blank">Rocker Drill</a></div>
+                <div class="equip">Tee</div>
+                <div class="ex-presc">3 swings each bat.</div>
+                <div class="bat-row">
+                  <div class="bat-label">Swings</div>
+                  <div class="bat-header bat-bl">BL</div>
+                  <div class="bat-header bat-hl">HL</div>
+                  <div class="bat-header bat-u">U</div>
+                  <div class="bat-header bat-r">R</div>
+                </div>
+                <div class="bat-row">
+                  <div></div>
+                  <input type="number" min="0" data-bat="BL" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="HL" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="U" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="R" onchange="updateSwings(this)" placeholder="0">
+                </div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
+
+              <div class="exercise" data-id="0818-hit3">
+                <div class="ex-name">Tee – Away</div>
+                <div class="equip">Tee</div>
+                <div class="ex-presc">3–4 swings each bat.</div>
+                <div class="bat-row">
+                  <div class="bat-label">Swings</div>
+                  <div class="bat-header bat-bl">BL</div>
+                  <div class="bat-header bat-hl">HL</div>
+                  <div class="bat-header bat-u">U</div>
+                  <div class="bat-header bat-r">R</div>
+                </div>
+                <div class="bat-row">
+                  <div></div>
+                  <input type="number" min="0" data-bat="BL" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="HL" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="U" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="R" onchange="updateSwings(this)" placeholder="0">
+                </div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
+
+              <div class="exercise" data-id="0818-hit4">
+                <div class="ex-name">Tee – Middle</div>
+                <div class="equip">Tee</div>
+                <div class="ex-presc">3–4 swings each bat.</div>
+                <div class="bat-row">
+                  <div class="bat-label">Swings</div>
+                  <div class="bat-header bat-bl">BL</div>
+                  <div class="bat-header bat-hl">HL</div>
+                  <div class="bat-header bat-u">U</div>
+                  <div class="bat-header bat-r">R</div>
+                </div>
+                <div class="bat-row">
+                  <div></div>
+                  <input type="number" min="0" data-bat="BL" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="HL" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="U" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="R" onchange="updateSwings(this)" placeholder="0">
+                </div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
+
+              <div class="exercise" data-id="0818-hit5">
+                <div class="ex-name">Front Toss – Adjustability</div>
+                <div class="equip">Soft Toss</div>
+                <div class="desc-card">
+                  Partner varies speed and location (including slower “change-up” tosses). Stay balanced, recognize the pitch early, and drive through the ball without lunging or pulling off.
+                </div>
+                <div class="ex-presc">3–4 swings each bat. Mix speeds.</div>
+                <div class="bat-row">
+                  <div class="bat-label">Swings</div>
+                  <div class="bat-header bat-bl">BL</div>
+                  <div class="bat-header bat-hl">HL</div>
+                  <div class="bat-header bat-u">U</div>
+                  <div class="bat-header bat-r">R</div>
+                </div>
+                <div class="bat-row">
+                  <div></div>
+                  <input type="number" min="0" data-bat="BL" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="HL" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="U" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="R" onchange="updateSwings(this)" placeholder="0">
+                </div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
+
+              <div class="exercise" data-id="0818-hit6">
+                <div class="ex-name">Machine – Heavy Curve Focus</div>
+                <div class="equip">Jr. Hack Attack</div>
+                <div class="machine-card" style="margin:6px 0;font-size:11.5px;">
+                  Primary: RH Curve 5/10/3 • LH Curve 10/5/3<br>
+                  Mix in a few Fastballs (7.5/7.5/10)
+                </div>
+                <div class="ex-presc">Regular bat. 20–30 total swings (mostly curve).</div>
+                <div class="bat-row">
+                  <div class="bat-label">Swings</div>
+                  <div class="bat-header bat-bl">BL</div>
+                  <div class="bat-header bat-hl">HL</div>
+                  <div class="bat-header bat-u">U</div>
+                  <div class="bat-header bat-r">R</div>
+                </div>
+                <div class="bat-row">
+                  <div></div>
+                  <input type="number" min="0" data-bat="BL" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="HL" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="U" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="R" onchange="updateSwings(this)" placeholder="0">
+                </div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
+            </div>
+
+            <div class="section">
+              <div class="section-title">5. Recovery + Notes</div>
+              <div class="exercise" data-id="0818-rec1">
+                <div class="ex-name"><a href="https://player.vimeo.com/video/851486713" target="_blank">90/90 Floss</a></div>
+                <div class="equip">Bodyweight</div>
+                <div class="ex-presc">2 × 45–60 sec each side.</div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
+              <div class="exercise" data-id="0818-rec2">
+                <div class="ex-name">Couch Stretch</div>
+                <div class="equip">Bodyweight</div>
+                <div class="ex-presc">2 × 45–60 sec each side.</div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
+              <div class="exercise" data-id="0818-rec3">
+                <div class="ex-name"><a href="https://player.vimeo.com/video/851488026" target="_blank">Band Pull-Aparts</a></div>
+                <div class="equip">Band</div>
+                <div class="ex-presc">2 × 15.</div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
+              <div style="margin-top:9px;">
+                <div style="font-size:12px;font-weight:700;margin-bottom:4px;">Day Notes</div>
+                <textarea id="notes-2026-08-18" placeholder="Heavy day notes..." onchange="saveNotes('2026-08-18',this.value)"></textarea>
+              </div>
+            </div>
+
+            <button class="complete-day-btn" onclick="completeDay('2026-08-18')">Complete Day</button>
           </div>
-          <div class="swing-box">
-            <div style="font-size:12px;font-weight:700;">Today’s Swings</div>
-            <div class="num" id="daily-swings-2026-08-17">0</div>
+        </div>
+
+        <!-- ===================== WEDNESDAY AUG 19 ===================== -->
+        <div class="day" data-date="2026-08-19" data-training="1">
+          <div class="day-header" onclick="this.parentElement.classList.toggle('open')">
+            <div><strong>Wednesday, Aug 19</strong><div style="font-size:11.5px;color:var(--muted)">Class Day • Moderate</div></div>
+            <span class="tag tag-mod" id="tag-2026-08-19">Moderate</span>
           </div>
+          <div class="day-body">
+            <div class="progress-wrap">
+              <div class="progress-label">Daily Progress <span id="prog-2026-08-19">0%</span></div>
+              <div class="bar"><div class="bar-fill" id="bar-2026-08-19" style="width:0%"></div></div>
+            </div>
+            <div class="swing-box">
+              <div style="font-size:12px;font-weight:700;">Today’s Swings</div>
+              <div class="num" id="daily-swings-2026-08-19">0</div>
+            </div>
 
-          <div class="section">
-            <div class="section-title">1. Warm-Up</div>
-            <div class="exercise" data-id="0817-wu1">
-              <div class="ex-name"><a href="https://player.vimeo.com/video/862985494" target="_blank">Everyday Dynamic Warm-up</a></div>
-              <div class="equip">Bodyweight • 10–12 min</div>
-              <div class="ex-presc">Full movement prep. Move athletically.</div>
-              <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+            <div class="section">
+              <div class="section-title">1. Warm-Up</div>
+              <div class="exercise" data-id="0819-wu1">
+                <div class="ex-name"><a href="https://player.vimeo.com/video/862985494" target="_blank">Everyday Dynamic Warm-up</a></div>
+                <div class="equip">Bodyweight</div>
+                <div class="ex-presc">10–12 min.</div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
+              <div class="exercise" data-id="0819-wu2">
+                <div class="ex-name"><a href="https://player.vimeo.com/video/851488026" target="_blank">Band Pull-Aparts</a></div>
+                <div class="equip">Band</div>
+                <div class="ex-presc">2 × 12.</div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
+              <div class="exercise" data-id="0819-wu3">
+                <div class="ex-name">Shoulder CARs</div>
+                <div class="equip">Bodyweight</div>
+                <div class="ex-presc">6–8 slow each direction.</div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
             </div>
-            <div class="exercise" data-id="0817-wu2">
-              <div class="ex-name"><a href="https://vimeo.com/457008259" target="_blank">World’s Greatest Stretch</a></div>
-              <div class="equip">Bodyweight</div>
-              <div class="ex-presc">2 × 6–8 each side.</div>
-              <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+
+            <div class="section">
+              <div class="section-title">2. Speed / COD Quality</div>
+              <div class="exercise" data-id="0819-sp1">
+                <div class="ex-name"><a href="https://player.vimeo.com/video/814750520" target="_blank">A-Skip</a></div>
+                <div class="equip">Open field</div>
+                <div class="ex-presc">2 × 15 yd.</div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
+              <div class="exercise" data-id="0819-sp2">
+                <div class="ex-name">Lateral Shuffle</div>
+                <div class="equip">Open field</div>
+                <div class="ex-presc">2 × 15 yd each direction.</div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
             </div>
-            <div class="exercise" data-id="0817-wu3">
-              <div class="ex-name"><a href="https://player.vimeo.com/video/851488026" target="_blank">Band Pull-Aparts</a></div>
-              <div class="equip">Light band</div>
-              <div class="ex-presc">2 × 12.</div>
-              <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+
+            <div class="section">
+              <div class="section-title">3. Upper Strength + Core</div>
+              <div class="exercise" data-id="0819-st1">
+                <div class="ex-name"><a href="https://player.vimeo.com/video/863300945" target="_blank">DB Floor Press or Bench</a></div>
+                <div class="equip">Dumbbells</div>
+                <div class="ex-presc">3 × 8 @ 2 RIR.</div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
+              <div class="exercise" data-id="0819-st2">
+                <div class="ex-name"><a href="https://player.vimeo.com/video/863272147" target="_blank">Single-Arm Row</a></div>
+                <div class="equip">DB</div>
+                <div class="ex-presc">3 × 8 each @ 2 RIR.</div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
+              <div class="exercise" data-id="0819-st3">
+                <div class="ex-name">Dead Bug</div>
+                <div class="equip">Bodyweight</div>
+                <div class="ex-presc">3 × 8–10 / side.</div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
             </div>
-            <div class="exercise" data-id="0817-wu4">
-              <div class="ex-name">Shoulder CARs</div>
-              <div class="equip">Bodyweight</div>
-              <div class="ex-presc">6–8 slow Controlled Articular Rotations each direction per shoulder.</div>
-              <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+
+            <div class="section">
+              <div class="section-title">4. Hitting</div>
+              <div class="exercise" data-id="0819-hit1">
+                <div class="ex-name"><a href="https://www.youtube.com/watch?v=9BsRj3u5HQs" target="_blank">Walk-Through Drill</a></div>
+                <div class="equip">Tee</div>
+                <div class="ex-presc">3 swings each bat.</div>
+                <div class="bat-row">
+                  <div class="bat-label">Swings</div>
+                  <div class="bat-header bat-bl">BL</div>
+                  <div class="bat-header bat-hl">HL</div>
+                  <div class="bat-header bat-u">U</div>
+                  <div class="bat-header bat-r">R</div>
+                </div>
+                <div class="bat-row">
+                  <div></div>
+                  <input type="number" min="0" data-bat="BL" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="HL" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="U" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="R" onchange="updateSwings(this)" placeholder="0">
+                </div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
+              <div class="exercise" data-id="0819-hit2">
+                <div class="ex-name"><a href="https://www.youtube.com/watch?v=r3wazOZE-MQ" target="_blank">Rocker Drill</a></div>
+                <div class="equip">Tee</div>
+                <div class="ex-presc">3 swings each bat.</div>
+                <div class="bat-row">
+                  <div class="bat-label">Swings</div>
+                  <div class="bat-header bat-bl">BL</div>
+                  <div class="bat-header bat-hl">HL</div>
+                  <div class="bat-header bat-u">U</div>
+                  <div class="bat-header bat-r">R</div>
+                </div>
+                <div class="bat-row">
+                  <div></div>
+                  <input type="number" min="0" data-bat="BL" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="HL" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="U" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="R" onchange="updateSwings(this)" placeholder="0">
+                </div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
+              <div class="exercise" data-id="0819-hit3">
+                <div class="ex-name">Tee – Middle</div>
+                <div class="equip">Tee</div>
+                <div class="ex-presc">3 swings each bat.</div>
+                <div class="bat-row">
+                  <div class="bat-label">Swings</div>
+                  <div class="bat-header bat-bl">BL</div>
+                  <div class="bat-header bat-hl">HL</div>
+                  <div class="bat-header bat-u">U</div>
+                  <div class="bat-header bat-r">R</div>
+                </div>
+                <div class="bat-row">
+                  <div></div>
+                  <input type="number" min="0" data-bat="BL" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="HL" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="U" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="R" onchange="updateSwings(this)" placeholder="0">
+                </div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
+              <div class="exercise" data-id="0819-hit4">
+                <div class="ex-name">Tee – Away</div>
+                <div class="equip">Tee</div>
+                <div class="ex-presc">3 swings each bat.</div>
+                <div class="bat-row">
+                  <div class="bat-label">Swings</div>
+                  <div class="bat-header bat-bl">BL</div>
+                  <div class="bat-header bat-hl">HL</div>
+                  <div class="bat-header bat-u">U</div>
+                  <div class="bat-header bat-r">R</div>
+                </div>
+                <div class="bat-row">
+                  <div></div>
+                  <input type="number" min="0" data-bat="BL" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="HL" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="U" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="R" onchange="updateSwings(this)" placeholder="0">
+                </div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
+              <div class="exercise" data-id="0819-hit5">
+                <div class="ex-name">Machine – FB + Curve</div>
+                <div class="equip">Jr. Hack Attack</div>
+                <div class="machine-card" style="margin:6px 0;font-size:11.5px;">FB 7.5/7.5/10 • Curves 5/10/3 or 10/5/3</div>
+                <div class="ex-presc">Regular bat. 15–20 total swings.</div>
+                <div class="bat-row">
+                  <div class="bat-label">Swings</div>
+                  <div class="bat-header bat-bl">BL</div>
+                  <div class="bat-header bat-hl">HL</div>
+                  <div class="bat-header bat-u">U</div>
+                  <div class="bat-header bat-r">R</div>
+                </div>
+                <div class="bat-row">
+                  <div></div>
+                  <input type="number" min="0" data-bat="BL" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="HL" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="U" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="R" onchange="updateSwings(this)" placeholder="0">
+                </div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
             </div>
+
+            <div class="section">
+              <div class="section-title">5. Recovery + Notes</div>
+              <div class="exercise" data-id="0819-rec1">
+                <div class="ex-name"><a href="https://player.vimeo.com/video/851488108" target="_blank">Band External Rotations</a></div>
+                <div class="equip">Band</div>
+                <div class="ex-presc">2 × 12 each arm.</div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
+              <div style="margin-top:9px;">
+                <div style="font-size:12px;font-weight:700;margin-bottom:4px;">Day Notes</div>
+                <textarea id="notes-2026-08-19" onchange="saveNotes('2026-08-19',this.value)"></textarea>
+              </div>
+            </div>
+
+            <button class="complete-day-btn" onclick="completeDay('2026-08-19')">Complete Day</button>
           </div>
+        </div>
 
-          <div class="section">
-            <div class="section-title">2. Speed Mechanics</div>
-            <div class="exercise" data-id="0817-sp1">
-              <div class="ex-name"><a href="https://player.vimeo.com/video/814750520" target="_blank">A-Skip</a></div>
-              <div class="equip">Open field</div>
-              <div class="ex-presc">2 × 15 yd.</div>
-              <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
-            </div>
-            <div class="exercise" data-id="0817-sp2">
-              <div class="ex-name"><a href="https://player.vimeo.com/video/814750520" target="_blank">B-Skip</a></div>
-              <div class="equip">Open field</div>
-              <div class="ex-presc">2 × 15 yd.</div>
-              <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
-            </div>
-            <div class="exercise" data-id="0817-sp3">
-              <div class="ex-name"><a href="https://player.vimeo.com/video/714737550" target="_blank">Falling Starts → 10 yd Sprint</a></div>
-              <div class="equip">Open space</div>
-              <div class="ex-presc">4–5 reps. Full recovery.</div>
-              <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
-            </div>
+        <!-- ===================== THURSDAY AUG 20 ===================== -->
+        <div class="day" data-date="2026-08-20" data-training="1">
+          <div class="day-header" onclick="this.parentElement.classList.toggle('open')">
+            <div><strong>Thursday, Aug 20</strong><div style="font-size:11.5px;color:var(--muted)">No Class • Heavy</div></div>
+            <span class="tag tag-heavy" id="tag-2026-08-20">Heavy</span>
           </div>
+          <div class="day-body">
+            <div class="progress-wrap">
+              <div class="progress-label">Daily Progress <span id="prog-2026-08-20">0%</span></div>
+              <div class="bar"><div class="bar-fill" id="bar-2026-08-20" style="width:0%"></div></div>
+            </div>
+            <div class="swing-box">
+              <div style="font-size:12px;font-weight:700;">Today’s Swings</div>
+              <div class="num" id="daily-swings-2026-08-20">0</div>
+            </div>
 
-          <div class="section">
-            <div class="section-title">3. Strength Maintenance</div>
-            <div class="exercise" data-id="0817-st1">
-              <div class="ex-name"><a href="https://player.vimeo.com/video/863301232" target="_blank">Goblet Squat</a></div>
-              <div class="equip">DB or KB</div>
-              <div class="ex-presc">3 × 8 @ 2–3 RIR.</div>
-              <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+            <div class="section">
+              <div class="section-title">1. Warm-Up</div>
+              <div class="exercise" data-id="0820-wu1">
+                <div class="ex-name"><a href="https://player.vimeo.com/video/862985494" target="_blank">Everyday Dynamic Warm-up</a></div>
+                <div class="equip">Bodyweight</div>
+                <div class="ex-presc">12 min.</div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
+              <div class="exercise" data-id="0820-wu2">
+                <div class="ex-name">Hip CARs</div>
+                <div class="equip">Bodyweight</div>
+                <div class="ex-presc">6–8 slow each direction.</div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
             </div>
-            <div class="exercise" data-id="0817-st2">
-              <div class="ex-name"><a href="https://player.vimeo.com/video/863272147" target="_blank">Single-Arm DB Row</a></div>
-              <div class="equip">Dumbbell + bench</div>
-              <div class="ex-presc">3 × 8 each arm @ 2 RIR.</div>
-              <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+
+            <div class="section">
+              <div class="section-title">2. Acceleration + Power</div>
+              <div class="exercise" data-id="0820-sp1">
+                <div class="ex-name"><a href="https://player.vimeo.com/video/714737550" target="_blank">Sprint Starts</a></div>
+                <div class="equip">Open field</div>
+                <div class="ex-presc">5–6 × 15–20 yd.</div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
+              <div class="exercise" data-id="0820-sp2">
+                <div class="ex-name"><a href="https://player.vimeo.com/video/641277377" target="_blank">Med-Ball OH Toss for Height</a></div>
+                <div class="equip">Med ball</div>
+                <div class="ex-presc">3 × 5.</div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
             </div>
-            <div class="exercise" data-id="0817-st3">
-              <div class="ex-name"><a href="https://player.vimeo.com/video/863300945" target="_blank">Half-Kneeling Press</a></div>
-              <div class="equip">Landmine or DB</div>
-              <div class="ex-presc">3 × 8 each side @ 2 RIR.</div>
-              <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+
+            <div class="section">
+              <div class="section-title">3. Strength (Heavy Lower Emphasis)</div>
+              <div class="exercise" data-id="0820-st1">
+                <div class="ex-name"><a href="https://player.vimeo.com/video/863271987" target="_blank">Trap Bar / Goblet Squat</a></div>
+                <div class="equip">Heavy</div>
+                <div class="ex-presc">4 × 5–6 @ 2 RIR.</div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
+              <div class="exercise" data-id="0820-st2">
+                <div class="ex-name"><a href="https://player.vimeo.com/video/863274606" target="_blank">Romanian Deadlift (RDL)</a></div>
+                <div class="equip">DB or BB</div>
+                <div class="ex-presc">3 × 8 @ 2 RIR.</div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
+              <div class="exercise" data-id="0820-st3">
+                <div class="ex-name"><a href="https://player.vimeo.com/video/812800937" target="_blank">Chest-Supported Row</a></div>
+                <div class="equip">DBs</div>
+                <div class="ex-presc">3 × 8 @ 2 RIR.</div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
+              <div class="exercise" data-id="0820-st4">
+                <div class="ex-name"><a href="https://player.vimeo.com/video/863300945" target="_blank">DB Press</a></div>
+                <div class="equip">Dumbbells</div>
+                <div class="ex-presc">3 × 8 @ 2 RIR.</div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
             </div>
+
+            <div class="section">
+              <div class="section-title">4. Hitting</div>
+              <div class="exercise" data-id="0820-hit1">
+                <div class="ex-name"><a href="https://www.youtube.com/watch?v=9BsRj3u5HQs" target="_blank">Walk-Through Drill</a></div>
+                <div class="equip">Tee</div>
+                <div class="ex-presc">3 swings each bat.</div>
+                <div class="bat-row">
+                  <div class="bat-label">Swings</div>
+                  <div class="bat-header bat-bl">BL</div>
+                  <div class="bat-header bat-hl">HL</div>
+                  <div class="bat-header bat-u">U</div>
+                  <div class="bat-header bat-r">R</div>
+                </div>
+                <div class="bat-row">
+                  <div></div>
+                  <input type="number" min="0" data-bat="BL" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="HL" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="U" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="R" onchange="updateSwings(this)" placeholder="0">
+                </div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
+              <div class="exercise" data-id="0820-hit2">
+                <div class="ex-name"><a href="https://www.youtube.com/watch?v=r3wazOZE-MQ" target="_blank">Rocker Drill</a></div>
+                <div class="equip">Tee</div>
+                <div class="ex-presc">3 swings each bat.</div>
+                <div class="bat-row">
+                  <div class="bat-label">Swings</div>
+                  <div class="bat-header bat-bl">BL</div>
+                  <div class="bat-header bat-hl">HL</div>
+                  <div class="bat-header bat-u">U</div>
+                  <div class="bat-header bat-r">R</div>
+                </div>
+                <div class="bat-row">
+                  <div></div>
+                  <input type="number" min="0" data-bat="BL" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="HL" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="U" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="R" onchange="updateSwings(this)" placeholder="0">
+                </div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
+              <div class="exercise" data-id="0820-hit3">
+                <div class="ex-name">Tee + Front Toss Combo</div>
+                <div class="equip">Tee + Soft Toss</div>
+                <div class="ex-presc">Quality contact and intent focus.</div>
+                <div class="bat-row">
+                  <div class="bat-label">Swings</div>
+                  <div class="bat-header bat-bl">BL</div>
+                  <div class="bat-header bat-hl">HL</div>
+                  <div class="bat-header bat-u">U</div>
+                  <div class="bat-header bat-r">R</div>
+                </div>
+                <div class="bat-row">
+                  <div></div>
+                  <input type="number" min="0" data-bat="BL" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="HL" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="U" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="R" onchange="updateSwings(this)" placeholder="0">
+                </div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
+              <div class="exercise" data-id="0820-hit4">
+                <div class="ex-name">Machine – Curve Priority</div>
+                <div class="equip">Jr. Hack Attack</div>
+                <div class="machine-card" style="margin:6px 0;font-size:11.5px;">RH Curve 5/10/3 • LH Curve 10/5/3 + some FB</div>
+                <div class="ex-presc">Regular bat. 20+ swings, mostly curve.</div>
+                <div class="bat-row">
+                  <div class="bat-label">Swings</div>
+                  <div class="bat-header bat-bl">BL</div>
+                  <div class="bat-header bat-hl">HL</div>
+                  <div class="bat-header bat-u">U</div>
+                  <div class="bat-header bat-r">R</div>
+                </div>
+                <div class="bat-row">
+                  <div></div>
+                  <input type="number" min="0" data-bat="BL" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="HL" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="U" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="R" onchange="updateSwings(this)" placeholder="0">
+                </div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
+            </div>
+
+            <div class="section">
+              <div class="section-title">5. Recovery + Notes</div>
+              <div class="exercise" data-id="0820-rec1">
+                <div class="ex-name"><a href="https://player.vimeo.com/video/851486713" target="_blank">90/90 Floss</a></div>
+                <div class="equip">Bodyweight</div>
+                <div class="ex-presc">2 × 45–60 sec each side.</div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
+              <div class="exercise" data-id="0820-rec2">
+                <div class="ex-name">Couch Stretch</div>
+                <div class="equip">Bodyweight</div>
+                <div class="ex-presc">2 × 45–60 sec each side.</div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
+              <div class="exercise" data-id="0820-rec3">
+                <div class="ex-name"><a href="https://player.vimeo.com/video/851488026" target="_blank">Band Pull-Aparts</a></div>
+                <div class="equip">Band</div>
+                <div class="ex-presc">2 × 15.</div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
+              <div style="margin-top:9px;">
+                <div style="font-size:12px;font-weight:700;margin-bottom:4px;">Day Notes</div>
+                <textarea id="notes-2026-08-20" onchange="saveNotes('2026-08-20',this.value)"></textarea>
+              </div>
+            </div>
+
+            <button class="complete-day-btn" onclick="completeDay('2026-08-20')">Complete Day</button>
           </div>
+        </div>
 
-          <div class="section">
-            <div class="section-title">4. Hitting</div>
-
-            <div class="exercise" data-id="0817-hit1">
-              <div class="ex-name"><a href="https://www.youtube.com/watch?v=9BsRj3u5HQs" target="_blank">Walk-Through Drill</a></div>
-              <div class="equip">Tee</div>
-              <div class="ex-presc">3 swings each bat = 12 total.</div>
-              <div class="bat-row">
-                <div class="bat-label">Swings</div>
-                <div class="bat-header bat-bl">BL</div>
-                <div class="bat-header bat-hl">HL</div>
-                <div class="bat-header bat-u">U</div>
-                <div class="bat-header bat-r">R</div>
-              </div>
-              <div class="bat-row">
-                <div></div>
-                <input type="number" min="0" data-bat="BL" onchange="updateSwings(this)" placeholder="0">
-                <input type="number" min="0" data-bat="HL" onchange="updateSwings(this)" placeholder="0">
-                <input type="number" min="0" data-bat="U" onchange="updateSwings(this)" placeholder="0">
-                <input type="number" min="0" data-bat="R" onchange="updateSwings(this)" placeholder="0">
-              </div>
-              <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
-            </div>
-
-            <div class="exercise" data-id="0817-hit2">
-              <div class="ex-name"><a href="https://www.youtube.com/watch?v=r3wazOZE-MQ" target="_blank">Rocker Drill</a></div>
-              <div class="equip">Tee</div>
-              <div class="ex-presc">3 swings each bat = 12 total.</div>
-              <div class="bat-row">
-                <div class="bat-label">Swings</div>
-                <div class="bat-header bat-bl">BL</div>
-                <div class="bat-header bat-hl">HL</div>
-                <div class="bat-header bat-u">U</div>
-                <div class="bat-header bat-r">R</div>
-              </div>
-              <div class="bat-row">
-                <div></div>
-                <input type="number" min="0" data-bat="BL" onchange="updateSwings(this)" placeholder="0">
-                <input type="number" min="0" data-bat="HL" onchange="updateSwings(this)" placeholder="0">
-                <input type="number" min="0" data-bat="U" onchange="updateSwings(this)" placeholder="0">
-                <input type="number" min="0" data-bat="R" onchange="updateSwings(this)" placeholder="0">
-              </div>
-              <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
-            </div>
-
-            <div class="exercise" data-id="0817-hit3">
-              <div class="ex-name">Tee – Middle (Round 1)</div>
-              <div class="equip">Tee</div>
-              <div class="ex-presc">3 swings each bat.</div>
-              <div class="bat-row">
-                <div class="bat-label">Swings</div>
-                <div class="bat-header bat-bl">BL</div>
-                <div class="bat-header bat-hl">HL</div>
-                <div class="bat-header bat-u">U</div>
-                <div class="bat-header bat-r">R</div>
-              </div>
-              <div class="bat-row">
-                <div></div>
-                <input type="number" min="0" data-bat="BL" onchange="updateSwings(this)" placeholder="0">
-                <input type="number" min="0" data-bat="HL" onchange="updateSwings(this)" placeholder="0">
-                <input type="number" min="0" data-bat="U" onchange="updateSwings(this)" placeholder="0">
-                <input type="number" min="0" data-bat="R" onchange="updateSwings(this)" placeholder="0">
-              </div>
-              <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
-            </div>
-
-            <div class="exercise" data-id="0817-hit4">
-              <div class="ex-name">Tee – Middle (Round 2)</div>
-              <div class="equip">Tee</div>
-              <div class="ex-presc">3 swings each bat.</div>
-              <div class="bat-row">
-                <div class="bat-label">Swings</div>
-                <div class="bat-header bat-bl">BL</div>
-                <div class="bat-header bat-hl">HL</div>
-                <div class="bat-header bat-u">U</div>
-                <div class="bat-header bat-r">R</div>
-              </div>
-              <div class="bat-row">
-                <div></div>
-                <input type="number" min="0" data-bat="BL" onchange="updateSwings(this)" placeholder="0">
-                <input type="number" min="0" data-bat="HL" onchange="updateSwings(this)" placeholder="0">
-                <input type="number" min="0" data-bat="U" onchange="updateSwings(this)" placeholder="0">
-                <input type="number" min="0" data-bat="R" onchange="updateSwings(this)" placeholder="0">
-              </div>
-              <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
-            </div>
-
-            <div class="exercise" data-id="0817-hit5">
-              <div class="ex-name">Front Toss – Middle</div>
-              <div class="equip">Soft Toss</div>
-              <div class="ex-presc">3–4 swings each bat.</div>
-              <div class="bat-row">
-                <div class="bat-label">Swings</div>
-                <div class="bat-header bat-bl">BL</div>
-                <div class="bat-header bat-hl">HL</div>
-                <div class="bat-header bat-u">U</div>
-                <div class="bat-header bat-r">R</div>
-              </div>
-              <div class="bat-row">
-                <div></div>
-                <input type="number" min="0" data-bat="BL" onchange="updateSwings(this)" placeholder="0">
-                <input type="number" min="0" data-bat="HL" onchange="updateSwings(this)" placeholder="0">
-                <input type="number" min="0" data-bat="U" onchange="updateSwings(this)" placeholder="0">
-                <input type="number" min="0" data-bat="R" onchange="updateSwings(this)" placeholder="0">
-              </div>
-              <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
-            </div>
-
-            <div class="exercise" data-id="0817-hit6">
-              <div class="ex-name">Front Toss – Away</div>
-              <div class="equip">Soft Toss</div>
-              <div class="ex-presc">3–4 swings each bat.</div>
-              <div class="bat-row">
-                <div class="bat-label">Swings</div>
-                <div class="bat-header bat-bl">BL</div>
-                <div class="bat-header bat-hl">HL</div>
-                <div class="bat-header bat-u">U</div>
-                <div class="bat-header bat-r">R</div>
-              </div>
-              <div class="bat-row">
-                <div></div>
-                <input type="number" min="0" data-bat="BL" onchange="updateSwings(this)" placeholder="0">
-                <input type="number" min="0" data-bat="HL" onchange="updateSwings(this)" placeholder="0">
-                <input type="number" min="0" data-bat="U" onchange="updateSwings(this)" placeholder="0">
-                <input type="number" min="0" data-bat="R" onchange="updateSwings(this)" placeholder="0">
-              </div>
-              <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
-            </div>
-
-            <div class="exercise" data-id="0817-hit7">
-              <div class="ex-name">Machine – Fastball + Curve Mix</div>
-              <div class="equip">Jr. Hack Attack</div>
-              <div class="machine-card" style="margin:6px 0;font-size:11.5px;">
-                FB 7.5 / 7.5 / 10<br>
-                RH Curve 5 / 10 / 3<br>
-                LH Curve 10 / 5 / 3
-              </div>
-              <div class="ex-presc">Regular bat. 8–10 FB + 8–10 Curve.</div>
-              <div class="bat-row">
-                <div class="bat-label">Swings</div>
-                <div class="bat-header bat-bl">BL</div>
-                <div class="bat-header bat-hl">HL</div>
-                <div class="bat-header bat-u">U</div>
-                <div class="bat-header bat-r">R</div>
-              </div>
-              <div class="bat-row">
-                <div></div>
-                <input type="number" min="0" data-bat="BL" onchange="updateSwings(this)" placeholder="0">
-                <input type="number" min="0" data-bat="HL" onchange="updateSwings(this)" placeholder="0">
-                <input type="number" min="0" data-bat="U" onchange="updateSwings(this)" placeholder="0">
-                <input type="number" min="0" data-bat="R" onchange="updateSwings(this)" placeholder="0">
-              </div>
-              <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
-            </div>
+        <!-- ===================== FRIDAY AUG 21 ===================== -->
+        <div class="day" data-date="2026-08-21" data-training="1">
+          <div class="day-header" onclick="this.parentElement.classList.toggle('open')">
+            <div><strong>Friday, Aug 21</strong><div style="font-size:11.5px;color:var(--muted)">Class Day • Moderate</div></div>
+            <span class="tag tag-mod" id="tag-2026-08-21">Moderate</span>
           </div>
+          <div class="day-body">
+            <div class="progress-wrap">
+              <div class="progress-label">Daily Progress <span id="prog-2026-08-21">0%</span></div>
+              <div class="bar"><div class="bar-fill" id="bar-2026-08-21" style="width:0%"></div></div>
+            </div>
+            <div class="swing-box">
+              <div style="font-size:12px;font-weight:700;">Today’s Swings</div>
+              <div class="num" id="daily-swings-2026-08-21">0</div>
+            </div>
 
-          <div class="section">
-            <div class="section-title">5. Recovery + Notes</div>
-            <div class="exercise" data-id="0817-rec1">
-              <div class="ex-name"><a href="https://player.vimeo.com/video/851488108" target="_blank">Band External Rotations</a></div>
-              <div class="equip">Band</div>
-              <div class="ex-presc">2 × 12 each arm.</div>
-              <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+            <div class="section">
+              <div class="section-title">1. Warm-Up</div>
+              <div class="exercise" data-id="0821-wu1">
+                <div class="ex-name"><a href="https://player.vimeo.com/video/862985494" target="_blank">Everyday Dynamic Warm-up</a></div>
+                <div class="equip">Bodyweight</div>
+                <div class="ex-presc">10 min.</div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
             </div>
-            <div class="exercise" data-id="0817-rec2">
-              <div class="ex-name">Dead Hang</div>
-              <div class="equip">Pull-up bar</div>
-              <div class="ex-presc">20–40 seconds.</div>
-              <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+
+            <div class="section">
+              <div class="section-title">2. Movement + Light Power</div>
+              <div class="exercise" data-id="0821-sp1">
+                <div class="ex-name">Skips + Low Box or Broad Jumps</div>
+                <div class="equip">Open space</div>
+                <div class="ex-presc">Quality only. 3–4 sets.</div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
             </div>
-            <div style="margin-top:9px;">
-              <div style="font-size:12px;font-weight:700;margin-bottom:4px;">Day Notes</div>
-              <textarea id="notes-2026-08-17" placeholder="How did it feel?" onchange="saveNotes('2026-08-17',this.value)"></textarea>
+
+            <div class="section">
+              <div class="section-title">3. Strength (Upper Focus)</div>
+              <div class="exercise" data-id="0821-st1">
+                <div class="ex-name"><a href="https://player.vimeo.com/video/863300945" target="_blank">DB Press</a></div>
+                <div class="equip">Dumbbells</div>
+                <div class="ex-presc">3 × 8 @ 2 RIR.</div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
+              <div class="exercise" data-id="0821-st2">
+                <div class="ex-name"><a href="https://player.vimeo.com/video/863272147" target="_blank">Row Variation</a></div>
+                <div class="equip">DB or band</div>
+                <div class="ex-presc">3 × 8–10.</div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
+            </div>
+
+            <div class="section">
+              <div class="section-title">4. Hitting</div>
+              <div class="exercise" data-id="0821-hit1">
+                <div class="ex-name"><a href="https://www.youtube.com/watch?v=9BsRj3u5HQs" target="_blank">Walk-Through Drill</a></div>
+                <div class="equip">Tee</div>
+                <div class="ex-presc">3 swings each bat.</div>
+                <div class="bat-row">
+                  <div class="bat-label">Swings</div>
+                  <div class="bat-header bat-bl">BL</div>
+                  <div class="bat-header bat-hl">HL</div>
+                  <div class="bat-header bat-u">U</div>
+                  <div class="bat-header bat-r">R</div>
+                </div>
+                <div class="bat-row">
+                  <div></div>
+                  <input type="number" min="0" data-bat="BL" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="HL" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="U" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="R" onchange="updateSwings(this)" placeholder="0">
+                </div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
+              <div class="exercise" data-id="0821-hit2">
+                <div class="ex-name"><a href="https://www.youtube.com/watch?v=r3wazOZE-MQ" target="_blank">Rocker Drill</a></div>
+                <div class="equip">Tee</div>
+                <div class="ex-presc">3 swings each bat.</div>
+                <div class="bat-row">
+                  <div class="bat-label">Swings</div>
+                  <div class="bat-header bat-bl">BL</div>
+                  <div class="bat-header bat-hl">HL</div>
+                  <div class="bat-header bat-u">U</div>
+                  <div class="bat-header bat-r">R</div>
+                </div>
+                <div class="bat-row">
+                  <div></div>
+                  <input type="number" min="0" data-bat="BL" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="HL" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="U" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="R" onchange="updateSwings(this)" placeholder="0">
+                </div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
+              <div class="exercise" data-id="0821-hit3">
+                <div class="ex-name">Tee + Soft Toss</div>
+                <div class="equip">Tee + Soft Toss</div>
+                <div class="ex-presc">Quality contact focus.</div>
+                <div class="bat-row">
+                  <div class="bat-label">Swings</div>
+                  <div class="bat-header bat-bl">BL</div>
+                  <div class="bat-header bat-hl">HL</div>
+                  <div class="bat-header bat-u">U</div>
+                  <div class="bat-header bat-r">R</div>
+                </div>
+                <div class="bat-row">
+                  <div></div>
+                  <input type="number" min="0" data-bat="BL" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="HL" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="U" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="R" onchange="updateSwings(this)" placeholder="0">
+                </div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
+              <div class="exercise" data-id="0821-hit4">
+                <div class="ex-name">Machine – Mix</div>
+                <div class="equip">Jr. Hack Attack</div>
+                <div class="ex-presc">15–20 swings, FB + Curve mix.</div>
+                <div class="bat-row">
+                  <div class="bat-label">Swings</div>
+                  <div class="bat-header bat-bl">BL</div>
+                  <div class="bat-header bat-hl">HL</div>
+                  <div class="bat-header bat-u">U</div>
+                  <div class="bat-header bat-r">R</div>
+                </div>
+                <div class="bat-row">
+                  <div></div>
+                  <input type="number" min="0" data-bat="BL" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="HL" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="U" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="R" onchange="updateSwings(this)" placeholder="0">
+                </div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
+            </div>
+
+            <div class="section">
+              <div class="section-title">5. Recovery + Notes</div>
+              <div class="exercise" data-id="0821-rec1">
+                <div class="ex-name">Arm Care + Light Stretch</div>
+                <div class="equip">Band</div>
+                <div class="ex-presc">External rotations + general stretch.</div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
+              <div style="margin-top:9px;">
+                <div style="font-size:12px;font-weight:700;margin-bottom:4px;">Day Notes</div>
+                <textarea id="notes-2026-08-21" onchange="saveNotes('2026-08-21',this.value)"></textarea>
+              </div>
+            </div>
+
+            <button class="complete-day-btn" onclick="completeDay('2026-08-21')">Complete Day</button>
+          </div>
+        </div>
+
+        <!-- ===================== SATURDAY AUG 22 ===================== -->
+        <div class="day" data-date="2026-08-22" data-training="1">
+          <div class="day-header" onclick="this.parentElement.classList.toggle('open')">
+            <div><strong>Saturday, Aug 22</strong><div style="font-size:11.5px;color:var(--muted)">Volume / Quality Day</div></div>
+            <span class="tag tag-mod" id="tag-2026-08-22">Moderate</span>
+          </div>
+          <div class="day-body">
+            <div class="progress-wrap">
+              <div class="progress-label">Daily Progress <span id="prog-2026-08-22">0%</span></div>
+              <div class="bar"><div class="bar-fill" id="bar-2026-08-22" style="width:0%"></div></div>
+            </div>
+            <div class="swing-box">
+              <div style="font-size:12px;font-weight:700;">Today’s Swings</div>
+              <div class="num" id="daily-swings-2026-08-22">0</div>
+            </div>
+
+            <div class="section">
+              <div class="section-title">1. Warm-Up</div>
+              <div class="exercise" data-id="0822-wu1">
+                <div class="ex-name"><a href="https://player.vimeo.com/video/862985494" target="_blank">Everyday Dynamic Warm-up</a></div>
+                <div class="equip">Bodyweight</div>
+                <div class="ex-presc">Full warm-up.</div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
+            </div>
+
+            <div class="section">
+              <div class="section-title">2. Movement Quality</div>
+              <div class="exercise" data-id="0822-sp1">
+                <div class="ex-name">Skips, Shuffles, Light Bounds</div>
+                <div class="equip">Open field</div>
+                <div class="ex-presc">Keep it snappy and clean. No grinding.</div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
+            </div>
+
+            <div class="section">
+              <div class="section-title">3. Strength (Maintenance)</div>
+              <div class="exercise" data-id="0822-st1">
+                <div class="ex-name">Goblet Squat or Split Squat</div>
+                <div class="equip">DB/KB</div>
+                <div class="ex-presc">3 × 8 @ 2–3 RIR.</div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
+              <div class="exercise" data-id="0822-st2">
+                <div class="ex-name">Upper Push + Pull</div>
+                <div class="equip">DBs or bands</div>
+                <div class="ex-presc">2–3 sets each.</div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
+            </div>
+
+            <div class="section">
+              <div class="section-title">4. Hitting – Higher Volume</div>
+              <div class="exercise" data-id="0822-hit1">
+                <div class="ex-name"><a href="https://www.youtube.com/watch?v=9BsRj3u5HQs" target="_blank">Walk-Through Drill</a></div>
+                <div class="equip">Tee</div>
+                <div class="ex-presc">3 swings each bat.</div>
+                <div class="bat-row">
+                  <div class="bat-label">Swings</div>
+                  <div class="bat-header bat-bl">BL</div>
+                  <div class="bat-header bat-hl">HL</div>
+                  <div class="bat-header bat-u">U</div>
+                  <div class="bat-header bat-r">R</div>
+                </div>
+                <div class="bat-row">
+                  <div></div>
+                  <input type="number" min="0" data-bat="BL" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="HL" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="U" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="R" onchange="updateSwings(this)" placeholder="0">
+                </div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
+              <div class="exercise" data-id="0822-hit2">
+                <div class="ex-name"><a href="https://www.youtube.com/watch?v=r3wazOZE-MQ" target="_blank">Rocker Drill</a></div>
+                <div class="equip">Tee</div>
+                <div class="ex-presc">3 swings each bat.</div>
+                <div class="bat-row">
+                  <div class="bat-label">Swings</div>
+                  <div class="bat-header bat-bl">BL</div>
+                  <div class="bat-header bat-hl">HL</div>
+                  <div class="bat-header bat-u">U</div>
+                  <div class="bat-header bat-r">R</div>
+                </div>
+                <div class="bat-row">
+                  <div></div>
+                  <input type="number" min="0" data-bat="BL" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="HL" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="U" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="R" onchange="updateSwings(this)" placeholder="0">
+                </div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
+              <div class="exercise" data-id="0822-hit3">
+                <div class="ex-name">Tee + Soft Toss + Machine</div>
+                <div class="equip">All three</div>
+                <div class="ex-presc">Build volume with quality. Include curve work on the machine.</div>
+                <div class="bat-row">
+                  <div class="bat-label">Swings</div>
+                  <div class="bat-header bat-bl">BL</div>
+                  <div class="bat-header bat-hl">HL</div>
+                  <div class="bat-header bat-u">U</div>
+                  <div class="bat-header bat-r">R</div>
+                </div>
+                <div class="bat-row">
+                  <div></div>
+                  <input type="number" min="0" data-bat="BL" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="HL" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="U" onchange="updateSwings(this)" placeholder="0">
+                  <input type="number" min="0" data-bat="R" onchange="updateSwings(this)" placeholder="0">
+                </div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
+            </div>
+
+            <div class="section">
+              <div class="section-title">5. Recovery + Notes</div>
+              <div class="exercise" data-id="0822-rec1">
+                <div class="ex-name">Full Recovery + Arm Care</div>
+                <div class="equip">Band + bodyweight</div>
+                <div class="ex-presc">Take care of the body after the week.</div>
+                <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
+              </div>
+              <div style="margin-top:9px;">
+                <div style="font-size:12px;font-weight:700;margin-bottom:4px;">Day Notes</div>
+                <textarea id="notes-2026-08-22" onchange="saveNotes('2026-08-22',this.value)"></textarea>
+              </div>
+            </div>
+
+            <button class="complete-day-btn" onclick="completeDay('2026-08-22')">Complete Day</button>
+          </div>
+        </div>
+
+        <!-- ===================== SUNDAY AUG 23 ===================== -->
+        <div class="day" data-date="2026-08-23">
+          <div class="day-header" onclick="this.parentElement.classList.toggle('open')">
+            <div><strong>Sunday, Aug 23</strong><div style="font-size:11.5px;color:var(--muted)">Full Recovery</div></div>
+            <span class="tag tag-off">OFF</span>
+          </div>
+          <div class="day-body">
+            <div class="off-card">
+              <div class="quote">“Champions are made when no one is watching.”</div>
+              <div class="verse">“I can do all things through him who strengthens me.” — Philippians 4:13 (ESV)</div>
+              <div class="proud">Mom and Dad are proud of you, Caynan.<br>Rest well. Recover fully. Come back stronger Monday.</div>
+            </div>
+            <div style="margin-top:14px;">
+              <div style="font-size:12px;font-weight:700;margin-bottom:4px;">Optional Notes</div>
+              <textarea id="notes-2026-08-23" placeholder="How are the legs/shoulders feeling?" onchange="saveNotes('2026-08-23',this.value)"></textarea>
             </div>
           </div>
         </div>
+
       </div>
-
-      <!-- ==================== TUE AUG 18 ==================== -->
-      <div class="day" data-date="2026-08-18" data-training="1">
-        <div class="day-header" onclick="this.parentElement.classList.toggle('open')">
-          <div><strong>Tuesday, Aug 18</strong><div style="font-size:11.5px;color:var(--muted)">No Class • Heavy</div></div>
-          <span class="tag tag-heavy">Heavy</span>
-        </div>
-        <div class="day-body">
-          <div class="progress-wrap">
-            <div class="progress-label">Daily Progress <span id="prog-2026-08-18">0%</span></div>
-            <div class="bar"><div class="bar-fill" id="bar-2026-08-18" style="width:0%"></div></div>
-          </div>
-          <div class="swing-box">
-            <div style="font-size:12px;font-weight:700;">Today’s Swings</div>
-            <div class="num" id="daily-swings-2026-08-18">0</div>
-          </div>
-
-          <div class="section">
-            <div class="section-title">1. Warm-Up</div>
-            <div class="exercise" data-id="0818-wu1">
-              <div class="ex-name"><a href="https://player.vimeo.com/video/862985494" target="_blank">Everyday Dynamic Warm-up</a></div>
-              <div class="equip">Bodyweight</div>
-              <div class="ex-presc">12 min.</div>
-              <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
-            </div>
-            <div class="exercise" data-id="0818-wu2">
-              <div class="ex-name">Hip CARs</div>
-              <div class="equip">Bodyweight</div>
-              <div class="ex-presc">6–8 slow Controlled Articular Rotations each direction per hip.</div>
-              <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
-            </div>
-            <div class="exercise" data-id="0818-wu3">
-              <div class="ex-name"><a href="https://vimeo.com/457008259" target="_blank">World’s Greatest Stretch</a></div>
-              <div class="equip">Bodyweight</div>
-              <div class="ex-presc">2 × 6–8 each side.</div>
-              <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
-            </div>
-          </div>
-
-          <div class="section">
-            <div class="section-title">2. Acceleration + Power</div>
-            <div class="exercise" data-id="0818-sp1">
-              <div class="ex-name"><a href="https://player.vimeo.com/video/714737550" target="_blank">Falling Sprint Starts</a></div>
-              <div class="equip">Open field</div>
-              <div class="ex-presc">6 × 15–20 yd. Full recovery.</div>
-              <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
-            </div>
-            <div class="exercise" data-id="0818-sp2">
-              <div class="ex-name"><a href="https://player.vimeo.com/video/641277377" target="_blank">Med-Ball Overhead Toss for Height</a></div>
-              <div class="equip">6–10 lb med ball</div>
-              <div class="ex-presc">3 × 5. Max intent.</div>
-              <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
-            </div>
-            <div class="exercise" data-id="0818-sp3">
-              <div class="ex-name"><a href="https://player.vimeo.com/video/863229762" target="_blank">Broad Jump</a></div>
-              <div class="equip">Open space</div>
-              <div class="ex-presc">4 × 3. Stick the landing.</div>
-              <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
-            </div>
-          </div>
-
-          <div class="section">
-            <div class="section-title">3. Strength Cluster (Heavy)</div>
-            <div class="exercise" data-id="0818-st1">
-              <div class="ex-name"><a href="https://player.vimeo.com/video/863271987" target="_blank">Trap Bar or Goblet Squat</a></div>
-              <div class="equip">Trap bar or heavy DB/KB</div>
-              <div class="ex-presc">4 × 6 @ 2 RIR.</div>
-              <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
-            </div>
-            <div class="exercise" data-id="0818-st2">
-              <div class="ex-name"><a href="https://player.vimeo.com/video/863274606" target="_blank">Romanian Deadlift (RDL)</a></div>
-              <div class="equip">Dumbbell (DB) or Barbell (BB)</div>
-              <div class="ex-presc">3 × 8 @ 2 RIR. Soft knee, push hips back.</div>
-              <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
-            </div>
-            <div class="exercise" data-id="0818-st3">
-              <div class="ex-name"><a href="https://player.vimeo.com/video/863300945" target="_blank">Dumbbell Bench Press</a></div>
-              <div class="equip">Dumbbells</div>
-              <div class="ex-presc">4 × 6–8 @ 2 RIR.</div>
-              <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
-            </div>
-            <div class="exercise" data-id="0818-st4">
-              <div class="ex-name"><a href="https://player.vimeo.com/video/812800937" target="_blank">Chest-Supported Row</a></div>
-              <div class="equip">Incline bench + DBs</div>
-              <div class="ex-presc">3 × 8 @ 2 RIR.</div>
-              <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
-            </div>
-          </div>
-
-          <div class="section">
-            <div class="section-title">4. Hitting – Curve Focus</div>
-
-            <div class="exercise" data-id="0818-hit1">
-              <div class="ex-name"><a href="https://www.youtube.com/watch?v=9BsRj3u5HQs" target="_blank">Walk-Through Drill</a></div>
-              <div class="equip">Tee</div>
-              <div class="ex-presc">3 swings each bat.</div>
-              <div class="bat-row">
-                <div class="bat-label">Swings</div>
-                <div class="bat-header bat-bl">BL</div>
-                <div class="bat-header bat-hl">HL</div>
-                <div class="bat-header bat-u">U</div>
-                <div class="bat-header bat-r">R</div>
-              </div>
-              <div class="bat-row">
-                <div></div>
-                <input type="number" min="0" data-bat="BL" onchange="updateSwings(this)" placeholder="0">
-                <input type="number" min="0" data-bat="HL" onchange="updateSwings(this)" placeholder="0">
-                <input type="number" min="0" data-bat="U" onchange="updateSwings(this)" placeholder="0">
-                <input type="number" min="0" data-bat="R" onchange="updateSwings(this)" placeholder="0">
-              </div>
-              <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
-            </div>
-
-            <div class="exercise" data-id="0818-hit2">
-              <div class="ex-name"><a href="https://www.youtube.com/watch?v=r3wazOZE-MQ" target="_blank">Rocker Drill</a></div>
-              <div class="equip">Tee</div>
-              <div class="ex-presc">3 swings each bat.</div>
-              <div class="bat-row">
-                <div class="bat-label">Swings</div>
-                <div class="bat-header bat-bl">BL</div>
-                <div class="bat-header bat-hl">HL</div>
-                <div class="bat-header bat-u">U</div>
-                <div class="bat-header bat-r">R</div>
-              </div>
-              <div class="bat-row">
-                <div></div>
-                <input type="number" min="0" data-bat="BL" onchange="updateSwings(this)" placeholder="0">
-                <input type="number" min="0" data-bat="HL" onchange="updateSwings(this)" placeholder="0">
-                <input type="number" min="0" data-bat="U" onchange="updateSwings(this)" placeholder="0">
-                <input type="number" min="0" data-bat="R" onchange="updateSwings(this)" placeholder="0">
-              </div>
-              <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
-            </div>
-
-            <div class="exercise" data-id="0818-hit3">
-              <div class="ex-name">Tee – Away</div>
-              <div class="equip">Tee</div>
-              <div class="ex-presc">3–4 swings each bat.</div>
-              <div class="bat-row">
-                <div class="bat-label">Swings</div>
-                <div class="bat-header bat-bl">BL</div>
-                <div class="bat-header bat-hl">HL</div>
-                <div class="bat-header bat-u">U</div>
-                <div class="bat-header bat-r">R</div>
-              </div>
-              <div class="bat-row">
-                <div></div>
-                <input type="number" min="0" data-bat="BL" onchange="updateSwings(this)" placeholder="0">
-                <input type="number" min="0" data-bat="HL" onchange="updateSwings(this)" placeholder="0">
-                <input type="number" min="0" data-bat="U" onchange="updateSwings(this)" placeholder="0">
-                <input type="number" min="0" data-bat="R" onchange="updateSwings(this)" placeholder="0">
-              </div>
-              <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
-            </div>
-
-            <div class="exercise" data-id="0818-hit4">
-              <div class="ex-name">Tee – Middle</div>
-              <div class="equip">Tee</div>
-              <div class="ex-presc">3–4 swings each bat.</div>
-              <div class="bat-row">
-                <div class="bat-label">Swings</div>
-                <div class="bat-header bat-bl">BL</div>
-                <div class="bat-header bat-hl">HL</div>
-                <div class="bat-header bat-u">U</div>
-                <div class="bat-header bat-r">R</div>
-              </div>
-              <div class="bat-row">
-                <div></div>
-                <input type="number" min="0" data-bat="BL" onchange="updateSwings(this)" placeholder="0">
-                <input type="number" min="0" data-bat="HL" onchange="updateSwings(this)" placeholder="0">
-                <input type="number" min="0" data-bat="U" onchange="updateSwings(this)" placeholder="0">
-                <input type="number" min="0" data-bat="R" onchange="updateSwings(this)" placeholder="0">
-              </div>
-              <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
-            </div>
-
-            <div class="exercise" data-id="0818-hit5">
-              <div class="ex-name">Front Toss – Adjustability</div>
-              <div class="equip">Soft Toss</div>
-              <div class="desc-card">
-                Partner varies speed and location (including slower “change-up” tosses). Goal is to stay balanced, recognize the pitch early, and drive through the ball without lunging or pulling off.
-              </div>
-              <div class="ex-presc">3–4 swings each bat. Mix speeds.</div>
-              <div class="bat-row">
-                <div class="bat-label">Swings</div>
-                <div class="bat-header bat-bl">BL</div>
-                <div class="bat-header bat-hl">HL</div>
-                <div class="bat-header bat-u">U</div>
-                <div class="bat-header bat-r">R</div>
-              </div>
-              <div class="bat-row">
-                <div></div>
-                <input type="number" min="0" data-bat="BL" onchange="updateSwings(this)" placeholder="0">
-                <input type="number" min="0" data-bat="HL" onchange="updateSwings(this)" placeholder="0">
-                <input type="number" min="0" data-bat="U" onchange="updateSwings(this)" placeholder="0">
-                <input type="number" min="0" data-bat="R" onchange="updateSwings(this)" placeholder="0">
-              </div>
-              <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
-            </div>
-
-            <div class="exercise" data-id="0818-hit6">
-              <div class="ex-name">Machine – Heavy Curve Focus</div>
-              <div class="equip">Jr. Hack Attack</div>
-              <div class="machine-card" style="margin:6px 0;font-size:11.5px;">
-                Primary: RH Curve 5/10/3 • LH Curve 10/5/3<br>
-                Mix in a few Fastballs (7.5/7.5/10)
-              </div>
-              <div class="ex-presc">Regular bat. 20–30 total swings (mostly curve).</div>
-              <div class="bat-row">
-                <div class="bat-label">Swings</div>
-                <div class="bat-header bat-bl">BL</div>
-                <div class="bat-header bat-hl">HL</div>
-                <div class="bat-header bat-u">U</div>
-                <div class="bat-header bat-r">R</div>
-              </div>
-              <div class="bat-row">
-                <div></div>
-                <input type="number" min="0" data-bat="BL" onchange="updateSwings(this)" placeholder="0">
-                <input type="number" min="0" data-bat="HL" onchange="updateSwings(this)" placeholder="0">
-                <input type="number" min="0" data-bat="U" onchange="updateSwings(this)" placeholder="0">
-                <input type="number" min="0" data-bat="R" onchange="updateSwings(this)" placeholder="0">
-              </div>
-              <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
-            </div>
-          </div>
-
-          <div class="section">
-            <div class="section-title">5. Recovery + Notes</div>
-            <div class="exercise" data-id="0818-rec1">
-              <div class="ex-name"><a href="https://player.vimeo.com/video/851486713" target="_blank">90/90 Floss</a></div>
-              <div class="equip">Bodyweight</div>
-              <div class="ex-presc">2 × 45–60 sec each side.</div>
-              <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
-            </div>
-            <div class="exercise" data-id="0818-rec2">
-              <div class="ex-name">Couch Stretch</div>
-              <div class="equip">Bodyweight</div>
-              <div class="ex-presc">2 × 45–60 sec each side.</div>
-              <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
-            </div>
-            <div class="exercise" data-id="0818-rec3">
-              <div class="ex-name"><a href="https://player.vimeo.com/video/851488026" target="_blank">Band Pull-Aparts</a></div>
-              <div class="equip">Band</div>
-              <div class="ex-presc">2 × 15.</div>
-              <div class="actions"><button class="btn btn-complete" onclick="markDone(this)">Complete</button><button class="btn btn-skip" onclick="markSkip(this)">Skip</button><button class="btn btn-edit" onclick="markEdit(this)">Edit</button></div>
-            </div>
-            <div style="margin-top:9px;">
-              <div style="font-size:12px;font-weight:700;margin-bottom:4px;">Day Notes</div>
-              <textarea id="notes-2026-08-18" placeholder="Heavy day notes..." onchange="saveNotes('2026-08-18',this.value)"></textarea>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- WED–SAT follow the same clean pattern (abbreviated here for length but fully separated in the actual file) -->
-      <!-- For brevity in this response the remaining days (Wed–Sat) follow identical separation + color-coding rules. -->
-      <!-- Full code includes complete Wed Aug 19, Thu Aug 20, Fri Aug 21, Sat Aug 22 with every drill separated. -->
-
-      <!-- SUN AUG 23 OFF -->
-      <div class="day" data-date="2026-08-23">
-        <div class="day-header" onclick="this.parentElement.classList.toggle('open')">
-          <div><strong>Sunday, Aug 23</strong><div style="font-size:11.5px;color:var(--muted)">Full Recovery</div></div>
-          <span class="tag tag-off">OFF</span>
-        </div>
-        <div class="day-body">
-          <div class="off-card">
-            <div class="quote">“Champions are made when no one is watching.”</div>
-            <div class="verse">“I can do all things through him who strengthens me.” — Philippians 4:13 (ESV)</div>
-            <div class="proud">Mom and Dad are proud of you, Caynan.<br>Rest well. Recover fully. Come back stronger Monday.</div>
-          </div>
-          <div style="margin-top:14px;">
-            <div style="font-size:12px;font-weight:700;margin-bottom:4px;">Optional Notes</div>
-            <textarea id="notes-2026-08-23" placeholder="How are the legs/shoulders feeling?" onchange="saveNotes('2026-08-23',this.value)"></textarea>
-          </div>
-        </div>
-      </div>
-
     </div>
   </div>
 </div>
@@ -841,10 +1528,10 @@ body {
 </main>
 
 <script>
-const STORAGE_KEY = 'caynan_fall2026_v5';
+const STORAGE_KEY = 'caynan_fall2026_v7';
 function loadData() {
-  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || { exercises:{}, swings:{}, notes:{}, weights:{} }; }
-  catch { return { exercises:{}, swings:{}, notes:{}, weights:{} }; }
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || { exercises:{}, swings:{}, notes:{}, weights:{}, completedDays:{} }; }
+  catch { return { exercises:{}, swings:{}, notes:{}, weights:{}, completedDays:{} }; }
 }
 function saveData(d) { localStorage.setItem(STORAGE_KEY, JSON.stringify(d)); }
 let data = loadData();
@@ -886,16 +1573,54 @@ function updateWeekProgress() {
   const days = document.querySelectorAll('.day[data-training="1"]');
   let complete = 0;
   days.forEach(day => {
-    const all = day.querySelectorAll('.exercise');
-    if (all.length === 0) return;
-    let done = 0;
-    all.forEach(ex => { if (ex.classList.contains('done') || ex.classList.contains('skipped')) done++; });
-    if (done === all.length) complete++;
+    if (data.completedDays[day.dataset.date]) complete++;
   });
   const pct = Math.round((complete / 6) * 100);
   document.getElementById('weekBar').style.width = pct + '%';
   document.getElementById('weekLabel').textContent = complete + ' of 6 training days complete';
 }
+
+function completeDay(date) {
+  const dayEl = document.querySelector(`.day[data-date="${date}"]`);
+  if (!dayEl) return;
+
+  const exercises = dayEl.querySelectorAll('.exercise');
+  let incomplete = 0;
+  exercises.forEach(ex => {
+    if (!ex.classList.contains('done') && !ex.classList.contains('skipped')) incomplete++;
+  });
+
+  if (incomplete > 0) {
+    const ok = confirm(`There are still ${incomplete} exercise(s) not marked Complete or Skip.\n\nAre you sure you want to complete this day?`);
+    if (!ok) return;
+  }
+
+  data.completedDays[date] = true;
+  saveData(data);
+
+  dayEl.classList.add('completed-day');
+  dayEl.classList.remove('open');
+  const tag = document.getElementById('tag-' + date);
+  if (tag) {
+    tag.textContent = 'DONE';
+    tag.className = 'tag tag-done';
+  }
+
+  reorderDays();
+  updateWeekProgress();
+}
+
+function reorderDays() {
+  const container = document.getElementById('daysContainer');
+  const days = Array.from(container.querySelectorAll('.day'));
+  days.sort((a, b) => {
+    const aDone = data.completedDays[a.dataset.date] ? 1 : 0;
+    const bDone = data.completedDays[b.dataset.date] ? 1 : 0;
+    return aDone - bDone;
+  });
+  days.forEach(d => container.appendChild(d));
+}
+
 function updateSwings(input) {
   const ex = input.closest('.exercise');
   const day = ex.closest('.day');
@@ -929,11 +1654,13 @@ function importData(e) {
   r.onload = ev => { try { data = JSON.parse(ev.target.result); saveData(data); location.reload(); } catch { alert('Bad file'); } };
   r.readAsText(f);
 }
+
 document.addEventListener('DOMContentLoaded', () => {
   Object.entries(data.exercises || {}).forEach(([id, st]) => {
     const ex = document.querySelector(`.exercise[data-id="${id}"]`);
     if (ex) { if (st === 'done') ex.classList.add('done'); if (st === 'skipped') ex.classList.add('skipped'); }
   });
+
   Object.entries(data.swings || {}).forEach(([date, drills]) => {
     Object.entries(drills).forEach(([id, bats]) => {
       const ex = document.querySelector(`.exercise[data-id="${id}"]`);
@@ -948,6 +1675,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const el = document.getElementById('daily-swings-' + date);
     if (el) el.textContent = daily;
   });
+
   Object.entries(data.notes || {}).forEach(([d, v]) => {
     const t = document.getElementById('notes-' + d); if (t) t.value = v;
   });
@@ -955,7 +1683,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const i = document.getElementById('wt-' + d); if (i) i.value = v;
     if (v) document.getElementById('headerWeight').textContent = v;
   });
+
+  Object.keys(data.completedDays || {}).forEach(date => {
+    const dayEl = document.querySelector(`.day[data-date="${date}"]`);
+    if (dayEl) {
+      dayEl.classList.add('completed-day');
+      const tag = document.getElementById('tag-' + date);
+      if (tag) { tag.textContent = 'DONE'; tag.className = 'tag tag-done'; }
+    }
+  });
+
   document.querySelectorAll('.day[data-date]').forEach(d => updateProgress(d));
+  reorderDays();
   updateWeekProgress();
 });
 </script>
