@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rend Lake Fall 2026</title>
+  <style>
+    :root {
+      --bg: #f6f3ed;
+      --paper: #fffdf9;
+      --text: #211b16;
+      --muted: #6e655a;
+      --border: #d8d0c6;
+      --accent: #6a3e22;
+      --accent-2: #1a5a63;
+      --game: #8b1e2d;
+      --off: #7a7a7a;
+      --done: #d8e8d3;
+      --done-text: #28502f;
+      --shadow: 0 10px 28px rgba(26, 22, 18, 0.08);
+      --radius: 18px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(180deg, #f9f6f0 0%, #f0ebe3 100%);
+      color: var(--text);
+    }
+    .wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 28px 18px 80px;
+    }
+    .hero {
+      background: var(--paper);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      padding: 28px;
+      box-shadow: var(--shadow);
+      margin-bottom: 22px;
+    }
+    .eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      font-size: 12px;
+      color: var(--accent-2);
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    h1 {
+      margin: 0 0 12px;
+      font-size: clamp(2rem, 4vw, 3.4rem);
+      line-height: 1.05;
+      color: var(--accent);
+    }
+    .lead {
+      max-width: 850px;
+      color: var(--muted);
+      font-size: 1.04rem;
+      line-height: 1.6;
+      margin: 0;
+    }
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      margin-top: 22px;
+    }
+    .summary-card {
+      background: #faf7f2;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 16px;
+    }
+    .summary-card strong {
+      display: block;
+      font-size: 1.3rem;
+      color: var(--accent);
+      margin-bottom: 4px;
+    }
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+      margin: 22px 0 16px;
+    }
+    .toolbar .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 13px;
+      border: 1px solid var(--border);
+      background: #fff;
+    }
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+    .dot-active { background: var(--accent-2); }
+    .dot-game { background: var(--game); }
+    .dot-off { background: var(--off); }
+    .dot-done { background: #4b8b58; }
+    .reset-btn {
+      appearance: none;
+      border: 0;
+      background: var(--accent);
+      color: #fff;
+      border-radius: 999px;
+      padding: 10px 16px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+    }
+    .section-title {
+      margin: 28px 0 14px;
+      font-size: 1.2rem;
+      color: var(--accent);
+    }
+    .weeks {
+      display: grid;
+      gap: 16px;
+    }
+    .week-card {
+      background: var(--paper);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .week-card.completed-week {
+      opacity: 0.82;
+      background: #f4f7f2;
+    }
+    .week-head {
+      padding: 18px 18px 16px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      align-items: center;
+      cursor: pointer;
+      background: linear-gradient(180deg, rgba(255,255,255,0.25) 0%, rgba(0,0,0,0.02) 100%);
+    }
+    .week-head h2 {
+      margin: 0 0 4px;
+      font-size: 1.15rem;
+      color: var(--accent);
+    }
+    .week-head p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .week-meta {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--text);
+    }
+    .badge.game-badge { color: var(--game); border-color: rgba(139,30,45,.25); background: rgba(139,30,45,.05); }
+    .badge.off-badge { color: #555; background: rgba(122,122,122,.08); }
+    .badge.done-badge { color: var(--done-text); background: rgba(75,139,88,.1); }
+    .week-body {
+      display: none;
+      padding: 0 18px 18px;
+      border-top: 1px solid var(--border);
+      background: #fffdfa;
+    }
+    .week-card.open .week-body { display: block; }
+    .days-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 12px;
+      padding-top: 16px;
+    }
+    .day-card {
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background: #fff;
+      overflow: hidden;
+    }
+    .day-card.done { border-color: #9bc2a4; background: #f4fbf3; }
+    .day-card.game { border-color: rgba(139,30,45,.26); }
+    .day-card.off { border-color: rgba(122,122,122,.22); background: #f8f8f8; }
+    .day-top {
+      padding: 14px;
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: flex-start;
+      cursor: pointer;
+    }
+    .day-top h3 {
+      margin: 0 0 4px;
+      font-size: 1rem;
+    }
+    .day-top p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .status-chip {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .6px;
+      text-transform: uppercase;
+      padding: 7px 9px;
+      border-radius: 999px;
+      white-space: nowrap;
+      border: 1px solid var(--border);
+      background: #faf6ef;
+      color: var(--accent);
+    }
+    .day-card.game .status-chip { background: rgba(139,30,45,.08); color: var(--game); border-color: rgba(139,30,45,.2); }
+    .day-card.off .status-chip { background: rgba(122,122,122,.08); color: #666; }
+    .day-card.done .status-chip { background: rgba(75,139,88,.1); color: var(--done-text); border-color: rgba(75,139,88,.2); }
+    .day-body {
+      display: none;
+      border-top: 1px solid var(--border);
+      padding: 14px;
+      background: #fff;
+    }
+    .day-card.open .day-body { display: block; }
+    .info-stack { display: grid; gap: 12px; }
+    .block {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 12px;
+      background: #fffdf8;
+    }
+    .block h4 {
+      margin: 0 0 8px;
+      font-size: .98rem;
+      color: var(--accent-2);
+    }
+    .block p, .block li {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.55;
+      font-size: 14px;
+    }
+    .block ul {
+      margin: 8px 0 0 18px;
+      padding: 0;
+      display: grid;
+      gap: 6px;
+    }
+    .quote-box {
+      background: linear-gradient(180deg, rgba(139,30,45,.06), rgba(139,30,45,.02));
+      border-color: rgba(139,30,45,.15);
+    }
+    .quote-box h4 { color: var(--game); }
+    .verse {
+      font-style: italic;
+      color: var(--text);
+      margin-top: 8px;
+      line-height: 1.6;
+    }
+    .complete-zone {
+      display: grid;
+      gap: 10px;
+    }
+    .exercise-log {
+      display: grid;
+      grid-template-columns: 1.2fr .8fr .8fr;
+      gap: 8px;
+    }
+    .exercise-log input, .exercise-log textarea, .exercise-log select {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 11px;
+      font: inherit;
+      background: #fff;
+    }
+    .exercise-log textarea { grid-column: 1 / -1; min-height: 72px; resize: vertical; }
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .btn {
+      appearance: none;
+      border: 0;
+      border-radius: 12px;
+      padding: 10px 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .btn-primary { background: var(--accent-2); color: #fff; }
+    .btn-secondary { background: #ece6dc; color: var(--text); }
+    .complete-banner {
+      display: none;
+      margin-top: 10px;
+      border-radius: 12px;
+      padding: 10px 12px;
+      background: var(--done);
+      color: var(--done-text);
+      font-weight: 700;
+    }
+    .complete-banner.show { display: block; }
+    .completed-list {
+      display: grid;
+      gap: 16px;
+    }
+    .empty-note {
+      border: 1px dashed var(--border);
+      border-radius: 18px;
+      padding: 18px;
+      color: var(--muted);
+      background: rgba(255,255,255,.55);
+    }
+    .footer-note {
+      margin-top: 24px;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    @media (max-width: 720px) {
+      .week-head { grid-template-columns: 1fr; }
+      .exercise-log { grid-template-columns: 1fr; }
+      .wrap { padding: 18px 12px 70px; }
+      .hero { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <div class="eyebrow">Rend Lake Warriors Baseball</div>
+      <h1>Rend Lake Fall 2026</h1>
+      <p class="lead">This dashboard runs from Monday, August 17, 2026 through Saturday, December 5, 2026, with Sundays reserved as rest, the full Thanksgiving week marked off, and game dates clearly labeled as game-only days. When a workout day is completed, it moves into completed status but stays editable so the athlete can review or update training logs later. </p>
+      <div class="summary-grid">
+        <div class="summary-card"><strong>16</strong><span>Calendar weeks on the dashboard</span></div>
+        <div class="summary-card"><strong>13</strong><span>Scheduled fall game/event dates</span></div>
+        <div class="summary-card"><strong>1</strong><span>Thanksgiving off week</span></div>
+        <div class="summary-card"><strong>Dec. 5</strong><span>Final active training Saturday</span></div>
+      </div>
+    </section>
+
+    <div class="toolbar">
+      <div class="legend">
+        <span class="pill"><span class="dot dot-active"></span>Active training day</span>
+        <span class="pill"><span class="dot dot-game"></span>Game day</span>
+        <span class="pill"><span class="dot dot-off"></span>Off / recovery</span>
+        <span class="pill"><span class="dot dot-done"></span>Completed</span>
+      </div>
+      <button class="reset-btn" id="resetAll">Reset all progress</button>
+    </div>
+
+    <h2 class="section-title">Active weeks</h2>
+    <div class="weeks" id="activeWeeks"></div>
+
+    <h2 class="section-title">Completed weeks</h2>
+    <div class="completed-list" id="completedWeeks"></div>
+
+    <p class="footer-note">Game days include the game label, event details, one motivational message, one Bible verse, and the note that Mom and Dad love him. Thanksgiving week is intentionally off, and December training ends after the first week of the month.</p>
+  </div>
+
+  <script>
+    const storageKey = 'rendlakefall26-progress';
+
+    const gameContent = {
+      '2026-08-27': {
+        title: 'vs Kaskaskia',
+        time: '12:00 PM - 3:00 PM',
+        location: 'Kaskaskia',
+        motivation: 'Preparation is finished. Trust your work, stay calm, and win the next pitch.',
+        verse: 'Colossians 3:23 — “Whatever you do, work at it with all your heart, as working for the Lord, not for human masters.”'
+      },
+      '2026-08-31': {
+        title: 'Scout Day',
+        time: '11:00 AM - 5:30 PM',
+        location: 'Rend Lake',
+        motivation: 'Do not chase attention today. Let your body language, effort, and consistency speak first.',
+        verse: 'Galatians 6:9 — “Let us not become weary in doing good, for at the proper time we will reap a harvest if we do not give up.”'
+      },
+      '2026-09-05': {
+        title: 'vs John A. Logan',
+        time: '6:00 PM - 8:00 PM',
+        location: 'John A. Logan',
+        motivation: 'The only play that matters is the next one. Reset quickly and compete with confidence.',
+        verse: 'Joshua 1:9 — “Be strong and courageous. Do not be afraid; do not be discouraged, for the Lord your God will be with you wherever you go.”'
+      },
+      '2026-09-12': {
+        title: 'Puma Classic at Grand Park',
+        time: '9:30 AM and 3:00 PM',
+        location: 'Grand Park, Westfield, Indiana',
+        motivation: 'Long day, same standard. Bring energy to every inning and keep the game simple.',
+        verse: 'Isaiah 40:31 — “But those who hope in the Lord will renew their strength. They will soar on wings like eagles.”'
+      },
+      '2026-09-18': {
+        title: 'Dinger Classic',
+        time: '8:00 AM and 1:50 PM',
+        location: 'Mt Dew Stadium',
+        motivation: 'Your energy can change the whole dugout. Bring life, toughness, and joy to the field.',
+        verse: '1 Thessalonians 5:11 — “Therefore encourage one another and build each other up.”'
+      },
+      '2026-09-22': {
+        title: 'vs John A. Logan',
+        time: '11:00 AM - 1:00 PM',
+        location: 'Rend Lake College',
+        motivation: 'Pressure is a privilege. You earned this moment, so compete free and fearless.',
+        verse: '2 Timothy 1:7 — “For God has not given us a spirit of fear, but of power and of love and of a sound mind.”'
+      },
+      '2026-09-26': {
+        title: 'Midwest Classic',
+        time: '9:00 AM and 12:30 PM',
+        location: 'Illinois Springfield',
+        motivation: 'When the day gets long, get back to simple baseball: breathe, compete, finish.',
+        verse: 'Hebrews 12:1 — “Let us run with perseverance the race marked out for us.”'
+      },
+      '2026-09-30': {
+        title: 'vs Kaskaskia',
+        time: '6:00 PM - 10:00 PM',
+        location: 'Rend Lake',
+        motivation: 'Bring edge to the little things today — first step, body language, and every rep between innings.',
+        verse: '1 Corinthians 16:14 — “Let all that you do be done in love.”'
+      },
+      '2026-10-02': {
+        title: 'Scout Connect',
+        time: '2:30 PM and 5:15 PM',
+        location: 'SIU Edwardsville',
+        motivation: 'You cannot control who is watching. You can control your effort, your focus, and your response.',
+        verse: 'Proverbs 16:3 — “Commit to the Lord whatever you do, and he will establish your plans.”'
+      },
+      '2026-10-10': {
+        title: 'Frontier College',
+        time: '6:00 PM - 10:00 PM',
+        location: 'Rend Lake',
+        motivation: 'Ordinary plays made with elite focus win games. Stay locked in pitch after pitch.',
+        verse: 'Philippians 4:8 — “Whatever is true, whatever is noble, whatever is right… think about such things.”'
+      },
+      '2026-10-13': {
+        title: 'Wabash Valley',
+        time: '12:00 PM - 3:00 PM',
+        location: 'Rend Lake',
+        motivation: 'Stay aggressive and calm at the same time. Your best baseball comes from quiet confidence.',
+        verse: 'Psalm 28:7 — “The Lord is my strength and my shield; my heart trusts in him, and he helps me.”'
+      },
+      '2026-10-24': {
+        title: 'McKendree',
+        time: '2:30 PM - 4:30 PM',
+        location: 'McKendree',
+        motivation: 'Compete for the people in your corner. Play with gratitude, toughness, and unselfish energy.',
+        verse: 'Ecclesiastes 4:9 — “Two are better than one, because they have a good return for their labor.”'
+      },
+      '2026-10-27': {
+        title: 'at Wabash Valley',
+        time: '12:00 PM - 3:00 PM',
+        location: 'Wabash Valley',
+        motivation: 'Finish the fall with intention. Play fast, stay present, and leave no doubt about your effort.',
+        verse: 'Philippians 4:13 — “I can do all this through him who gives me strength.”'
+      }
+    };
+
+    const offWeekStarts = ['2026-11-23'];
+
+    function fmtDate(dateStr) {
+      const d = new Date(dateStr + 'T12:00:00');
+      return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    }
+
+    function iso(date) {
+      return date.toISOString().slice(0,10);
+    }
+
+    function addDays(date, days) {
+      const d = new Date(date);
+      d.setDate(d.getDate() + days);
+      return d;
+    }
+
+    function getStorage() {
+      try { return JSON.parse(localStorage.getItem(storageKey) || '{}'); }
+      catch { return {}; }
+    }
+
+    function setStorage(obj) {
+      localStorage.setItem(storageKey, JSON.stringify(obj));
+    }
+
+    function getDayStatus(day) {
+      if (day.type === 'off' || day.type === 'game') return day.type;
+      const store = getStorage();
+      return store[day.id]?.completed ? 'done' : 'active';
+    }
+
+    const weekTemplates = [
+      ['Primer Lower + Bat Speed', 'Heavy Lower + Speed', 'Upper Power + Bat Speed', 'Heavy Upper / Total Body', 'Recovery Strength + Hitting', 'Explosive Full Body + Hitting'],
+      ['Accumulation Lower', 'Heavy Speed + Lower', 'Upper Strength', 'Rotational Power', 'Recovery Flush', 'Short Neural Lift'],
+      ['Lower Force Production', 'Heavy Lower + Bat Speed', 'Upper Power', 'Total Body Strength', 'Recovery Movement', 'Explosive Primer'],
+      ['Lower Hypertrophy', 'Heavy Speed Day', 'Upper Hypertrophy', 'Rotational Transfer', 'Recovery Lift', 'Short Practice Support']
+    ];
+
+    function getTrainingTitle(weekIndex, dayIndex) {
+      return weekTemplates[weekIndex % weekTemplates.length][dayIndex];
+    }
+
+    function buildWeeks() {
+      const start = new Date('2026-08-17T12:00:00');
+      const end = new Date('2026-12-05T12:00:00');
+      const weeks = [];
+      let weekIndex = 1;
+      for (let current = new Date(start); current <= end; current = addDays(current, 7)) {
+        const monday = new Date(current);
+        const saturday = addDays(monday, 5);
+        const week = {
+          id: `week-${weekIndex}`,
+          label: `Week ${weekIndex}`,
+          start: iso(monday),
+          end: iso(saturday),
+          offWeek: offWeekStarts.includes(iso(monday)),
+          days: []
+        };
+        for (let i = 0; i < 6; i++) {
+          const dayDate = addDays(monday, i);
+          const dayIso = iso(dayDate);
+          const weekday = dayDate.toLocaleDateString('en-US', { weekday: 'long' });
+          let type = 'training';
+          let title = getTrainingTitle(weekIndex - 1, i);
+          if (week.offWeek) {
+            type = 'off';
+            title = 'Thanksgiving Off Week';
+          }
+          if (gameContent[dayIso]) {
+            type = 'game';
+            title = 'Game Day';
+          }
+          week.days.push({
+            id: `${week.id}-${dayIso}`,
+            date: dayIso,
+            label: weekday,
+            title,
+            type
+          });
+        }
+        weeks.push(week);
+        weekIndex++;
+      }
+      return weeks;
+    }
+
+    const weeks = buildWeeks();
+
+    function buildTrainingBody(day) {
+      const store = getStorage();
+      const log = store[day.id] || { reps: '', weight: '', notes: '', completed: false };
+      return `
+        <div class="info-stack">
+          <div class="block">
+            <h4>${day.label} focus</h4>
+            <p>${day.title}. The detailed exercise blocks for this date will connect to the full workout page later, but this dashboard already tracks completion status and athlete notes.</p>
+          </div>
+          <div class="block">
+            <h4>Daily blocks</h4>
+            <ul>
+              <li>Dynamic warm-up</li>
+              <li>Movement prep / arm care</li>
+              <li>Speed, power, or medicine ball block</li>
+              <li>Lifting block</li>
+              <li>Driveline Axe bat speed block</li>
+              <li>Hitting environment block</li>
+              <li>Team practice</li>
+              <li>Recovery</li>
+            </ul>
+          </div>
+          <div class="block complete-zone">
+            <h4>Completed section</h4>
+            <div class="exercise-log">
+              <input type="text" placeholder="Reps / sets completed" data-field="reps" value="${log.reps || ''}">
+              <input type="text" placeholder="Weight / intensity" data-field="weight" value="${log.weight || ''}">
+              <select data-field="completedSelect">
+                <option value="no" ${log.completed ? '' : 'selected'}>Not completed</option>
+                <option value="yes" ${log.completed ? 'selected' : ''}>Completed</option>
+              </select>
+              <textarea placeholder="Notes, edits, soreness, changes, or anything to remember" data-field="notes">${log.notes || ''}</textarea>
+            </div>
+            <div class="actions">
+              <button class="btn btn-primary" data-action="save">Save day</button>
+              <button class="btn btn-secondary" data-action="toggle-complete">${log.completed ? 'Mark incomplete' : 'Mark completed'}</button>
+            </div>
+            <div class="complete-banner ${log.completed ? 'show' : ''}">This day is marked completed and can still be edited anytime.</div>
+          </div>
+        </div>
+      `;
+    }
+
+    function buildGameBody(day) {
+      const g = gameContent[day.date];
+      return `
+        <div class="info-stack">
+          <div class="block quote-box">
+            <h4>GAME DAY</h4>
+            <p><strong>${g.title}</strong><br>${fmtDate(day.date)} · ${g.time}<br>${g.location}</p>
+          </div>
+          <div class="block">
+            <h4>Motivational message</h4>
+            <p>${g.motivation}</p>
+          </div>
+          <div class="block">
+            <h4>Scripture for today</h4>
+            <p class="verse">${g.verse}</p>
+          </div>
+          <div class="block">
+            <h4>From home</h4>
+            <p>Mom and Dad love you. Play hard, stay present, and enjoy the opportunity to compete.</p>
+          </div>
+        </div>
+      `;
+    }
+
+    function buildOffBody(day, week) {
+      const text = week.offWeek
+        ? 'This full week is intentionally off for Thanksgiving. Recover, reset, spend time with family, and come back fresh for the last training block.'
+        : 'This day is off or recovery-focused.';
+      return `
+        <div class="info-stack">
+          <div class="block">
+            <h4>Off / recovery day</h4>
+            <p>${text}</p>
+          </div>
+        </div>
+      `;
+    }
+
+    function isWeekCompleted(week) {
+      const store = getStorage();
+      return week.days.every(day => {
+        if (day.type === 'game' || day.type === 'off') return true;
+        return !!store[day.id]?.completed;
+      });
+    }
+
+    function render() {
+      const activeContainer = document.getElementById('activeWeeks');
+      const completedContainer = document.getElementById('completedWeeks');
+      activeContainer.innerHTML = '';
+      completedContainer.innerHTML = '';
+
+      const completedWeeks = [];
+      const activeWeeks = [];
+      weeks.forEach(week => (isWeekCompleted(week) ? completedWeeks : activeWeeks).push(week));
+
+      function renderWeek(week, completed=false) {
+        const gameCount = week.days.filter(d => d.type === 'game').length;
+        const trainingCount = week.days.filter(d => d.type === 'training').length;
+        const card = document.createElement('div');
+        card.className = 'week-card' + (completed ? ' completed-week' : '');
+        card.dataset.weekId = week.id;
+
+        const head = document.createElement('div');
+        head.className = 'week-head';
+        head.innerHTML = `
+          <div>
+            <h2>${week.label}</h2>
+            <p>${fmtDate(week.start)} through ${fmtDate(week.end)}</p>
+          </div>
+          <div class="week-meta">
+            ${week.offWeek ? '<span class="badge off-badge">Thanksgiving off week</span>' : ''}
+            ${gameCount ? `<span class="badge game-badge">${gameCount} game day${gameCount>1?'s':''}</span>` : ''}
+            ${trainingCount ? `<span class="badge">${trainingCount} training day${trainingCount>1?'s':''}</span>` : ''}
+            ${completed ? '<span class="badge done-badge">Completed week</span>' : '<span class="badge">Open week</span>'}
+          </div>
+        `;
+        head.addEventListener('click', () => card.classList.toggle('open'));
+        card.appendChild(head);
+
+        const body = document.createElement('div');
+        body.className = 'week-body';
+        const grid = document.createElement('div');
+        grid.className = 'days-grid';
+
+        week.days.forEach(day => {
+          const status = getDayStatus(day);
+          const dayCard = document.createElement('div');
+          dayCard.className = `day-card ${status === 'done' ? 'done' : ''} ${day.type === 'game' ? 'game' : ''} ${day.type === 'off' ? 'off' : ''}`;
+          dayCard.dataset.dayId = day.id;
+
+          const top = document.createElement('div');
+          top.className = 'day-top';
+          const statusText = status === 'done' ? 'Completed' : day.type === 'game' ? 'Game day' : day.type === 'off' ? 'Off' : 'Active';
+          top.innerHTML = `
+            <div>
+              <h3>${day.label}</h3>
+              <p>${fmtDate(day.date)}</p>
+              <p>${day.title}</p>
+            </div>
+            <span class="status-chip">${statusText}</span>
+          `;
+          top.addEventListener('click', () => dayCard.classList.toggle('open'));
+          dayCard.appendChild(top);
+
+          const bodyInner = document.createElement('div');
+          bodyInner.className = 'day-body';
+          if (day.type === 'game') bodyInner.innerHTML = buildGameBody(day);
+          else if (day.type === 'off') bodyInner.innerHTML = buildOffBody(day, week);
+          else bodyInner.innerHTML = buildTrainingBody(day);
+          dayCard.appendChild(bodyInner);
+          grid.appendChild(dayCard);
+        });
+
+        body.appendChild(grid);
+        card.appendChild(body);
+        return card;
+      }
+
+      activeWeeks.forEach(week => activeContainer.appendChild(renderWeek(week, false)));
+      if (!completedWeeks.length) {
+        completedContainer.innerHTML = '<div class="empty-note">Completed weeks will move here automatically once every required training day in that week is finished.</div>';
+      } else {
+        completedWeeks.forEach(week => completedContainer.appendChild(renderWeek(week, true)));
+      }
+
+      bindActions();
+    }
+
+    function bindActions() {
+      document.querySelectorAll('[data-action="save"]').forEach(btn => {
+        btn.onclick = () => {
+          const dayCard = btn.closest('.day-card');
+          const dayId = dayCard.dataset.dayId;
+          const reps = dayCard.querySelector('[data-field="reps"]').value;
+          const weight = dayCard.querySelector('[data-field="weight"]').value;
+          const notes = dayCard.querySelector('[data-field="notes"]').value;
+          const completed = dayCard.querySelector('[data-field="completedSelect"]').value === 'yes';
+          const store = getStorage();
+          store[dayId] = { reps, weight, notes, completed };
+          setStorage(store);
+          render();
+        };
+      });
+
+      document.querySelectorAll('[data-action="toggle-complete"]').forEach(btn => {
+        btn.onclick = () => {
+          const dayCard = btn.closest('.day-card');
+          const dayId = dayCard.dataset.dayId;
+          const reps = dayCard.querySelector('[data-field="reps"]').value;
+          const weight = dayCard.querySelector('[data-field="weight"]').value;
+          const notes = dayCard.querySelector('[data-field="notes"]').value;
+          const select = dayCard.querySelector('[data-field="completedSelect"]');
+          const nowComplete = select.value !== 'yes';
+          select.value = nowComplete ? 'yes' : 'no';
+          const store = getStorage();
+          store[dayId] = { reps, weight, notes, completed: nowComplete };
+          setStorage(store);
+          render();
+        };
+      });
+    }
+
+    document.getElementById('resetAll').addEventListener('click', () => {
+      if (!confirm('Reset all saved progress for Rend Lake Fall 2026?')) return;
+      localStorage.removeItem(storageKey);
+      render();
+    });
+
+    render();
+  </script>
+</body>
+</html>
