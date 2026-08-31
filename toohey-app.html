@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Toohey Sports Performance</title>
+  <style>
+    :root {
+      --navy: #0c1a2e;
+      --navy2: #132337;
+      --bg: #f0f2f5;
+      --card: #ffffff;
+      --text: #1a1d21;
+      --muted: #6b7280;
+      --border: #e5e7eb;
+      --accent: #eab308;
+      --edit: #dc2626;
+      --edit-bg: #fef2f2;
+      --complete: #0d9488;
+      --skip: #64748b;
+      --warn: #b45309;
+      --warn-bg: #fffbeb;
+      --radius: 12px;
+      --shadow: 0 1px 3px rgba(0,0,0,0.06);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.45;
+      min-height: 100vh;
+    }
+    .gate { min-height: 100vh; display: flex; flex-direction: column; }
+    .gate-hero {
+      background: linear-gradient(180deg, var(--navy) 0%, var(--navy2) 100%);
+      color: #fff;
+      padding: 36px 22px 28px;
+      text-align: center;
+    }
+    .gate-kicker {
+      font-size: 0.68rem;
+      letter-spacing: 0.16em;
+      font-weight: 700;
+      opacity: 0.7;
+      margin-bottom: 10px;
+    }
+    .gate-logo {
+      font-size: 1.55rem;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      line-height: 1.15;
+    }
+    .gate-logo span { color: #f5e6a8; display: block; font-size: 0.95rem; font-weight: 600; letter-spacing: 0.12em; margin-top: 6px; }
+    .gate-tag { margin-top: 14px; font-size: 0.88rem; opacity: 0.8; max-width: 340px; margin-left: auto; margin-right: auto; }
+    .gate-body { padding: 22px 18px 40px; max-width: 480px; margin: 0 auto; width: 100%; }
+    .auth-card {
+      background: white;
+      border-radius: 14px;
+      padding: 18px;
+      box-shadow: var(--shadow);
+      margin-bottom: 12px;
+    }
+    .auth-card h2 { font-size: 1.05rem; margin-bottom: 12px; color: var(--navy); }
+    label.field { display: block; font-size: 0.74rem; font-weight: 700; color: var(--muted); margin: 10px 0 4px; letter-spacing: 0.04em; text-transform: uppercase; }
+    input.field, select.field {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 11px 12px;
+      font-size: 1rem;
+    }
+    .btn-row { display: flex; flex-direction: column; gap: 8px; margin-top: 16px; }
+    .btn { border: none; border-radius: 10px; padding: 12px 14px; font-size: 0.92rem; font-weight: 700; cursor: pointer; }
+    .btn:active { transform: scale(0.98); }
+    .btn-gold { background: var(--accent); color: #1a1403; }
+    .btn-navy { background: var(--navy); color: white; }
+    .btn-ghost { background: white; color: var(--navy); border: 1px solid var(--border); }
+    .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+    .fine { font-size: 0.78rem; color: var(--muted); text-align: center; margin-top: 10px; }
+    .demo-box {
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 0.8rem;
+      color: #92400e;
+      margin-bottom: 12px;
+    }
+    .demo-box code { font-weight: 700; }
+    .err { color: #b91c1c; font-size: 0.8rem; margin-top: 8px; min-height: 1em; }
+    .sport-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 6px; }
+    .sport-card {
+      border: 1.5px solid var(--border);
+      background: #fff;
+      border-radius: 10px;
+      padding: 12px 10px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--navy);
+      cursor: pointer;
+      text-align: center;
+    }
+    .sport-card.on { border-color: var(--navy); background: var(--navy); color: #fff; }
+    .sex-row { display: flex; gap: 8px; }
+    .sex-row .sport-card { flex: 1; }
+    .shop-card {
+      background: white;
+      border-radius: 12px;
+      padding: 14px;
+      box-shadow: var(--shadow);
+      margin-bottom: 10px;
+    }
+    .shop-card h3 { font-size: 0.95rem; margin-bottom: 4px; }
+    .shop-meta { font-size: 0.75rem; color: var(--muted); margin-bottom: 8px; }
+    .tag {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      background: #e0f2fe;
+      color: #075985;
+      padding: 2px 7px;
+      border-radius: 99px;
+      margin-right: 4px;
+    }
+    .tag.male { background: #e0e7ff; color: #3730a3; }
+    .tag.custom { background: #fef3c7; color: #92400e; }
+    .tag.add { background: #dcfce7; color: #166534; }
+    .screen { display: none; }
+    .screen.on { display: block; }
+    .topbar {
+      background: linear-gradient(180deg, var(--navy) 0%, var(--navy2) 100%);
+      color: #fff;
+      padding: 12px 14px 14px;
+    }
+    .topbar-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+    .brand-mini { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; opacity: 0.85; }
+    .hdr-btn {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.35);
+      color: #fff;
+      border-radius: 8px;
+      padding: 6px 10px;
+      font-size: 0.74rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .athlete-name { font-size: 1.4rem; font-weight: 700; }
+    .plan-range { font-size: 0.8rem; opacity: 0.75; margin: 2px 0 12px; }
+    .metrics { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; }
+    @media (max-width: 520px) { .metrics { grid-template-columns: repeat(3, 1fr); } }
+    .metric { background: rgba(255,255,255,0.08); border-radius: 10px; padding: 10px 6px; text-align: center; }
+    .metric-label { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.05em; opacity: 0.65; margin-bottom: 3px; }
+    .metric-value { font-size: 1.05rem; font-weight: 700; color: #f5e6a8; }
+    .main { padding: 14px 14px 80px; max-width: 560px; margin: 0 auto; }
+    .tabbar {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      background: #fff; border-top: 1px solid var(--border);
+      display: flex; z-index: 50;
+    }
+    .tabbar button {
+      flex: 1; border: none; background: none; padding: 10px 4px 12px;
+      font-size: 0.68rem; font-weight: 700; color: var(--muted); cursor: pointer;
+    }
+    .tabbar button.on { color: var(--navy); }
+    .glossary { background: white; border-radius: 12px; margin-bottom: 14px; box-shadow: var(--shadow); overflow: hidden; }
+    .glossary-toggle { width: 100%; background: none; border: none; padding: 12px 14px; font-size: 0.88rem; font-weight: 600; color: var(--navy); text-align: left; cursor: pointer; }
+    .glossary-body { display: none; padding: 0 14px 14px; font-size: 0.82rem; color: #374151; }
+    .glossary.open .glossary-body { display: block; }
+    .glossary-body table { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 0.78rem; }
+    .glossary-body th, .glossary-body td { border: 1px solid var(--border); padding: 5px 7px; text-align: left; }
+    .glossary-body th { background: #f8fafc; }
+    .day-tabs { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 10px; margin-bottom: 12px; -webkit-overflow-scrolling: touch; }
+    .day-tab { flex: 0 0 auto; padding: 8px 11px; border-radius: 10px; border: 1px solid var(--border); background: white; font-size: 0.76rem; font-weight: 600; cursor: pointer; color: var(--muted); white-space: nowrap; }
+    .day-tab.active { background: var(--navy); color: white; border-color: var(--navy); }
+    .day-tab.partial { border-color: #fbbf24; }
+    .day-tab.done { border-color: #5eead4; background: #f0fdfa; color: #0f766e; }
+    .day-tab.active.done { background: #0f766e; color: white; border-color: #0f766e; }
+    .progress-card, .bw-card { background: white; border-radius: var(--radius); padding: 12px 14px; box-shadow: var(--shadow); margin-bottom: 10px; }
+    .progress-row { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
+    .progress-bar-wrap { flex: 1; height: 8px; background: #e5e7eb; border-radius: 99px; overflow: hidden; }
+    .progress-bar { height: 100%; background: linear-gradient(90deg, #14b8a6, #0d9488); border-radius: 99px; }
+    .progress-text { font-size: 0.8rem; font-weight: 600; color: var(--muted); }
+    .whats-left { font-size: 0.78rem; color: var(--muted); }
+    .nudge { background: var(--warn-bg); color: var(--warn); font-size: 0.78rem; font-weight: 600; padding: 8px 12px; border-radius: 8px; margin-bottom: 10px; border: 1px solid #fde68a; }
+    .bw-card { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .bw-card label { font-size: 0.8rem; font-weight: 600; color: var(--muted); }
+    .bw-card input { width: 80px; border: 1px solid var(--border); border-radius: 8px; padding: 6px 8px; font-size: 0.9rem; font-weight: 600; }
+    .bw-last { font-size: 0.75rem; color: var(--muted); }
+    .day-actions { display: flex; gap: 8px; margin-bottom: 14px; }
+    .day-actions .btn { flex: 1; }
+    .btn-dark { background: var(--navy); color: white; }
+    .btn-light { background: white; color: var(--navy); border: 1px solid var(--border); }
+    .day-meta { font-size: 0.78rem; color: var(--muted); margin-bottom: 12px; display: flex; gap: 8px; flex-wrap: wrap; }
+    .day-meta span { background: white; border: 1px solid var(--border); border-radius: 6px; padding: 3px 8px; }
+    .hit-summary { background: white; border-radius: 10px; padding: 10px 12px; margin-bottom: 10px; box-shadow: var(--shadow); font-size: 0.8rem; }
+    .hit-summary-title { font-weight: 700; margin-bottom: 6px; color: var(--navy); }
+    .hit-pills { display: flex; gap: 8px; flex-wrap: wrap; }
+    .hit-pill { padding: 4px 10px; border-radius: 6px; font-weight: 700; font-size: 0.78rem; }
+    .hit-pill.bl { background: #fecdd3; color: #9f1239; }
+    .hit-pill.hl { background: #d9f99d; color: #3f6212; }
+    .hit-pill.u { background: #bae6fd; color: #075985; }
+    .hit-pill.r { background: #e2e8f0; color: #334155; }
+    .thin-bar { display: flex; align-items: center; justify-content: space-between; background: white; border-radius: 10px; padding: 10px 12px; box-shadow: var(--shadow); margin-bottom: 7px; border-left: 4px solid var(--complete); gap: 8px; }
+    .thin-bar.incomplete { border-left-color: var(--warn); background: var(--warn-bg); }
+    .thin-bar.skipped { border-left-color: var(--skip); }
+    .thin-bar .name { font-size: 0.86rem; font-weight: 600; flex: 1; }
+    .thin-bar.complete .name { text-decoration: line-through; opacity: 0.7; }
+    .thin-bar .warn-label { font-size: 0.7rem; font-weight: 700; color: var(--warn); background: #fef3c7; padding: 2px 7px; border-radius: 4px; }
+    .thin-bar .skip-reason { font-size: 0.72rem; color: var(--skip); font-style: italic; }
+    .thin-bar .edit-btn { background: var(--edit-bg); color: var(--edit); border: none; border-radius: 6px; padding: 5px 10px; font-size: 0.74rem; font-weight: 600; cursor: pointer; }
+    .section { margin-bottom: 14px; }
+    .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; padding: 4px 2px; cursor: pointer; }
+    .section-title { font-size: 0.76rem; font-weight: 700; letter-spacing: 0.04em; color: var(--navy); text-transform: uppercase; display: flex; align-items: center; gap: 7px; }
+    .section-title .line { width: 16px; height: 3px; background: var(--accent); border-radius: 2px; }
+    .section-actions { display: flex; gap: 6px; }
+    .mark-section-btn, .toggle-sec-btn { background: transparent; border: 1px solid var(--border); color: var(--muted); border-radius: 6px; padding: 3px 8px; font-size: 0.7rem; font-weight: 600; cursor: pointer; }
+    .exercise-card { background: white; border-radius: var(--radius); padding: 13px 14px; margin-bottom: 8px; box-shadow: var(--shadow); }
+    .exercise-card.done-state { opacity: 0.7; }
+    .exercise-name { font-size: 0.95rem; font-weight: 600; margin-bottom: 3px; }
+    .exercise-name a { color: inherit; text-underline-offset: 2px; }
+    .exercise-name.completed-name { text-decoration: underline; text-decoration-color: var(--accent); text-decoration-thickness: 2px; text-underline-offset: 3px; }
+    .equip-pill { display: inline-block; background: #f1f5f9; color: #334155; font-size: 0.72rem; font-weight: 600; padding: 2px 8px; border-radius: 99px; }
+    .exercise-desc { font-size: 0.82rem; color: #4b5563; margin-top: 4px; }
+    .settings-box { background: #ecfdf5; border: 1px solid #a7f3d0; border-radius: 8px; padding: 8px 10px; margin: 8px 0 6px; font-size: 0.8rem; color: #065f46; white-space: pre-line; }
+    .swing-block { margin-top: 10px; }
+    .swing-header, .swing-inputs { display: grid; grid-template-columns: 52px repeat(4, 1fr); gap: 4px; }
+    .swing-header { margin-bottom: 4px; font-size: 0.72rem; font-weight: 700; text-align: center; }
+    .bat-bl { background: #fecdd3; color: #9f1239; border-radius: 5px; padding: 3px 0; }
+    .bat-hl { background: #d9f99d; color: #3f6212; border-radius: 5px; padding: 3px 0; }
+    .bat-u { background: #bae6fd; color: #075985; border-radius: 5px; padding: 3px 0; }
+    .bat-r { background: #e2e8f0; color: #334155; border-radius: 5px; padding: 3px 0; }
+    .swing-inputs input { width: 100%; border: 1px solid var(--border); border-radius: 6px; padding: 6px 2px; text-align: center; font-size: 0.85rem; }
+    .swing-label { font-size: 0.75rem; font-weight: 600; color: var(--muted); align-self: center; }
+    .card-actions { display: flex; gap: 8px; margin-top: 12px; }
+    .btn-complete { flex: 1; background: #0d9488; color: white; border: none; border-radius: 9px; padding: 9px 12px; font-size: 0.84rem; font-weight: 600; cursor: pointer; }
+    .btn-skip { flex: 1; background: #f1f5f9; color: #475569; border: none; border-radius: 9px; padding: 9px 12px; font-size: 0.84rem; font-weight: 600; cursor: pointer; }
+    .btn-undo, .btn-collapse { background: transparent; border: 1px solid var(--border); color: var(--muted); border-radius: 8px; padding: 7px 12px; font-size: 0.78rem; font-weight: 600; cursor: pointer; }
+    .notes-area { margin-top: 10px; }
+    .notes-area textarea { width: 100%; min-height: 58px; border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px; font-size: 0.85rem; font-family: inherit; }
+    .day-done-msg { text-align: center; padding: 20px 12px; color: var(--muted); font-size: 0.9rem; }
+    .day-done-msg strong { color: #0f766e; display: block; font-size: 1.1rem; margin-bottom: 4px; }
+    .off-day { background: white; border-radius: var(--radius); padding: 28px 18px; text-align: center; box-shadow: var(--shadow); }
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); display: flex; align-items: flex-end; justify-content: center; z-index: 200; padding: 16px; }
+    .modal { background: white; border-radius: 16px 16px 12px 12px; padding: 18px; width: 100%; max-width: 400px; }
+    .modal h3 { font-size: 1rem; margin-bottom: 12px; }
+    .reason-list { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
+    .reason-btn { background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; font-size: 0.88rem; text-align: left; cursor: pointer; }
+    .reason-btn.selected { background: #e0f2fe; border-color: #38bdf8; }
+    .modal input[type=text] { width: 100%; border: 1px solid var(--border); border-radius: 8px; padding: 9px 10px; font-size: 0.88rem; margin-bottom: 12px; }
+    .modal-actions { display: flex; gap: 8px; }
+    .modal-actions button { flex: 1; }
+    .toast { position: fixed; bottom: 72px; left: 50%; transform: translateX(-50%) translateY(70px); background: var(--navy); color: white; padding: 11px 18px; border-radius: 10px; font-size: 0.84rem; opacity: 0; transition: all 0.28s ease; z-index: 300; pointer-events: none; }
+    .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+    .hint { font-size: 0.72rem; color: #9ca3af; text-align: center; margin-top: 20px; }
+    .hidden { display: none !important; }
+    .readonly-banner { background: #e0f2fe; color: #075985; font-size: 0.78rem; font-weight: 600; padding: 8px 12px; border-radius: 8px; margin-bottom: 10px; }
+  </style>
+</head>
+<body>
+<div id="screenLanding" class="screen on">
+  <div class="gate">
+    <div class="gate-hero">
+      <div class="gate-kicker">STRENGTH · SPEED · SPORT</div>
+      <div class="gate-logo">TOOHEY<br>SPORTS PERFORMANCE<span>ATHLETE APP</span></div>
+      <p class="gate-tag">Speed, power, and strength built around the sport — then the skill work on the same day.</p>
+    </div>
+    <div class="gate-body">
+      <div class="btn-row">
+        <button class="btn btn-gold" onclick="showScreen('screenLogin')">Log in</button>
+        <button class="btn btn-navy" onclick="showScreen('screenRegister')">Create account</button>
+        <button class="btn btn-ghost" onclick="openShare()">Parent / coach share link</button>
+      </div>
+      <p class="fine">Mobile first. Coach builds Custom on desktop. Athletes train on the phone.</p>
+    </div>
+  </div>
+</div>
+
+<div id="screenLogin" class="screen">
+  <div class="gate">
+    <div class="gate-hero">
+      <div class="gate-kicker">TOOHEY SPORTS PERFORMANCE</div>
+      <div class="gate-logo" style="font-size:1.2rem;">Log in</div>
+    </div>
+    <div class="gate-body">
+      <div class="demo-box">
+        Dummy athlete: <code>caynan@toohey</code> / <code>caynan</code><br>
+        Dummy coach: <code>coach@toohey</code> / <code>coach</code>
+      </div>
+      <div class="auth-card">
+        <label class="field">Email</label>
+        <input class="field" id="loginEmail" type="email" autocomplete="username" value="caynan@toohey" />
+        <label class="field">Password</label>
+        <input class="field" id="loginPass" type="password" autocomplete="current-password" value="caynan" />
+        <div class="err" id="loginErr"></div>
+        <div class="btn-row">
+          <button class="btn btn-gold" onclick="doLogin()">Log in</button>
+          <button class="btn btn-ghost" onclick="showScreen('screenRegister')">Need an account?</button>
+          <button class="btn btn-ghost" onclick="showScreen('screenLanding')">Back</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="screenRegister" class="screen">
+  <div class="gate">
+    <div class="gate-hero">
+      <div class="gate-kicker">TOOHEY SPORTS PERFORMANCE</div>
+      <div class="gate-logo" style="font-size:1.2rem;">Create account</div>
+    </div>
+    <div class="gate-body">
+      <div class="auth-card">
+        <label class="field">Name</label>
+        <input class="field" id="regName" placeholder="Athlete name" />
+        <label class="field">Email</label>
+        <input class="field" id="regEmail" type="email" />
+        <label class="field">Password</label>
+        <input class="field" id="regPass" type="password" />
+        <label class="field">Male or Female</label>
+        <div class="sex-row">
+          <button type="button" class="sport-card" id="sexM" onclick="setSex('male')">Male</button>
+          <button type="button" class="sport-card" id="sexF" onclick="setSex('female')">Female</button>
+        </div>
+        <label class="field">Sport (tap all that apply)</label>
+        <div class="sport-grid" id="sportGrid"></div>
+        <div class="err" id="regErr"></div>
+        <div class="btn-row">
+          <button class="btn btn-gold" onclick="doRegister()">Continue to programs</button>
+          <button class="btn btn-ghost" onclick="showScreen('screenLogin')">Already have a login</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="screenShop" class="screen">
+  <div class="topbar">
+    <div class="topbar-row">
+      <div class="brand-mini">TOOHEY SPORTS PERFORMANCE</div>
+      <button class="hdr-btn" onclick="logout()">Log out</button>
+    </div>
+    <div class="athlete-name" id="shopName">Programs</div>
+    <div class="plan-range" id="shopSub">Pick a template or request Custom</div>
+  </div>
+  <div class="main" id="shopList"></div>
+</div>
+
+<div id="screenToday" class="screen">
+  <div class="topbar">
+    <div class="topbar-row">
+      <div class="brand-mini">TOOHEY SPORTS PERFORMANCE</div>
+      <div>
+        <button class="hdr-btn" onclick="doExport()">Export</button>
+        <button class="hdr-btn" onclick="doImport()">Import</button>
+        <button class="hdr-btn" onclick="logout()">Log out</button>
+      </div>
+    </div>
+    <div class="athlete-name">Caynan Sizemore</div>
+    <div class="plan-range">Custom • Week 3 • Aug 30 – Sep 6 • Scout Day + @ Logan</div>
+    <div class="metrics">
+      <div class="metric"><div class="metric-label">HEIGHT</div><div class="metric-value">6'2"</div></div>
+      <div class="metric"><div class="metric-label">WEIGHT</div><div class="metric-value">210</div></div>
+      <div class="metric"><div class="metric-label">MAX EV</div><div class="metric-value">99.2</div></div>
+      <div class="metric"><div class="metric-label">60-YD</div><div class="metric-value">7.14</div></div>
+      <div class="metric"><div class="metric-label">INF VELO</div><div class="metric-value">87</div></div>
+      <div class="metric"><div class="metric-label">BAT SPD</div><div class="metric-value">88</div></div>
+    </div>
+  </div>
+  <div class="main">
+    <div class="glossary" id="glossary">
+      <button class="glossary-toggle" onclick="toggleGlossary()">▶ Glossary • Abbreviations • Machine Settings</button>
+      <div class="glossary-body">
+        <p><strong>BL</strong> – Barrel-Loaded overload bat &nbsp; <strong>HL</strong> – Hand-Loaded / End-Loaded overload bat<br>
+        <strong>U</strong> – Underload bat &nbsp; <strong>R</strong> – Regular game bat<br>
+        <strong>CARs</strong> – Controlled Articular Rotations &nbsp; <strong>RIR</strong> – Reps In Reserve</p>
+        <p style="margin-top:10px;font-weight:700;">Jr. Hack Attack Dial Settings</p>
+        <table>
+          <tr><th>Pitch</th><th>Left</th><th>Right</th><th>Bottom</th><th>MPH</th></tr>
+          <tr><td>Fastball</td><td>7.5</td><td>7.5</td><td>10</td><td>70+</td></tr>
+          <tr><td>RH Curve</td><td>5</td><td>10</td><td>3</td><td>55±</td></tr>
+          <tr><td>LH Curve</td><td>10</td><td>5</td><td>3</td><td>55±</td></tr>
+          <tr><td>RH Slider</td><td>7</td><td>10</td><td>5</td><td>60±</td></tr>
+          <tr><td>LH Slider</td><td>10</td><td>7</td><td>5</td><td>60±</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="day-tabs" id="dayTabs"></div>
+    <div id="dayContent"></div>
+    <div class="hint">Same Week 3 Custom session. Complete / skip is saved on this device until the backend is live.</div>
+  </div>
+  <nav class="tabbar" id="athleteTabs">
+    <button class="on" onclick="showAppTab('today')">Today</button>
+    <button onclick="showAppTab('shop')">Programs</button>
+    <button onclick="copyShare()">Share</button>
+  </nav>
+</div>
+
+<div id="screenCoach" class="screen">
+  <div class="topbar">
+    <div class="topbar-row">
+      <div class="brand-mini">TOOHEY SPORTS PERFORMANCE • COACH</div>
+      <button class="hdr-btn" onclick="logout()">Log out</button>
+    </div>
+    <div class="athlete-name">Coach desk</div>
+    <div class="plan-range">Custom is written here. Athletes cannot build their own.</div>
+  </div>
+  <div class="main">
+    <div class="shop-card">
+      <h3>Caynan Sizemore</h3>
+      <div class="shop-meta">Assigned: Custom • Week 3 Scout + Logan • Rend Lake</div>
+      <span class="tag custom">CUSTOM</span>
+      <span class="tag male">MALE</span>
+      <span class="tag">BASEBALL</span>
+      <div class="btn-row">
+        <button class="btn btn-navy" onclick="loginAsCaynanFromCoach()">Open his Today</button>
+      </div>
+    </div>
+    <div class="shop-card">
+      <h3>Builder (next pass)</h3>
+      <div class="shop-meta">Search the 180-exercise library, attach video, sets / reps / load / RIR, save the week. Not wired in this shell — Week 3 is already written.</div>
+    </div>
+    <div class="demo-box">Parent share: add <code>?share=caynan</code> to this file’s URL after you host it.</div>
+  </div>
+</div>
+
+<div id="screenShare" class="screen">
+  <div class="topbar">
+    <div class="topbar-row">
+      <div class="brand-mini">TOOHEY SPORTS PERFORMANCE</div>
+      <button class="hdr-btn" onclick="showScreen('screenLanding')">Home</button>
+    </div>
+    <div class="athlete-name">Caynan Sizemore</div>
+    <div class="plan-range">Read-only share • Week 3</div>
+  </div>
+  <div class="main">
+    <div class="readonly-banner">Parent / visitor view. Logging stays on Caynan’s login.</div>
+    <p class="fine" style="text-align:left;">Open his Today after logging in as caynan@toohey to see live complete / skip. This share page is the placeholder for the link you’ll send family.</p>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<div id="skipModal" class="modal-overlay hidden"></div>
+<input type="file" id="importFile" accept="application/json" class="hidden" onchange="handleImport(event)" />
+
+<script>
+const SPORTS = ["Baseball","Softball","Volleyball","Basketball","Soccer","Football","Tennis"];
+const MALE_TEMPLATES = [
+  { id:"golden-spikes", name:"Golden Spikes Phase 1", weeks:"6 weeks", sport:"Baseball", blurb:"College baseball. Dynamic → MP → primer → power → eccentric strength → ACC." },
+  { id:"d1-bound", name:"D1 Bound Phase 1", weeks:"6 weeks", sport:"Baseball", blurb:"Same skeleton as Golden Spikes plus Arm Farm." },
+  { id:"exit-velo", name:"Elite Exit Velo Phase 1", weeks:"6 weeks", sport:"Baseball", blurb:"Hitter EV. Weekly test day. Written as published." },
+  { id:"velo-code", name:"Velo Code", weeks:"10 weeks", sport:"Baseball", blurb:"Throwing velocity. Hybrid / plyo / recovery / pulldowns." },
+  { id:"speed", name:"Baseball Speed System", weeks:"8 weeks", sport:"Baseball", blurb:"Linear speed, 5-10-5, contrast, 60-yard days." },
+  { id:"grind", name:"In-Season Grind Phase 1", weeks:"6 weeks", sport:"Baseball", blurb:"Travel, full body, recovery, pre-series lift, arm care." },
+  { id:"youth", name:"Youth Power Program Phase 1", weeks:"6 weeks", sport:"Baseball", blurb:"Younger athletes. Circuit strength + explainer videos." },
+  { id:"mass", name:"Baseball Mass Gainer", weeks:"14 weeks", sport:"Baseball", blurb:"Hypertrophy. Written as published." },
+  { id:"shred", name:"Baseball Shred System", weeks:"12 weeks", sport:"Baseball", blurb:"Conditioning + after-dinner walks. Written as published." }
+];
+const ADDONS = [
+  { id:"hitting", name:"Hitting pack", blurb:"Tee, wedges, weighted balls, hurling, timing drills." },
+  { id:"arm", name:"Throwing / arm care", blurb:"J-bands, scaps, plyo-ball series, long toss." }
+];
+
+let selectedSex = null;
+let selectedSports = [];
+let session = null;
+let currentDayId = localStorage.getItem("caynan_curDay_w3") || "2026-08-31";
+let state = loadStateSafe();
+let pendingSkipId = null;
+let trackerReady = false;
+
+function loadStateSafe() {
+  try {
+    const raw = localStorage.getItem("caynan_v3_w3");
+    return raw ? JSON.parse(raw) : { status: {}, forceOpen: {}, secCollapsed: {}, swings: {}, notes: {}, bodyweight: {}, skipReason: {} };
+  } catch (e) {
+    return { status: {}, forceOpen: {}, secCollapsed: {}, swings: {}, notes: {}, bodyweight: {}, skipReason: {} };
+  }
+}
+
+function showScreen(id) {
+  document.querySelectorAll(".screen").forEach(s => s.classList.remove("on"));
+  document.getElementById(id).classList.add("on");
+  window.scrollTo(0,0);
+}
+
+function setSex(v) {
+  selectedSex = v;
+  document.getElementById("sexM").classList.toggle("on", v === "male");
+  document.getElementById("sexF").classList.toggle("on", v === "female");
+}
+
+function toggleSport(s) {
+  if (selectedSports.includes(s)) selectedSports = selectedSports.filter(x => x !== s);
+  else selectedSports.push(s);
+  renderSportGrid();
+}
+
+function renderSportGrid() {
+  document.getElementById("sportGrid").innerHTML = SPORTS.map(s =>
+    '<button type="button" class="sport-card' + (selectedSports.includes(s) ? ' on' : '') + '" onclick="toggleSport(\'' + s + '\')">' + s + '</button>'
+  ).join("");
+}
+
+function doLogin() {
+  const email = (document.getElementById("loginEmail").value || "").trim().toLowerCase();
+  const pass = document.getElementById("loginPass").value || "";
+  const err = document.getElementById("loginErr");
+  err.textContent = "";
+  if (email === "caynan@toohey" && pass === "caynan") {
+    session = { role: "athlete", name: "Caynan Sizemore", email: email, program: "custom" };
+    localStorage.setItem("toohey_session", JSON.stringify(session));
+    enterToday();
+    return;
+  }
+  if (email === "coach@toohey" && pass === "coach") {
+    session = { role: "coach", name: "Coach", email: email };
+    localStorage.setItem("toohey_session", JSON.stringify(session));
+    showScreen("screenCoach");
+    return;
+  }
+  const users = JSON.parse(localStorage.getItem("toohey_users") || "[]");
+  const found = users.find(u => u.email === email && u.pass === pass);
+  if (found) {
+    session = found;
+    localStorage.setItem("toohey_session", JSON.stringify(session));
+    renderShop();
+    showScreen("screenShop");
+    return;
+  }
+  err.textContent = "No match. Use the dummy logins or create an account.";
+}
+
+function doRegister() {
+  const name = (document.getElementById("regName").value || "").trim();
+  const email = (document.getElementById("regEmail").value || "").trim().toLowerCase();
+  const pass = document.getElementById("regPass").value || "";
+  const err = document.getElementById("regErr");
+  err.textContent = "";
+  if (!name || !email || !pass) { err.textContent = "Name, email, and password are required."; return; }
+  if (!selectedSex) { err.textContent = "Pick male or female."; return; }
+  if (!selectedSports.length) { err.textContent = "Pick at least one sport."; return; }
+  const user = { role: "athlete", name, email, pass, sex: selectedSex, sports: selectedSports.slice(), program: null };
+  const users = JSON.parse(localStorage.getItem("toohey_users") || "[]");
+  users.push(user);
+  localStorage.setItem("toohey_users", JSON.stringify(users));
+  session = user;
+  localStorage.setItem("toohey_session", JSON.stringify(session));
+  renderShop();
+  showScreen("screenShop");
+}
+
+function renderShop() {
+  const who = session || {};
+  document.getElementById("shopName").textContent = who.name || "Programs";
+  document.getElementById("shopSub").textContent = (who.sex || "") + " · " + ((who.sports || []).join(", ") || "choose a track");
+  const sports = who.sports || [];
+  const baseballish = sports.some(s => s === "Baseball" || s === "Softball");
+  let html = "";
+  html += '<div class="shop-card"><h3>Custom</h3><div class="shop-meta">Coach writes every lift, sprint, and skill block. You cannot build this yourself.</div><span class="tag custom">COACH ONLY</span><div class="btn-row"><button class="btn btn-navy" onclick="requestCustom()">Request Custom</button></div></div>';
+  if (who.sex === "male" && sports.includes("Baseball")) {
+    MALE_TEMPLATES.forEach(t => {
+      html += '<div class="shop-card"><h3>' + t.name + '</h3><div class="shop-meta">' + t.weeks + ' · ' + t.blurb + '</div><span class="tag male">MALE AS WRITTEN</span><span class="tag">' + t.sport.toUpperCase() + '</span><div class="btn-row"><button class="btn btn-ghost" onclick="toastPdf(\'' + t.name + '\')">Download PDF / ebook</button></div></div>';
+    });
+    ADDONS.forEach(a => {
+      html += '<div class="shop-card"><h3>' + a.name + '</h3><div class="shop-meta">' + a.blurb + '</div><span class="tag add">ADD-ON</span><div class="btn-row"><button class="btn btn-ghost" onclick="toastPdf(\'' + a.name + '\')">Add on</button></div></div>';
+    });
+  } else if (baseballish && who.sex === "female") {
+    html += '<div class="shop-card"><h3>Softball on-ramp</h3><div class="shop-meta">Shared library + Custom. Male baseball PDFs stay male-as-written and are not auto-assigned here.</div><span class="tag">SOFTBALL</span></div>';
+  } else {
+    html += '<div class="shop-card"><h3>Templates for this sport</h3><div class="shop-meta">Card is live so dual-sport and volleyball athletes are in the catalog. A sport-specific PDF ships when the file exists. Until then: Custom.</div></div>';
+  }
+  if (who.email === "caynan@toohey" || who.program === "custom") {
+    html = '<div class="shop-card"><h3>Assigned: Custom Week 3</h3><div class="shop-meta">Scout Day + Logan. Open Today.</div><div class="btn-row"><button class="btn btn-gold" onclick="enterToday()">Go to Today</button></div></div>' + html;
+  }
+  document.getElementById("shopList").innerHTML = html;
+}
+
+function requestCustom() {
+  showToast("Custom request logged. Coach writes the week.");
+}
+
+function toastPdf(name) {
+  showToast(name + " — PDF attach comes next. Program stays as published.");
+}
+
+function enterToday() {
+  showScreen("screenToday");
+  if (typeof render === "function") render();
+}
+
+function showAppTab(tab) {
+  document.querySelectorAll("#athleteTabs button").forEach(b => b.classList.remove("on"));
+  if (tab === "shop") {
+    renderShop();
+    showScreen("screenShop");
+  } else {
+    document.querySelector("#athleteTabs button").classList.add("on");
+    enterToday();
+  }
+}
+
+function copyShare() {
+  const url = location.href.split("?")[0] + "?share=caynan";
+  if (navigator.clipboard) navigator.clipboard.writeText(url);
+  showToast("Share link copied");
+}
+
+function openShare() { showScreen("screenShare"); }
+
+function loginAsCaynanFromCoach() {
+  session = { role: "athlete", name: "Caynan Sizemore", email: "caynan@toohey", program: "custom" };
+  localStorage.setItem("toohey_session", JSON.stringify(session));
+  enterToday();
+}
+
+function logout() {
+  session = null;
+  localStorage.removeItem("toohey_session");
+  showScreen("screenLanding");
+}
+
+renderSportGrid();
+if (location.search.indexOf("share=caynan") !== -1) {
+  showScreen("screenShare");
+} else {
+  try {
+    const saved = JSON.parse(localStorage.getItem("toohey_session") || "null");
+    if (saved && saved.email === "caynan@toohey") { session = saved; }
+  } catch (e) {}
+}
+
+    const DAYS = [
+      {
+        id: "2026-08-30", label: "Sun 30", full: "Sunday, Aug 30", type: "Full Recovery", off: true,
+        message: "Week 3 starts tomorrow with Scout Day at home.\\n\\nNothing to prove in the weight room today. Sleep, water, protein, sunlight walk if you want it.\\n\\n“I can do all things through him who strengthens me.” — Philippians 4:13 (ESV)\\n\\nMom and Dad are proud of you, Caynan."
+      },
+      {
+        id: "2026-08-31", label: "Mon 31", full: "Monday, Aug 31", type: "Scout Day • Home • ~12:00 PM CST",
+        sections: [
+          { title: "1. AM Timeline (noon CST)", exercises: [
+            { id: "0831-am1", name: "Now — hydrate + weigh-in", meta: "Scale + water", desc: "16–24 oz water. Weigh in after bathroom, before breakfast. Log it in the card above." },
+            { id: "0831-am2", name: "Breakfast by 9:00 AM CST", meta: "Kitchen", desc: "Protein + carb: eggs, fruit, oats or rice. 3 hours before first look. No heavy grease." },
+            { id: "0831-am3", name: "Bag check", meta: "Locker / car", desc: "Cleats, game bat, extra socks, bands, snacks, extra water. Phone on silent once you hit the field." },
+            { id: "0831-am4", name: "Arrive 10:45–11:00 AM CST", meta: "Home field", desc: "On time is late. Bathroom, sip water, start the primer with the team — do not add a private lift." }
+          ]},
+          { title: "2. Field Primer (12 min)", exercises: [
+            { id: "0831-pr1", name: "Everyday Dynamic Warm-up", video: "https://player.vimeo.com/video/862985494", meta: "Bodyweight • 8 min", desc: "Move athletically. Look loose, not tired." },
+            { id: "0831-pr2", name: "Band Pull-Aparts + Shoulder CARs", video: "https://player.vimeo.com/video/851488026", meta: "Light band", desc: "1 × 12 pull-aparts. 6 slow CARs each direction." },
+            { id: "0831-pr3", name: "Build-ups", meta: "Open field", desc: "3 × 15 yd at 70–80%. Smooth, tall, fast feet." },
+            { id: "0831-pr4", name: "Two easy starts", meta: "Open field", desc: "2 × 10 yd at 90%. Full recovery. Stop." }
+          ]},
+          { title: "3. Three Cues", exercises: [
+            { id: "0831-cue1", name: "Defense — first step, not first look", meta: "INF", desc: "Quiet feet into the pitch. Beat the ball with the first step. Show the arm when you have it — don't force it." },
+            { id: "0831-cue2", name: "Swing — see it, stay through it", meta: "RHH", desc: "One swing thought. Let the ball travel. Loud contact > pretty misses." },
+            { id: "0831-cue3", name: "Body language", meta: "Compete", desc: "Chest up between pitches. Jog everywhere. Scouts watch the innings you aren't hitting." }
+          ]},
+          { title: "4. Compete", exercises: [
+            { id: "0831-cp1", name: "Pro-style / team look", meta: "Scout Day", desc: "Treat every throw, swing, and run as the clip they keep. Quality over extra swings." },
+            { id: "0831-cp2", name: "Live / game action if scheduled", meta: "Field", desc: "Compete. Don't add extra cages after you are done unless a coach asks." }
+          ]},
+          { title: "5. Post + Notes", exercises: [
+            { id: "0831-po1", name: "10–15 min flush walk", meta: "Outside", desc: "Nasal breathing. Shake the day out. No lift." },
+            { id: "0831-po2", name: "Feed + fluids", meta: "Kitchen", desc: "Protein + carbs within 60 min. Keep sipping fluids the rest of the afternoon." },
+            { id: "0831-po3", name: "Event log", meta: "Notes", desc: "Write: how the body felt, best swing, best play, one thing to clean up before Friday." }
+          ], notes: true }
+        ]
+      },
+      {
+        id: "2026-09-01", label: "Tue 1", full: "Tuesday, Sep 1", type: "Labor Day • Extra Lift Lower",
+        sections: [
+          { title: "1. Warm-Up", exercises: [
+            { id: "0901-wu1", name: "Everyday Dynamic Warm-up", video: "https://player.vimeo.com/video/862985494", meta: "Bodyweight • 10–12 min", desc: "Full movement prep after Scout Day." },
+            { id: "0901-wu2", name: "Hip CARs", meta: "Bodyweight", desc: "6–8 slow Controlled Articular Rotations each direction per hip." },
+            { id: "0901-wu3", name: "World’s Greatest Stretch", video: "https://vimeo.com/457008259", meta: "Bodyweight", desc: "2 × 6–8 each side." }
+          ]},
+          { title: "2. Acceleration", exercises: [
+            { id: "0901-sp1", name: "A-Skip", video: "https://player.vimeo.com/video/814750520", meta: "Open field", desc: "2 × 15 yd." },
+            { id: "0901-sp2", name: "Falling Starts → 10 yd", video: "https://player.vimeo.com/video/714737550", meta: "Open field", desc: "4 × 10 yd. Full recovery. Pop, don't grind." }
+          ]},
+          { title: "3. Extra Lift — Lower Power", exercises: [
+            { id: "0901-st1", name: "Trap-Bar Deadlift", video: "https://player.vimeo.com/video/863271987", meta: "Trap bar", desc: "4 × 4 @ 2 RIR. Fast off the floor. This is the extra lower day." },
+            { id: "0901-st2", name: "Rear-Foot Elevated Split Squat", video: "https://player.vimeo.com/video/863301232", meta: "DB or KB", desc: "3 × 6 each @ 2 RIR. Front heel stays down." },
+            { id: "0901-st3", name: "Romanian Deadlift (RDL)", video: "https://player.vimeo.com/video/863274606", meta: "DB or BB", desc: "3 × 6 @ 2 RIR. Soft knee, push hips back. Last heavy hinge until after Friday." },
+            { id: "0901-st4", name: "Standing Calf Raise", meta: "DB or machine", desc: "3 × 10. Pause 1 sec at the top." },
+            { id: "0901-st5", name: "Side Plank", meta: "Bodyweight", desc: "3 × 25–30 sec each side." }
+          ]},
+          { title: "4. Hitting — Quality", exercises: [
+            { id: "0901-hit1", name: "Walk-Through Drill", video: "https://www.youtube.com/watch?v=9BsRj3u5HQs", meta: "Tee", desc: "3 swings each bat = 12 total.", swings: true },
+            { id: "0901-hit2", name: "Rocker Drill", video: "https://www.youtube.com/watch?v=r3wazOZE-MQ", meta: "Tee", desc: "3 swings each bat = 12 total.", swings: true },
+            { id: "0901-hit3", name: "Tee – Middle", meta: "Tee", desc: "3 swings each bat. Hunt the barrel.", swings: true },
+            { id: "0901-hit4", name: "Front Toss – Middle / Away", meta: "Soft Toss", desc: "3–4 swings each bat. Stay through the middle-away ball.", swings: true },
+            { id: "0901-hit5", name: "Machine – FB + Curve Mix", meta: "Jr. Hack Attack", desc: "Regular bat. 8–10 FB + 8–10 Curve. Stop when quality drops.", swings: true, settings: "FB 7.5 / 7.5 / 10\\nRH Curve 5 / 10 / 3\\nLH Curve 10 / 5 / 3" }
+          ]},
+          { title: "5. Recovery + Notes", exercises: [
+            { id: "0901-rec1", name: "90/90 Floss", video: "https://player.vimeo.com/video/851486713", meta: "Bodyweight", desc: "2 × 45–60 sec each side." },
+            { id: "0901-rec2", name: "Couch Stretch", meta: "Bodyweight", desc: "2 × 45–60 sec each side." },
+            { id: "0901-rec3", name: "Band External Rotations", video: "https://player.vimeo.com/video/851488108", meta: "Band", desc: "2 × 12 each arm." }
+          ], notes: true }
+        ]
+      },
+      {
+        id: "2026-09-02", label: "Wed 2", full: "Wednesday, Sep 2", type: "Extra Lift • Speed + Upper",
+        sections: [
+          { title: "1. Warm-Up", exercises: [
+            { id: "0902-wu1", name: "Everyday Dynamic Warm-up", video: "https://player.vimeo.com/video/862985494", meta: "Bodyweight • 10–12 min", desc: "Full movement prep." },
+            { id: "0902-wu2", name: "World’s Greatest Stretch", video: "https://vimeo.com/457008259", meta: "Bodyweight", desc: "2 × 6–8 each side." },
+            { id: "0902-wu3", name: "Band Pull-Aparts", video: "https://player.vimeo.com/video/851488026", meta: "Light band", desc: "2 × 12." },
+            { id: "0902-wu4", name: "Shoulder CARs", meta: "Bodyweight", desc: "6–8 slow each direction per shoulder." }
+          ]},
+          { title: "2. Speed", exercises: [
+            { id: "0902-sp1", name: "A-Skip + B-Skip", video: "https://player.vimeo.com/video/814750520", meta: "Open field", desc: "2 × 15 yd each." },
+            { id: "0902-sp2", name: "Acceleration", video: "https://player.vimeo.com/video/714737550", meta: "Open field", desc: "4 × 20 yd. Full recovery." },
+            { id: "0902-sp3", name: "Flying 10s", meta: "Open field", desc: "3 reps. 20 yd build + 10 yd fly. Walk back." }
+          ]},
+          { title: "3. Extra Lift — Upper + Rotation", exercises: [
+            { id: "0902-st1", name: "Dumbbell Bench Press", video: "https://player.vimeo.com/video/863300945", meta: "Dumbbells", desc: "4 × 6 @ 2 RIR. This is the extra upper day." },
+            { id: "0902-st2", name: "Chest-Supported Row", video: "https://player.vimeo.com/video/812800937", meta: "Incline bench + DBs", desc: "4 × 8 @ 2 RIR." },
+            { id: "0902-st3", name: "Landmine or Half-Kneeling Press", video: "https://player.vimeo.com/video/863300945", meta: "Landmine or DB", desc: "3 × 8 each side @ 2 RIR." },
+            { id: "0902-st4", name: "Face Pull", video: "https://player.vimeo.com/video/851488026", meta: "Band or cable", desc: "3 × 12. Pause at the face." },
+            { id: "0902-st5", name: "Med-Ball Rotational Throw", video: "https://player.vimeo.com/video/641277377", meta: "6–10 lb med ball", desc: "3 × 4 each side. Max intent, stick the finish." }
+          ]},
+          { title: "4. Hitting — Curve Mix", exercises: [
+            { id: "0902-hit1", name: "Walk-Through Drill", video: "https://www.youtube.com/watch?v=9BsRj3u5HQs", meta: "Tee", desc: "3 swings each bat.", swings: true },
+            { id: "0902-hit2", name: "Rocker Drill", video: "https://www.youtube.com/watch?v=r3wazOZE-MQ", meta: "Tee", desc: "3 swings each bat.", swings: true },
+            { id: "0902-hit3", name: "Tee – Away", meta: "Tee", desc: "3–4 swings each bat.", swings: true },
+            { id: "0902-hit4", name: "Front Toss – Adjustability", meta: "Soft Toss", desc: "Partner mixes speed and location. 3–4 swings each bat.", swings: true },
+            { id: "0902-hit5", name: "Machine – Heavy Curve Focus", meta: "Jr. Hack Attack", desc: "Regular bat. 20–24 total, mostly curve. Logan will spin it.", swings: true, settings: "Primary: RH Curve 5/10/3 • LH Curve 10/5/3\\nMix in a few Fastballs (7.5/7.5/10)" }
+          ]},
+          { title: "5. Recovery + Notes", exercises: [
+            { id: "0902-rec1", name: "Band External Rotations", video: "https://player.vimeo.com/video/851488108", meta: "Band", desc: "2 × 12 each arm." },
+            { id: "0902-rec2", name: "Dead Hang", meta: "Pull-up bar", desc: "20–40 seconds." },
+            { id: "0902-rec3", name: "90/90 Floss", video: "https://player.vimeo.com/video/851486713", meta: "Bodyweight", desc: "2 × 45 sec each side." }
+          ], notes: true }
+        ]
+      },
+      {
+        id: "2026-09-03", label: "Thu 3", full: "Thursday, Sep 3", type: "Primer • Low",
+        sections: [
+          { title: "1. Activate", exercises: [
+            { id: "0903-wu1", name: "Everyday Dynamic Warm-up", video: "https://player.vimeo.com/video/862985494", meta: "Bodyweight • 8–10 min", desc: "Just enough to feel springy." },
+            { id: "0903-wu2", name: "Band Pull-Aparts + CARs", video: "https://player.vimeo.com/video/851488026", meta: "Light band", desc: "1 × 12 pull-aparts. 6 CARs each shoulder and hip." }
+          ]},
+          { title: "2. CNS Primer", exercises: [
+            { id: "0903-sp1", name: "Build-ups", meta: "Open field", desc: "3 × 15 yd at 70–80%. Smooth." },
+            { id: "0903-sp2", name: "Starts", video: "https://player.vimeo.com/video/714737550", meta: "Open field", desc: "2 × 10 yd at 90%. Full recovery. Stop there." },
+            { id: "0903-sp3", name: "Med-Ball Scoop Toss", video: "https://player.vimeo.com/video/641277377", meta: "Light med ball", desc: "2 × 4. Crisp, not a workout." }
+          ]},
+          { title: "3. Short Hitting", exercises: [
+            { id: "0903-hit1", name: "Walk-Through + Rocker", meta: "Tee", desc: "2 swings each bat on each drill. Feel the barrel.", swings: true },
+            { id: "0903-hit2", name: "Tee – Middle", meta: "Tee", desc: "2–3 swings each bat. Done when it feels right.", swings: true }
+          ]},
+          { title: "4. Visualize + Stop", exercises: [
+            { id: "0903-vs1", name: "3-minute visualization", meta: "Quiet", desc: "See the first at-bat at Logan. See a clean first-step on a 5-hopper. See yourself jogging on and off." },
+            { id: "0903-vs2", name: "Hard stop", meta: "Done", desc: "No extra lift. No extra cages. Eat, hydrate, lights out on time." }
+          ], notes: true }
+        ]
+      },
+      {
+        id: "2026-09-04", label: "Fri 4", full: "Friday, Sep 4", type: "Game • @ John A. Logan 12pm",
+        sections: [
+          { title: "1. AM Checklist", exercises: [
+            { id: "0904-am1", name: "Sleep + wake check", meta: "Night before", desc: "8–9 hours. Set two alarms if you are on the road." },
+            { id: "0904-am2", name: "Hydration + breakfast", meta: "Kitchen / travel", desc: "16–24 oz water. Protein + carb meal 2.5–3 hrs before first pitch." },
+            { id: "0904-am3", name: "Travel kit", meta: "Bag", desc: "Cleats, game bat, extra socks, bands, snacks, extra water." }
+          ]},
+          { title: "2. Field Primer (12 min)", exercises: [
+            { id: "0904-pr1", name: "Everyday Dynamic Warm-up", video: "https://player.vimeo.com/video/862985494", meta: "Bodyweight • 8 min", desc: "Same primer as Scout Day. Familiar on purpose." },
+            { id: "0904-pr2", name: "Band work + CARs", video: "https://player.vimeo.com/video/851488026", meta: "Light band", desc: "Pull-aparts + shoulder CARs. Keep the arm loose." },
+            { id: "0904-pr3", name: "Build-ups + 2 starts", meta: "Open field", desc: "2–3 × 15 yd at 70–80%, then 2 × 10 yd at 90%. Stop." }
+          ]},
+          { title: "3. Three Cues", exercises: [
+            { id: "0904-cue1", name: "Hunt the first strike you can drive", meta: "RHH", desc: "Don't expand early. Middle-away is still your damage zone." },
+            { id: "0904-cue2", name: "First step wins", meta: "INF", desc: "Quiet prep. Attack the hop. Show the arm when you have the throw." },
+            { id: "0904-cue3", name: "Next pitch", meta: "Compete", desc: "Good or bad play — close it and go. Logan is a look, not a season." }
+          ]},
+          { title: "4. Game", exercises: [
+            { id: "0904-gm1", name: "Compete vs John A. Logan", meta: "Away • 12:00 PM", desc: "Exhibition. Play it like it counts. Extra swings only if a coach asks." }
+          ]},
+          { title: "5. Post-Game + Notes", exercises: [
+            { id: "0904-po1", name: "10–20 min flush walk", meta: "Outside", desc: "Nasal breathing. Get the legs moving before the bus nap." },
+            { id: "0904-po2", name: "Feed + fluids", meta: "Kitchen / travel", desc: "Protein + carbs within 60 min. Keep drinking." },
+            { id: "0904-po3", name: "W / L / T log", meta: "Notes", desc: "Win, learn, or both. One sentence on the at-bats, one on defense, one on the body." }
+          ], notes: true }
+        ]
+      },
+      {
+        id: "2026-09-05", label: "Sat 5", full: "Saturday, Sep 5", type: "Recovery • No Lift",
+        sections: [
+          { title: "1. Flush", exercises: [
+            { id: "0905-fl1", name: "20-min easy flush", meta: "Walk or bike", desc: "Nasal only. Conversation pace. No intervals." },
+            { id: "0905-fl2", name: "4-6-8 breathing", meta: "Seated or lying", desc: "In 4, hold 6, out 8. 6–8 rounds." }
+          ]},
+          { title: "2. Tissue + Mobility", exercises: [
+            { id: "0905-mo1", name: "90/90 Floss", video: "https://player.vimeo.com/video/851486713", meta: "Bodyweight", desc: "2 × 60 sec each side." },
+            { id: "0905-mo2", name: "Couch Stretch", meta: "Bodyweight", desc: "2 × 60 sec each side." },
+            { id: "0905-mo3", name: "World’s Greatest Stretch", video: "https://vimeo.com/457008259", meta: "Bodyweight", desc: "2 × 6 each side, slow." },
+            { id: "0905-mo4", name: "Soft tissue — hips / T-spine / feet", meta: "Ball or roller", desc: "6–8 min total. Stop on sharp pain." }
+          ]},
+          { title: "3. Arm Care", exercises: [
+            { id: "0905-ar1", name: "Band External Rotations", video: "https://player.vimeo.com/video/851488108", meta: "Band", desc: "2 × 12 each arm." },
+            { id: "0905-ar2", name: "Band Pull-Aparts", video: "https://player.vimeo.com/video/851488026", meta: "Band", desc: "2 × 15." },
+            { id: "0905-ar3", name: "Dead Hang", meta: "Pull-up bar", desc: "20–40 seconds if shoulders feel good." }
+          ]},
+          { title: "4. Recover Hard", exercises: [
+            { id: "0905-rc1", name: "Protein + fluids all day", meta: "Kitchen", desc: "Hit protein. Keep a bottle in hand." },
+            { id: "0905-rc2", name: "Nap or 9 hours tonight", meta: "Bed", desc: "This is the training. No extra lift today." }
+          ], notes: true }
+        ]
+      },
+      {
+        id: "2026-09-06", label: "Sun 6", full: "Sunday, Sep 6", type: "Full Recovery", off: true,
+        message: "Week 3 is in the books.\\n\\nScout Day and Logan are done. Let the tissues catch up.\\nSleep, water, protein, optional sunlight walk. Nothing in the weight room.\\n\\n“I can do all things through him who strengthens me.” — Philippians 4:13 (ESV)\\n\\nMom and Dad are proud of you, Caynan.\\nNext up: Puma Classic, Saturday Sep 12 at Grand Park."
+      }
+    ];
+
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem("caynan_v3_w3");
+        return raw ? JSON.parse(raw) : { status: {}, forceOpen: {}, secCollapsed: {}, swings: {}, notes: {}, bodyweight: {}, skipReason: {} };
+      } catch (e) {
+        return { status: {}, forceOpen: {}, secCollapsed: {}, swings: {}, notes: {}, bodyweight: {}, skipReason: {} };
+      }
+    }
+    function save() {
+      localStorage.setItem("caynan_v3_w3", JSON.stringify(state));
+      localStorage.setItem("caynan_curDay_w3", currentDayId);
+    }
+    function getStatus(id) { return state.status[id] || null; }
+    function isForceOpen(id) { return !!state.forceOpen[id]; }
+    function isSecCollapsed(dayId, sIdx) { return !!state.secCollapsed[dayId + "-" + sIdx]; }
+    function sectionFullyDone(section) {
+      return section.exercises.every(e => getStatus(e.id) === "complete" || getStatus(e.id) === "skip");
+    }
+    function countDay(day) {
+      if (day.off) return { done: 0, total: 0, left: [] };
+      let total = 0, done = 0;
+      const left = [];
+      day.sections.forEach(s => {
+        s.exercises.forEach(e => {
+          total++;
+          if (getStatus(e.id) === "complete" || getStatus(e.id) === "skip") done++;
+          else left.push({ section: s.title, name: e.name });
+        });
+      });
+      return { done, total, left };
+    }
+    function dayStatus(day) {
+      if (day.off) return "off";
+      const { done, total } = countDay(day);
+      if (done === 0) return "none";
+      if (done === total) return "done";
+      return "partial";
+    }
+    function hitTotals(day) {
+      const totals = { BL: 0, HL: 0, U: 0, R: 0 };
+      if (day.off) return totals;
+      day.sections.forEach(s => {
+        if (!s.title.toLowerCase().includes("hitting")) return;
+        s.exercises.forEach(e => {
+          if (!e.swings) return;
+          const sw = state.swings[e.id] || {};
+          ["BL","HL","U","R"].forEach(b => { totals[b] += parseInt(sw[b] || 0, 10) || 0; });
+        });
+      });
+      return totals;
+    }
+    function showToast(msg) {
+      const t = document.getElementById("toast");
+      t.textContent = msg;
+      t.classList.add("show");
+      setTimeout(() => t.classList.remove("show"), 2000);
+    }
+    function toggleGlossary() {
+      document.getElementById("glossary").classList.toggle("open");
+      const btn = document.querySelector(".glossary-toggle");
+      btn.textContent = document.getElementById("glossary").classList.contains("open")
+        ? "▼ Glossary • Abbreviations • Machine Settings"
+        : "▶ Glossary • Abbreviations • Machine Settings";
+    }
+    function renderTabs() {
+      const tabs = document.getElementById("dayTabs");
+      tabs.innerHTML = "";
+      DAYS.forEach(d => {
+        const st = dayStatus(d);
+        const tab = document.createElement("button");
+        tab.className = "day-tab" + (d.id === currentDayId ? " active" : "") + (st === "done" ? " done" : st === "partial" ? " partial" : "");
+        const tag = d.type && d.type.indexOf("Scout") !== -1 ? " ★" : (d.type && d.type.indexOf("Game") !== -1 ? " ◆" : "");
+        tab.innerHTML = d.label + tag + (st === "done" ? " ✓" : "");
+        tab.onclick = () => { currentDayId = d.id; save(); render(); };
+        tabs.appendChild(tab);
+      });
+    }
+    function render() {
+      renderTabs();
+      const day = DAYS.find(d => d.id === currentDayId);
+      const content = document.getElementById("dayContent");
+      content.innerHTML = "";
+      if (day.off) {
+        content.innerHTML = '<div class="off-day"><h2>' + day.full + '</h2><p style="margin:10px 0 6px;font-weight:600;color:#0f766e;">' + day.type + '</p><p style="white-space:pre-line;">' + day.message.replace(/\\n/g, "\n") + '</p></div>';
+        return;
+      }
+      const { done, total, left } = countDay(day);
+      const pct = total ? Math.round((done / total) * 100) : 0;
+      const hits = hitTotals(day);
+      const hasHits = hits.BL + hits.HL + hits.U + hits.R > 0;
+
+      const prog = document.createElement("div");
+      prog.className = "progress-card";
+      let leftText = "";
+      if (left.length > 0 && left.length <= 4) leftText = left.map(l => l.name).join(", ");
+      else if (left.length > 4) leftText = left.length + " exercises remaining";
+      prog.innerHTML = '<div class="progress-row"><div class="progress-bar-wrap"><div class="progress-bar" style="width:' + pct + '%"></div></div><div class="progress-text">' + done + ' / ' + total + '</div></div>' +
+        (leftText ? '<div class="whats-left">What’s left: ' + leftText + '</div>' : (done === total ? '<div class="whats-left" style="color:#0f766e;font-weight:600;">Day complete</div>' : ""));
+      content.appendChild(prog);
+
+      if (done >= total - 3 && done < total && left.length > 0) {
+        const nudge = document.createElement("div");
+        nudge.className = "nudge";
+        nudge.textContent = left.length === 1 ? "Almost done — 1 exercise still open." : "Almost done — " + left.length + " exercises still open.";
+        content.appendChild(nudge);
+      }
+
+      const bw = document.createElement("div");
+      bw.className = "bw-card";
+      const lastBw = state.bodyweight[day.id] || "";
+      const prevKeys = Object.keys(state.bodyweight).filter(k => k < day.id).sort();
+      const prevBw = prevKeys.length ? state.bodyweight[prevKeys[prevKeys.length - 1]] : null;
+      bw.innerHTML = '<label>Body Weight (lbs)</label><input type="number" step="0.1" min="0" value="' + lastBw + '" placeholder="—" onchange="saveBW(this.value)">' +
+        (prevBw ? '<span class="bw-last">Last logged: ' + prevBw + '</span>' : "");
+      content.appendChild(bw);
+
+      const actions = document.createElement("div");
+      actions.className = "day-actions";
+      actions.innerHTML = '<button class="btn btn-light" ' + (done === total ? "disabled" : "") + ' onclick="markDayComplete()">Mark Day Complete</button><button class="btn btn-dark" onclick="resetDay()">Reset Day</button>';
+      content.appendChild(actions);
+
+      const meta = document.createElement("div");
+      meta.className = "day-meta";
+      meta.innerHTML = '<span>' + day.full + '</span><span>' + day.type + '</span>';
+      content.appendChild(meta);
+
+      if (hasHits) {
+        const hs = document.createElement("div");
+        hs.className = "hit-summary";
+        hs.innerHTML = '<div class="hit-summary-title">Swing totals today</div><div class="hit-pills">' +
+          '<span class="hit-pill bl">BL ' + hits.BL + '</span><span class="hit-pill hl">HL ' + hits.HL + '</span>' +
+          '<span class="hit-pill u">U ' + hits.U + '</span><span class="hit-pill r">R ' + hits.R + '</span></div>';
+        content.appendChild(hs);
+      }
+
+      day.sections.forEach((section, sIdx) => {
+        const fullyDone = sectionFullyDone(section);
+        const collapsed = isSecCollapsed(day.id, sIdx);
+        const showCollapsed = (fullyDone && !isForceOpen("sec-" + day.id + "-" + sIdx)) || collapsed;
+
+        if (showCollapsed) {
+          const bar = document.createElement("div");
+          bar.className = "thin-bar section-bar" + (fullyDone ? " complete" : " incomplete");
+          bar.innerHTML = '<span class="name">' + section.title + '</span>' +
+            (!fullyDone ? '<span class="warn-label">Not completed</span>' : "") +
+            '<button class="edit-btn" onclick="expandSection(' + sIdx + ')">Edit</button>';
+          content.appendChild(bar);
+          return;
+        }
+
+        const secEl = document.createElement("div");
+        secEl.className = "section";
+        const header = document.createElement("div");
+        header.className = "section-header";
+        header.onclick = function(e) { if (e.target.closest("button")) return; toggleSection(sIdx); };
+        header.innerHTML = '<div class="section-title"><span class="line"></span>' + section.title + '</div><div class="section-actions">' +
+          (!fullyDone ? '<button class="mark-section-btn" onclick="event.stopPropagation();markSectionComplete(' + sIdx + ')">Mark section complete</button>' : "") +
+          '<button class="toggle-sec-btn" onclick="event.stopPropagation();toggleSection(' + sIdx + ')">Minimize</button></div>';
+        secEl.appendChild(header);
+
+        section.exercises.forEach(function(ex) {
+          const st = getStatus(ex.id);
+          const force = isForceOpen(ex.id);
+          if ((st === "complete" || st === "skip") && !force) {
+            const bar = document.createElement("div");
+            bar.className = "thin-bar " + (st === "skip" ? "skipped" : "complete");
+            const reason = state.skipReason[ex.id] ? '<span class="skip-reason">(' + state.skipReason[ex.id] + ')</span>' : "";
+            bar.innerHTML = '<span class="name">' + ex.name + ' ' + reason + '</span><button class="edit-btn" onclick="expandExercise(\'' + ex.id + '\')">Edit</button>';
+            secEl.appendChild(bar);
+          } else {
+            const card = document.createElement("div");
+            card.className = "exercise-card" + (st ? " done-state" : "");
+            const nameHtml = ex.video ? '<a href="' + ex.video + '" target="_blank" rel="noopener">' + ex.name + '</a>' : ex.name;
+            let body = '<div class="exercise-name ' + (st === "complete" ? "completed-name" : "") + '">' + nameHtml + '</div>';
+            if (ex.meta) body += '<span class="equip-pill">' + ex.meta + '</span>';
+            if (ex.settings) body += '<div class="settings-box">' + ex.settings + '</div>';
+            if (ex.desc) body += '<div class="exercise-desc">' + ex.desc + '</div>';
+            if (ex.swings) body += renderSwings(ex.id);
+            if (st === "complete" || st === "skip") {
+              body += '<div class="card-actions"><button class="btn-undo" onclick="uncomplete(\'' + ex.id + '\')">Undo</button><button class="btn-collapse" onclick="collapseExercise(\'' + ex.id + '\')">Collapse</button></div>';
+            } else {
+              body += '<div class="card-actions"><button class="btn-complete" onclick="complete(\'' + ex.id + '\')">Complete</button><button class="btn-skip" onclick="openSkip(\'' + ex.id + '\')">Skip</button></div>';
+            }
+            card.innerHTML = body;
+            secEl.appendChild(card);
+          }
+        });
+
+        if (section.notes) {
+          const notesWrap = document.createElement("div");
+          notesWrap.className = "notes-area";
+          notesWrap.innerHTML = '<div style="font-size:0.78rem;font-weight:700;margin-bottom:4px;color:var(--muted);">Day Notes</div><textarea placeholder="Notes for the day..." onchange="saveNotes(this.value)">' + (state.notes[day.id] || "") + '</textarea>';
+          secEl.appendChild(notesWrap);
+        }
+        content.appendChild(secEl);
+      });
+
+      if (done === total && total > 0) {
+        const doneEl = document.createElement("div");
+        doneEl.className = "day-done-msg";
+        doneEl.innerHTML = "<strong>Day complete</strong>Everything collapsed. Tap any Edit to review.";
+        content.appendChild(doneEl);
+      }
+      save();
+    }
+    function renderSwings(exId) {
+      const s = state.swings[exId] || { BL: "", HL: "", U: "", R: "" };
+      return '<div class="swing-block"><div class="swing-header"><div class="swing-label">Swings</div><div class="bat-bl">BL</div><div class="bat-hl">HL</div><div class="bat-u">U</div><div class="bat-r">R</div></div>' +
+        '<div class="swing-inputs"><div></div>' +
+        '<input type="number" min="0" value="' + s.BL + '" onchange="updateSwing(\'' + exId + '\',\'BL\',this.value)" placeholder="0">' +
+        '<input type="number" min="0" value="' + s.HL + '" onchange="updateSwing(\'' + exId + '\',\'HL\',this.value)" placeholder="0">' +
+        '<input type="number" min="0" value="' + s.U + '" onchange="updateSwing(\'' + exId + '\',\'U\',this.value)" placeholder="0">' +
+        '<input type="number" min="0" value="' + s.R + '" onchange="updateSwing(\'' + exId + '\',\'R\',this.value)" placeholder="0"></div></div>';
+    }
+    function complete(id) {
+      state.status[id] = "complete";
+      state.forceOpen[id] = false;
+      delete state.skipReason[id];
+      render();
+      showToast("Completed");
+    }
+    function openSkip(id) {
+      pendingSkipId = id;
+      const modal = document.getElementById("skipModal");
+      modal.classList.remove("hidden");
+      modal.innerHTML = '<div class="modal"><h3>Why are you skipping?</h3><div class="reason-list">' +
+        '<button class="reason-btn" onclick="chooseReason(\'Sore\')">Sore / Pain</button>' +
+        '<button class="reason-btn" onclick="chooseReason(\'No equipment\')">No equipment</button>' +
+        '<button class="reason-btn" onclick="chooseReason(\'Time\')">Short on time</button>' +
+        '<button class="reason-btn" onclick="chooseReason(\'Other\')">Other</button></div>' +
+        '<input type="text" id="customReason" placeholder="Or type a reason..."><div class="modal-actions">' +
+        '<button class="btn btn-light" onclick="closeSkip()">Cancel</button><button class="btn btn-dark" onclick="confirmSkip()">Skip</button></div></div>';
+    }
+    function chooseReason(r) {
+      document.querySelectorAll(".reason-btn").forEach(function(b) { b.classList.remove("selected"); });
+      event.target.classList.add("selected");
+      document.getElementById("customReason").value = r;
+    }
+    function confirmSkip() {
+      const reason = (document.getElementById("customReason").value || "Skipped").trim();
+      state.status[pendingSkipId] = "skip";
+      state.skipReason[pendingSkipId] = reason;
+      state.forceOpen[pendingSkipId] = false;
+      closeSkip();
+      render();
+      showToast("Skipped");
+    }
+    function closeSkip() {
+      document.getElementById("skipModal").classList.add("hidden");
+      pendingSkipId = null;
+    }
+    function uncomplete(id) {
+      delete state.status[id];
+      delete state.skipReason[id];
+      state.forceOpen[id] = true;
+      render();
+    }
+    function expandExercise(id) {
+      state.forceOpen[id] = true;
+      const day = DAYS.find(function(d) { return d.id === currentDayId; });
+      day.sections.forEach(function(s, i) {
+        if (s.exercises.some(function(e) { return e.id === id; })) {
+          state.forceOpen["sec-" + day.id + "-" + i] = true;
+          delete state.secCollapsed[day.id + "-" + i];
+        }
+      });
+      render();
+    }
+    function collapseExercise(id) {
+      state.forceOpen[id] = false;
+      render();
+    }
+    function expandSection(sIdx) {
+      const day = DAYS.find(function(d) { return d.id === currentDayId; });
+      state.forceOpen["sec-" + day.id + "-" + sIdx] = true;
+      delete state.secCollapsed[day.id + "-" + sIdx];
+      day.sections[sIdx].exercises.forEach(function(e) { state.forceOpen[e.id] = true; });
+      render();
+    }
+    function toggleSection(sIdx) {
+      const day = DAYS.find(function(d) { return d.id === currentDayId; });
+      const key = day.id + "-" + sIdx;
+      if (state.secCollapsed[key]) {
+        delete state.secCollapsed[key];
+        state.forceOpen["sec-" + day.id + "-" + sIdx] = true;
+      } else {
+        state.secCollapsed[key] = true;
+        state.forceOpen["sec-" + day.id + "-" + sIdx] = false;
+      }
+      render();
+    }
+    function markSectionComplete(sIdx) {
+      const day = DAYS.find(function(d) { return d.id === currentDayId; });
+      day.sections[sIdx].exercises.forEach(function(e) {
+        if (!state.status[e.id]) state.status[e.id] = "complete";
+        state.forceOpen[e.id] = false;
+      });
+      state.forceOpen["sec-" + day.id + "-" + sIdx] = false;
+      delete state.secCollapsed[day.id + "-" + sIdx];
+      render();
+      showToast("Section complete");
+    }
+    function markDayComplete() {
+      const day = DAYS.find(function(d) { return d.id === currentDayId; });
+      day.sections.forEach(function(s, i) {
+        s.exercises.forEach(function(e) {
+          if (!state.status[e.id]) state.status[e.id] = "complete";
+          state.forceOpen[e.id] = false;
+        });
+        state.forceOpen["sec-" + day.id + "-" + i] = false;
+        delete state.secCollapsed[day.id + "-" + i];
+      });
+      render();
+      showToast("Day complete");
+    }
+    function resetDay() {
+      if (!confirm("Reset all progress for this day?")) return;
+      const day = DAYS.find(function(d) { return d.id === currentDayId; });
+      day.sections.forEach(function(s, i) {
+        s.exercises.forEach(function(e) {
+          delete state.status[e.id];
+          delete state.forceOpen[e.id];
+          delete state.swings[e.id];
+          delete state.skipReason[e.id];
+        });
+        delete state.forceOpen["sec-" + day.id + "-" + i];
+        delete state.secCollapsed[day.id + "-" + i];
+      });
+      delete state.notes[day.id];
+      delete state.bodyweight[day.id];
+      render();
+      showToast("Day reset");
+    }
+    function updateSwing(exId, bat, val) {
+      if (!state.swings[exId]) state.swings[exId] = {};
+      state.swings[exId][bat] = val;
+      save();
+      render();
+    }
+    function saveNotes(val) { state.notes[currentDayId] = val; save(); }
+    function saveBW(val) { state.bodyweight[currentDayId] = val; save(); }
+    function doExport() {
+      const data = { version: 3, exported: new Date().toISOString(), state: state, currentDayId: currentDayId };
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "caynan-week3-" + new Date().toISOString().slice(0,10) + ".json";
+      a.click();
+      showToast("Exported");
+    }
+    function doImport() { document.getElementById("importFile").click(); }
+    function handleImport(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(ev) {
+        try {
+          const data = JSON.parse(ev.target.result);
+          if (data.state) {
+            state = data.state;
+            if (data.currentDayId) currentDayId = data.currentDayId;
+            save();
+            render();
+            showToast("Imported");
+          } else showToast("Invalid file");
+        } catch (err) { showToast("Import failed"); }
+      };
+      reader.readAsText(file);
+      e.target.value = "";
+    }
+
+
+if (session && session.email === "caynan@toohey") enterToday();
+</script>
+</body>
+</html>
