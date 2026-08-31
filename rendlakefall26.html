@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Caynan Sizemore • Rend Lake Fall 2026</title>
+  <title>Caynan Sizemore • Week 3 Scout + Logan</title>
   <style>
     :root {
       --navy: #0c1a2e;
@@ -567,7 +567,7 @@
       </div>
     </div>
     <div class="athlete-name">Caynan Sizemore</div>
-    <div class="plan-range">Fall 2026 Performance Plan • Aug 17 – Dec 5</div>
+    <div class="plan-range">Week 3 • Aug 30 – Sep 6 • Scout Day + @ Logan</div>
     <div class="metrics">
       <div class="metric"><div class="metric-label">HEIGHT</div><div class="metric-value">6'2"</div></div>
       <div class="metric"><div class="metric-label">WEIGHT</div><div class="metric-value">210</div></div>
@@ -612,200 +612,203 @@
   <script>
     const DAYS = [
       {
-        id: "2026-08-17", label: "Mon 17", full: "Monday, Aug 17", type: "Class Day • Moderate",
+        id: "2026-08-30", label: "Sun 30", full: "Sunday, Aug 30", type: "Full Recovery", off: true,
+        message: "Week 3 starts tomorrow with Scout Day at home.\\n\\nNothing to prove in the weight room today. Sleep, water, protein, sunlight walk if you want it.\\n\\n“I can do all things through him who strengthens me.” — Philippians 4:13 (ESV)\\n\\nMom and Dad are proud of you, Caynan."
+      },
+      {
+        id: "2026-08-31", label: "Mon 31", full: "Monday, Aug 31", type: "Scout Day • Home • ~12:00 PM CST",
         sections: [
-          { title: "1. Warm-Up", exercises: [
-            { id: "0817-wu1", name: "Everyday Dynamic Warm-up", video: "https://player.vimeo.com/video/862985494", meta: "Bodyweight • 10–12 min", desc: "Full movement prep. Move athletically." },
-            { id: "0817-wu2", name: "World’s Greatest Stretch", video: "https://vimeo.com/457008259", meta: "Bodyweight", desc: "2 × 6–8 each side." },
-            { id: "0817-wu3", name: "Band Pull-Aparts", video: "https://player.vimeo.com/video/851488026", meta: "Light band", desc: "2 × 12." },
-            { id: "0817-wu4", name: "Shoulder CARs", meta: "Bodyweight", desc: "6–8 slow Controlled Articular Rotations each direction per shoulder." }
+          { title: "1. AM Timeline (noon CST)", exercises: [
+            { id: "0831-am1", name: "Now — hydrate + weigh-in", meta: "Scale + water", desc: "16–24 oz water. Weigh in after bathroom, before breakfast. Log it in the card above." },
+            { id: "0831-am2", name: "Breakfast by 9:00 AM CST", meta: "Kitchen", desc: "Protein + carb: eggs, fruit, oats or rice. 3 hours before first look. No heavy grease." },
+            { id: "0831-am3", name: "Bag check", meta: "Locker / car", desc: "Cleats, game bat, extra socks, bands, snacks, extra water. Phone on silent once you hit the field." },
+            { id: "0831-am4", name: "Arrive 10:45–11:00 AM CST", meta: "Home field", desc: "On time is late. Bathroom, sip water, start the primer with the team — do not add a private lift." }
           ]},
-          { title: "2. Speed Mechanics", exercises: [
-            { id: "0817-sm1", name: "A-Skip", video: "https://player.vimeo.com/video/814750520", meta: "Open field", desc: "2 × 15 yd." },
-            { id: "0817-sm2", name: "B-Skip", video: "https://player.vimeo.com/video/814750520", meta: "Open field", desc: "2 × 15 yd." },
-            { id: "0817-sm3", name: "Falling Starts → 10 yd Sprint", video: "https://player.vimeo.com/video/714737550", meta: "Open space", desc: "4–5 reps. Full recovery." }
+          { title: "2. Field Primer (12 min)", exercises: [
+            { id: "0831-pr1", name: "Everyday Dynamic Warm-up", video: "https://player.vimeo.com/video/862985494", meta: "Bodyweight • 8 min", desc: "Move athletically. Look loose, not tired." },
+            { id: "0831-pr2", name: "Band Pull-Aparts + Shoulder CARs", video: "https://player.vimeo.com/video/851488026", meta: "Light band", desc: "1 × 12 pull-aparts. 6 slow CARs each direction." },
+            { id: "0831-pr3", name: "Build-ups", meta: "Open field", desc: "3 × 15 yd at 70–80%. Smooth, tall, fast feet." },
+            { id: "0831-pr4", name: "Two easy starts", meta: "Open field", desc: "2 × 10 yd at 90%. Full recovery. Stop." }
           ]},
-          { title: "3. Strength Maintenance", exercises: [
-            { id: "0817-st1", name: "Goblet Squat", video: "https://player.vimeo.com/video/863301232", meta: "DB or KB", desc: "3 × 8 @ 2–3 RIR." },
-            { id: "0817-st2", name: "Single-Arm DB Row", video: "https://player.vimeo.com/video/863272147", meta: "Dumbbell + bench", desc: "3 × 8 each arm @ 2 RIR." },
-            { id: "0817-st3", name: "Half-Kneeling Press", video: "https://player.vimeo.com/video/863300945", meta: "Landmine or DB", desc: "3 × 8 each side @ 2 RIR." }
+          { title: "3. Three Cues", exercises: [
+            { id: "0831-cue1", name: "Defense — first step, not first look", meta: "INF", desc: "Quiet feet into the pitch. Beat the ball with the first step. Show the arm when you have it — don't force it." },
+            { id: "0831-cue2", name: "Swing — see it, stay through it", meta: "RHH", desc: "One swing thought. Let the ball travel. Loud contact > pretty misses." },
+            { id: "0831-cue3", name: "Body language", meta: "Compete", desc: "Chest up between pitches. Jog everywhere. Scouts watch the innings you aren't hitting." }
           ]},
-          { title: "4. Hitting", exercises: [
-            { id: "0817-hit1", name: "Walk-Through Drill", video: "https://www.youtube.com/watch?v=9BsRj3u5HQs", meta: "Tee", desc: "3 swings each bat = 12 total.", swings: true },
-            { id: "0817-hit2", name: "Rocker Drill", video: "https://www.youtube.com/watch?v=r3wazOZE-MQ", meta: "Tee", desc: "3 swings each bat = 12 total.", swings: true },
-            { id: "0817-hit3", name: "Tee – Middle (Round 1)", meta: "Tee", desc: "3 swings each bat.", swings: true },
-            { id: "0817-hit4", name: "Tee – Middle (Round 2)", meta: "Tee", desc: "3 swings each bat.", swings: true },
-            { id: "0817-hit5", name: "Front Toss – Middle", meta: "Soft Toss", desc: "3–4 swings each bat.", swings: true },
-            { id: "0817-hit6", name: "Front Toss – Away", meta: "Soft Toss", desc: "3–4 swings each bat.", swings: true },
-            { id: "0817-hit7", name: "Machine – Fastball + Curve Mix", meta: "Jr. Hack Attack", desc: "Regular bat. 8–10 FB + 8–10 Curve.", swings: true, settings: "FB 7.5 / 7.5 / 10\nRH Curve 5 / 10 / 3\nLH Curve 10 / 5 / 3" }
+          { title: "4. Compete", exercises: [
+            { id: "0831-cp1", name: "Pro-style / team look", meta: "Scout Day", desc: "Treat every throw, swing, and run as the clip they keep. Quality over extra swings." },
+            { id: "0831-cp2", name: "Live / game action if scheduled", meta: "Field", desc: "Compete. Don't add extra cages after you are done unless a coach asks." }
           ]},
-          { title: "5. Recovery + Notes", exercises: [
-            { id: "0817-rec1", name: "Band External Rotations", video: "https://player.vimeo.com/video/851488108", meta: "Band", desc: "2 × 12 each arm." },
-            { id: "0817-rec2", name: "Dead Hang", meta: "Pull-up bar", desc: "20–40 seconds." }
+          { title: "5. Post + Notes", exercises: [
+            { id: "0831-po1", name: "10–15 min flush walk", meta: "Outside", desc: "Nasal breathing. Shake the day out. No lift." },
+            { id: "0831-po2", name: "Feed + fluids", meta: "Kitchen", desc: "Protein + carbs within 60 min. Keep sipping fluids the rest of the afternoon." },
+            { id: "0831-po3", name: "Event log", meta: "Notes", desc: "Write: how the body felt, best swing, best play, one thing to clean up before Friday." }
           ], notes: true }
         ]
       },
       {
-        id: "2026-08-18", label: "Tue 18", full: "Tuesday, Aug 18", type: "No Class • Heavy",
+        id: "2026-09-01", label: "Tue 1", full: "Tuesday, Sep 1", type: "Labor Day • Extra Lift Lower",
         sections: [
           { title: "1. Warm-Up", exercises: [
-            { id: "0818-wu1", name: "Everyday Dynamic Warm-up", video: "https://player.vimeo.com/video/862985494", meta: "Bodyweight", desc: "12 min." },
-            { id: "0818-wu2", name: "Hip CARs", meta: "Bodyweight", desc: "6–8 slow Controlled Articular Rotations each direction per hip." },
-            { id: "0818-wu3", name: "World’s Greatest Stretch", video: "https://vimeo.com/457008259", meta: "Bodyweight", desc: "2 × 6–8 each side." }
+            { id: "0901-wu1", name: "Everyday Dynamic Warm-up", video: "https://player.vimeo.com/video/862985494", meta: "Bodyweight • 10–12 min", desc: "Full movement prep after Scout Day." },
+            { id: "0901-wu2", name: "Hip CARs", meta: "Bodyweight", desc: "6–8 slow Controlled Articular Rotations each direction per hip." },
+            { id: "0901-wu3", name: "World’s Greatest Stretch", video: "https://vimeo.com/457008259", meta: "Bodyweight", desc: "2 × 6–8 each side." }
           ]},
-          { title: "2. Acceleration + Power", exercises: [
-            { id: "0818-ap1", name: "Falling Sprint Starts", video: "https://player.vimeo.com/video/714737550", meta: "Open field", desc: "6 × 15–20 yd. Full recovery." },
-            { id: "0818-ap2", name: "Med-Ball Overhead Toss for Height", video: "https://player.vimeo.com/video/641277377", meta: "6–10 lb med ball", desc: "3 × 5. Max intent." },
-            { id: "0818-ap3", name: "Broad Jump", video: "https://player.vimeo.com/video/863229762", meta: "Open space", desc: "4 × 3. Stick the landing." }
+          { title: "2. Acceleration", exercises: [
+            { id: "0901-sp1", name: "A-Skip", video: "https://player.vimeo.com/video/814750520", meta: "Open field", desc: "2 × 15 yd." },
+            { id: "0901-sp2", name: "Falling Starts → 10 yd", video: "https://player.vimeo.com/video/714737550", meta: "Open field", desc: "4 × 10 yd. Full recovery. Pop, don't grind." }
           ]},
-          { title: "3. Strength Cluster (Heavy)", exercises: [
-            { id: "0818-st1", name: "Trap Bar or Goblet Squat", video: "https://player.vimeo.com/video/863271987", meta: "Trap bar or heavy DB/KB", desc: "4 × 6 @ 2 RIR." },
-            { id: "0818-st2", name: "Romanian Deadlift (RDL)", video: "https://player.vimeo.com/video/863274606", meta: "Dumbbell or Barbell", desc: "3 × 8 @ 2 RIR. Soft knee, push hips back." },
-            { id: "0818-st3", name: "Dumbbell Bench Press", video: "https://player.vimeo.com/video/863300945", meta: "Dumbbells", desc: "4 × 6–8 @ 2 RIR." },
-            { id: "0818-st4", name: "Chest-Supported Row", video: "https://player.vimeo.com/video/812800937", meta: "Incline bench + DBs", desc: "3 × 8 @ 2 RIR." }
+          { title: "3. Extra Lift — Lower Power", exercises: [
+            { id: "0901-st1", name: "Trap-Bar Deadlift", video: "https://player.vimeo.com/video/863271987", meta: "Trap bar", desc: "4 × 4 @ 2 RIR. Fast off the floor. This is the extra lower day." },
+            { id: "0901-st2", name: "Rear-Foot Elevated Split Squat", video: "https://player.vimeo.com/video/863301232", meta: "DB or KB", desc: "3 × 6 each @ 2 RIR. Front heel stays down." },
+            { id: "0901-st3", name: "Romanian Deadlift (RDL)", video: "https://player.vimeo.com/video/863274606", meta: "DB or BB", desc: "3 × 6 @ 2 RIR. Soft knee, push hips back. Last heavy hinge until after Friday." },
+            { id: "0901-st4", name: "Standing Calf Raise", meta: "DB or machine", desc: "3 × 10. Pause 1 sec at the top." },
+            { id: "0901-st5", name: "Side Plank", meta: "Bodyweight", desc: "3 × 25–30 sec each side." }
           ]},
-          { title: "4. Hitting – Curve Focus", exercises: [
-            { id: "0818-hit1", name: "Walk-Through Drill", video: "https://www.youtube.com/watch?v=9BsRj3u5HQs", meta: "Tee", desc: "3 swings each bat.", swings: true },
-            { id: "0818-hit2", name: "Rocker Drill", video: "https://www.youtube.com/watch?v=r3wazOZE-MQ", meta: "Tee", desc: "3 swings each bat.", swings: true },
-            { id: "0818-hit3", name: "Tee – Away", meta: "Tee", desc: "3–4 swings each bat.", swings: true },
-            { id: "0818-hit4", name: "Tee – Middle", meta: "Tee", desc: "3–4 swings each bat.", swings: true },
-            { id: "0818-hit5", name: "Front Toss – Adjustability", meta: "Soft Toss", desc: "Partner varies speed and location. 3–4 swings each bat. Mix speeds.", swings: true },
-            { id: "0818-hit6", name: "Machine – Heavy Curve Focus", meta: "Jr. Hack Attack", desc: "Regular bat. 20–30 total swings (mostly curve).", swings: true, settings: "Primary: RH Curve 5/10/3 • LH Curve 10/5/3\nMix in a few Fastballs (7.5/7.5/10)" }
+          { title: "4. Hitting — Quality", exercises: [
+            { id: "0901-hit1", name: "Walk-Through Drill", video: "https://www.youtube.com/watch?v=9BsRj3u5HQs", meta: "Tee", desc: "3 swings each bat = 12 total.", swings: true },
+            { id: "0901-hit2", name: "Rocker Drill", video: "https://www.youtube.com/watch?v=r3wazOZE-MQ", meta: "Tee", desc: "3 swings each bat = 12 total.", swings: true },
+            { id: "0901-hit3", name: "Tee – Middle", meta: "Tee", desc: "3 swings each bat. Hunt the barrel.", swings: true },
+            { id: "0901-hit4", name: "Front Toss – Middle / Away", meta: "Soft Toss", desc: "3–4 swings each bat. Stay through the middle-away ball.", swings: true },
+            { id: "0901-hit5", name: "Machine – FB + Curve Mix", meta: "Jr. Hack Attack", desc: "Regular bat. 8–10 FB + 8–10 Curve. Stop when quality drops.", swings: true, settings: "FB 7.5 / 7.5 / 10\\nRH Curve 5 / 10 / 3\\nLH Curve 10 / 5 / 3" }
           ]},
           { title: "5. Recovery + Notes", exercises: [
-            { id: "0818-rec1", name: "90/90 Floss", video: "https://player.vimeo.com/video/851486713", meta: "Bodyweight", desc: "2 × 45–60 sec each side." },
-            { id: "0818-rec2", name: "Couch Stretch", meta: "Bodyweight", desc: "2 × 45–60 sec each side." },
-            { id: "0818-rec3", name: "Band Pull-Aparts", video: "https://player.vimeo.com/video/851488026", meta: "Band", desc: "2 × 15." }
+            { id: "0901-rec1", name: "90/90 Floss", video: "https://player.vimeo.com/video/851486713", meta: "Bodyweight", desc: "2 × 45–60 sec each side." },
+            { id: "0901-rec2", name: "Couch Stretch", meta: "Bodyweight", desc: "2 × 45–60 sec each side." },
+            { id: "0901-rec3", name: "Band External Rotations", video: "https://player.vimeo.com/video/851488108", meta: "Band", desc: "2 × 12 each arm." }
           ], notes: true }
         ]
       },
       {
-        id: "2026-08-19", label: "Wed 19", full: "Wednesday, Aug 19", type: "Class Day • Moderate",
+        id: "2026-09-02", label: "Wed 2", full: "Wednesday, Sep 2", type: "Extra Lift • Speed + Upper",
         sections: [
           { title: "1. Warm-Up", exercises: [
-            { id: "0819-wu1", name: "Everyday Dynamic Warm-up", video: "https://player.vimeo.com/video/862985494", meta: "Bodyweight", desc: "10–12 min." },
-            { id: "0819-wu2", name: "Band Pull-Aparts", video: "https://player.vimeo.com/video/851488026", meta: "Band", desc: "2 × 12." },
-            { id: "0819-wu3", name: "Shoulder CARs", meta: "Bodyweight", desc: "6–8 slow each direction." }
+            { id: "0902-wu1", name: "Everyday Dynamic Warm-up", video: "https://player.vimeo.com/video/862985494", meta: "Bodyweight • 10–12 min", desc: "Full movement prep." },
+            { id: "0902-wu2", name: "World’s Greatest Stretch", video: "https://vimeo.com/457008259", meta: "Bodyweight", desc: "2 × 6–8 each side." },
+            { id: "0902-wu3", name: "Band Pull-Aparts", video: "https://player.vimeo.com/video/851488026", meta: "Light band", desc: "2 × 12." },
+            { id: "0902-wu4", name: "Shoulder CARs", meta: "Bodyweight", desc: "6–8 slow each direction per shoulder." }
           ]},
-          { title: "2. Speed / COD Quality", exercises: [
-            { id: "0819-sp1", name: "A-Skip", video: "https://player.vimeo.com/video/814750520", meta: "Open field", desc: "2 × 15 yd." },
-            { id: "0819-sp2", name: "Lateral Shuffle", meta: "Open field", desc: "2 × 15 yd each direction." }
+          { title: "2. Speed", exercises: [
+            { id: "0902-sp1", name: "A-Skip + B-Skip", video: "https://player.vimeo.com/video/814750520", meta: "Open field", desc: "2 × 15 yd each." },
+            { id: "0902-sp2", name: "Acceleration", video: "https://player.vimeo.com/video/714737550", meta: "Open field", desc: "4 × 20 yd. Full recovery." },
+            { id: "0902-sp3", name: "Flying 10s", meta: "Open field", desc: "3 reps. 20 yd build + 10 yd fly. Walk back." }
           ]},
-          { title: "3. Upper Strength + Core", exercises: [
-            { id: "0819-st1", name: "DB Floor Press or Bench", video: "https://player.vimeo.com/video/863300945", meta: "Dumbbells", desc: "3 × 8 @ 2 RIR." },
-            { id: "0819-st2", name: "Single-Arm Row", video: "https://player.vimeo.com/video/863272147", meta: "DB", desc: "3 × 8 each @ 2 RIR." },
-            { id: "0819-st3", name: "Dead Bug", meta: "Bodyweight", desc: "3 × 8–10 / side." }
+          { title: "3. Extra Lift — Upper + Rotation", exercises: [
+            { id: "0902-st1", name: "Dumbbell Bench Press", video: "https://player.vimeo.com/video/863300945", meta: "Dumbbells", desc: "4 × 6 @ 2 RIR. This is the extra upper day." },
+            { id: "0902-st2", name: "Chest-Supported Row", video: "https://player.vimeo.com/video/812800937", meta: "Incline bench + DBs", desc: "4 × 8 @ 2 RIR." },
+            { id: "0902-st3", name: "Landmine or Half-Kneeling Press", video: "https://player.vimeo.com/video/863300945", meta: "Landmine or DB", desc: "3 × 8 each side @ 2 RIR." },
+            { id: "0902-st4", name: "Face Pull", video: "https://player.vimeo.com/video/851488026", meta: "Band or cable", desc: "3 × 12. Pause at the face." },
+            { id: "0902-st5", name: "Med-Ball Rotational Throw", video: "https://player.vimeo.com/video/641277377", meta: "6–10 lb med ball", desc: "3 × 4 each side. Max intent, stick the finish." }
           ]},
-          { title: "4. Hitting", exercises: [
-            { id: "0819-hit1", name: "Walk-Through Drill", video: "https://www.youtube.com/watch?v=9BsRj3u5HQs", meta: "Tee", desc: "3 swings each bat.", swings: true },
-            { id: "0819-hit2", name: "Rocker Drill", video: "https://www.youtube.com/watch?v=r3wazOZE-MQ", meta: "Tee", desc: "3 swings each bat.", swings: true },
-            { id: "0819-hit3", name: "Tee – Middle", meta: "Tee", desc: "3 swings each bat.", swings: true },
-            { id: "0819-hit4", name: "Tee – Away", meta: "Tee", desc: "3 swings each bat.", swings: true },
-            { id: "0819-hit5", name: "Machine – FB + Curve", meta: "Jr. Hack Attack", desc: "Regular bat. 15–20 total swings.", swings: true, settings: "FB 7.5/7.5/10 • Curves 5/10/3 or 10/5/3" }
+          { title: "4. Hitting — Curve Mix", exercises: [
+            { id: "0902-hit1", name: "Walk-Through Drill", video: "https://www.youtube.com/watch?v=9BsRj3u5HQs", meta: "Tee", desc: "3 swings each bat.", swings: true },
+            { id: "0902-hit2", name: "Rocker Drill", video: "https://www.youtube.com/watch?v=r3wazOZE-MQ", meta: "Tee", desc: "3 swings each bat.", swings: true },
+            { id: "0902-hit3", name: "Tee – Away", meta: "Tee", desc: "3–4 swings each bat.", swings: true },
+            { id: "0902-hit4", name: "Front Toss – Adjustability", meta: "Soft Toss", desc: "Partner mixes speed and location. 3–4 swings each bat.", swings: true },
+            { id: "0902-hit5", name: "Machine – Heavy Curve Focus", meta: "Jr. Hack Attack", desc: "Regular bat. 20–24 total, mostly curve. Logan will spin it.", swings: true, settings: "Primary: RH Curve 5/10/3 • LH Curve 10/5/3\\nMix in a few Fastballs (7.5/7.5/10)" }
           ]},
           { title: "5. Recovery + Notes", exercises: [
-            { id: "0819-rec1", name: "Band External Rotations", video: "https://player.vimeo.com/video/851488108", meta: "Band", desc: "2 × 12 each arm." }
+            { id: "0902-rec1", name: "Band External Rotations", video: "https://player.vimeo.com/video/851488108", meta: "Band", desc: "2 × 12 each arm." },
+            { id: "0902-rec2", name: "Dead Hang", meta: "Pull-up bar", desc: "20–40 seconds." },
+            { id: "0902-rec3", name: "90/90 Floss", video: "https://player.vimeo.com/video/851486713", meta: "Bodyweight", desc: "2 × 45 sec each side." }
           ], notes: true }
         ]
       },
       {
-        id: "2026-08-20", label: "Thu 20", full: "Thursday, Aug 20", type: "No Class • Heavy",
+        id: "2026-09-03", label: "Thu 3", full: "Thursday, Sep 3", type: "Primer • Low",
         sections: [
-          { title: "1. Warm-Up", exercises: [
-            { id: "0820-wu1", name: "Everyday Dynamic Warm-up", video: "https://player.vimeo.com/video/862985494", meta: "Bodyweight", desc: "12 min." },
-            { id: "0820-wu2", name: "Hip CARs", meta: "Bodyweight", desc: "6–8 slow each direction." }
+          { title: "1. Activate", exercises: [
+            { id: "0903-wu1", name: "Everyday Dynamic Warm-up", video: "https://player.vimeo.com/video/862985494", meta: "Bodyweight • 8–10 min", desc: "Just enough to feel springy." },
+            { id: "0903-wu2", name: "Band Pull-Aparts + CARs", video: "https://player.vimeo.com/video/851488026", meta: "Light band", desc: "1 × 12 pull-aparts. 6 CARs each shoulder and hip." }
           ]},
-          { title: "2. Acceleration + Power", exercises: [
-            { id: "0820-ap1", name: "Sprint Starts", video: "https://player.vimeo.com/video/714737550", meta: "Open field", desc: "5–6 × 15–20 yd." },
-            { id: "0820-ap2", name: "Med-Ball OH Toss for Height", video: "https://player.vimeo.com/video/641277377", meta: "Med ball", desc: "3 × 5." }
+          { title: "2. CNS Primer", exercises: [
+            { id: "0903-sp1", name: "Build-ups", meta: "Open field", desc: "3 × 15 yd at 70–80%. Smooth." },
+            { id: "0903-sp2", name: "Starts", video: "https://player.vimeo.com/video/714737550", meta: "Open field", desc: "2 × 10 yd at 90%. Full recovery. Stop there." },
+            { id: "0903-sp3", name: "Med-Ball Scoop Toss", video: "https://player.vimeo.com/video/641277377", meta: "Light med ball", desc: "2 × 4. Crisp, not a workout." }
           ]},
-          { title: "3. Strength (Heavy Lower Emphasis)", exercises: [
-            { id: "0820-st1", name: "Trap Bar / Goblet Squat", video: "https://player.vimeo.com/video/863271987", meta: "Heavy", desc: "4 × 5–6 @ 2 RIR." },
-            { id: "0820-st2", name: "Romanian Deadlift (RDL)", video: "https://player.vimeo.com/video/863274606", meta: "DB or BB", desc: "3 × 8 @ 2 RIR." },
-            { id: "0820-st3", name: "Chest-Supported Row", video: "https://player.vimeo.com/video/812800937", meta: "DBs", desc: "3 × 8 @ 2 RIR." },
-            { id: "0820-st4", name: "DB Press", video: "https://player.vimeo.com/video/863300945", meta: "Dumbbells", desc: "3 × 8 @ 2 RIR." }
+          { title: "3. Short Hitting", exercises: [
+            { id: "0903-hit1", name: "Walk-Through + Rocker", meta: "Tee", desc: "2 swings each bat on each drill. Feel the barrel.", swings: true },
+            { id: "0903-hit2", name: "Tee – Middle", meta: "Tee", desc: "2–3 swings each bat. Done when it feels right.", swings: true }
           ]},
-          { title: "4. Hitting", exercises: [
-            { id: "0820-hit1", name: "Walk-Through Drill", video: "https://www.youtube.com/watch?v=9BsRj3u5HQs", meta: "Tee", desc: "3 swings each bat.", swings: true },
-            { id: "0820-hit2", name: "Rocker Drill", video: "https://www.youtube.com/watch?v=r3wazOZE-MQ", meta: "Tee", desc: "3 swings each bat.", swings: true },
-            { id: "0820-hit3", name: "Tee + Front Toss Combo", meta: "Tee + Soft Toss", desc: "Quality contact and intent focus.", swings: true },
-            { id: "0820-hit4", name: "Machine – Curve Priority", meta: "Jr. Hack Attack", desc: "Regular bat. 20+ swings, mostly curve.", swings: true, settings: "RH Curve 5/10/3 • LH Curve 10/5/3 + some FB" }
-          ]},
-          { title: "5. Recovery + Notes", exercises: [
-            { id: "0820-rec1", name: "90/90 Floss", video: "https://player.vimeo.com/video/851486713", meta: "Bodyweight", desc: "2 × 45–60 sec each side." },
-            { id: "0820-rec2", name: "Couch Stretch", meta: "Bodyweight", desc: "2 × 45–60 sec each side." },
-            { id: "0820-rec3", name: "Band Pull-Aparts", video: "https://player.vimeo.com/video/851488026", meta: "Band", desc: "2 × 15." }
+          { title: "4. Visualize + Stop", exercises: [
+            { id: "0903-vs1", name: "3-minute visualization", meta: "Quiet", desc: "See the first at-bat at Logan. See a clean first-step on a 5-hopper. See yourself jogging on and off." },
+            { id: "0903-vs2", name: "Hard stop", meta: "Done", desc: "No extra lift. No extra cages. Eat, hydrate, lights out on time." }
           ], notes: true }
         ]
       },
       {
-        id: "2026-08-21", label: "Fri 21", full: "Friday, Aug 21", type: "Class Day • Moderate",
+        id: "2026-09-04", label: "Fri 4", full: "Friday, Sep 4", type: "Game • @ John A. Logan 12pm",
         sections: [
-          { title: "1. Warm-Up", exercises: [
-            { id: "0821-wu1", name: "Everyday Dynamic Warm-up", video: "https://player.vimeo.com/video/862985494", meta: "Bodyweight", desc: "10 min." }
+          { title: "1. AM Checklist", exercises: [
+            { id: "0904-am1", name: "Sleep + wake check", meta: "Night before", desc: "8–9 hours. Set two alarms if you are on the road." },
+            { id: "0904-am2", name: "Hydration + breakfast", meta: "Kitchen / travel", desc: "16–24 oz water. Protein + carb meal 2.5–3 hrs before first pitch." },
+            { id: "0904-am3", name: "Travel kit", meta: "Bag", desc: "Cleats, game bat, extra socks, bands, snacks, extra water." }
           ]},
-          { title: "2. Movement + Light Power", exercises: [
-            { id: "0821-mp1", name: "Skips + Low Box or Broad Jumps", meta: "Open space", desc: "Quality only. 3–4 sets." }
+          { title: "2. Field Primer (12 min)", exercises: [
+            { id: "0904-pr1", name: "Everyday Dynamic Warm-up", video: "https://player.vimeo.com/video/862985494", meta: "Bodyweight • 8 min", desc: "Same primer as Scout Day. Familiar on purpose." },
+            { id: "0904-pr2", name: "Band work + CARs", video: "https://player.vimeo.com/video/851488026", meta: "Light band", desc: "Pull-aparts + shoulder CARs. Keep the arm loose." },
+            { id: "0904-pr3", name: "Build-ups + 2 starts", meta: "Open field", desc: "2–3 × 15 yd at 70–80%, then 2 × 10 yd at 90%. Stop." }
           ]},
-          { title: "3. Strength (Upper Focus)", exercises: [
-            { id: "0821-st1", name: "DB Press", video: "https://player.vimeo.com/video/863300945", meta: "Dumbbells", desc: "3 × 8 @ 2 RIR." },
-            { id: "0821-st2", name: "Row Variation", video: "https://player.vimeo.com/video/863272147", meta: "DB or band", desc: "3 × 8–10." }
+          { title: "3. Three Cues", exercises: [
+            { id: "0904-cue1", name: "Hunt the first strike you can drive", meta: "RHH", desc: "Don't expand early. Middle-away is still your damage zone." },
+            { id: "0904-cue2", name: "First step wins", meta: "INF", desc: "Quiet prep. Attack the hop. Show the arm when you have the throw." },
+            { id: "0904-cue3", name: "Next pitch", meta: "Compete", desc: "Good or bad play — close it and go. Logan is a look, not a season." }
           ]},
-          { title: "4. Hitting", exercises: [
-            { id: "0821-hit1", name: "Walk-Through Drill", video: "https://www.youtube.com/watch?v=9BsRj3u5HQs", meta: "Tee", desc: "3 swings each bat.", swings: true },
-            { id: "0821-hit2", name: "Rocker Drill", video: "https://www.youtube.com/watch?v=r3wazOZE-MQ", meta: "Tee", desc: "3 swings each bat.", swings: true },
-            { id: "0821-hit3", name: "Tee + Soft Toss", meta: "Tee + Soft Toss", desc: "Quality contact focus.", swings: true },
-            { id: "0821-hit4", name: "Machine – Mix", meta: "Jr. Hack Attack", desc: "15–20 swings, FB + Curve mix.", swings: true }
+          { title: "4. Game", exercises: [
+            { id: "0904-gm1", name: "Compete vs John A. Logan", meta: "Away • 12:00 PM", desc: "Exhibition. Play it like it counts. Extra swings only if a coach asks." }
           ]},
-          { title: "5. Recovery + Notes", exercises: [
-            { id: "0821-rec1", name: "Arm Care + Light Stretch", meta: "Band", desc: "External rotations + general stretch." }
+          { title: "5. Post-Game + Notes", exercises: [
+            { id: "0904-po1", name: "10–20 min flush walk", meta: "Outside", desc: "Nasal breathing. Get the legs moving before the bus nap." },
+            { id: "0904-po2", name: "Feed + fluids", meta: "Kitchen / travel", desc: "Protein + carbs within 60 min. Keep drinking." },
+            { id: "0904-po3", name: "W / L / T log", meta: "Notes", desc: "Win, learn, or both. One sentence on the at-bats, one on defense, one on the body." }
           ], notes: true }
         ]
       },
       {
-        id: "2026-08-22", label: "Sat 22", full: "Saturday, Aug 22", type: "Volume / Quality Day",
+        id: "2026-09-05", label: "Sat 5", full: "Saturday, Sep 5", type: "Recovery • No Lift",
         sections: [
-          { title: "1. Warm-Up", exercises: [
-            { id: "0822-wu1", name: "Everyday Dynamic Warm-up", video: "https://player.vimeo.com/video/862985494", meta: "Bodyweight", desc: "Full warm-up." }
+          { title: "1. Flush", exercises: [
+            { id: "0905-fl1", name: "20-min easy flush", meta: "Walk or bike", desc: "Nasal only. Conversation pace. No intervals." },
+            { id: "0905-fl2", name: "4-6-8 breathing", meta: "Seated or lying", desc: "In 4, hold 6, out 8. 6–8 rounds." }
           ]},
-          { title: "2. Movement Quality", exercises: [
-            { id: "0822-mq1", name: "Skips, Shuffles, Light Bounds", meta: "Open field", desc: "Keep it snappy and clean. No grinding." }
+          { title: "2. Tissue + Mobility", exercises: [
+            { id: "0905-mo1", name: "90/90 Floss", video: "https://player.vimeo.com/video/851486713", meta: "Bodyweight", desc: "2 × 60 sec each side." },
+            { id: "0905-mo2", name: "Couch Stretch", meta: "Bodyweight", desc: "2 × 60 sec each side." },
+            { id: "0905-mo3", name: "World’s Greatest Stretch", video: "https://vimeo.com/457008259", meta: "Bodyweight", desc: "2 × 6 each side, slow." },
+            { id: "0905-mo4", name: "Soft tissue — hips / T-spine / feet", meta: "Ball or roller", desc: "6–8 min total. Stop on sharp pain." }
           ]},
-          { title: "3. Strength (Maintenance)", exercises: [
-            { id: "0822-st1", name: "Goblet Squat or Split Squat", meta: "DB/KB", desc: "3 × 8 @ 2–3 RIR." },
-            { id: "0822-st2", name: "Upper Push + Pull", meta: "DBs or bands", desc: "2–3 sets each." }
+          { title: "3. Arm Care", exercises: [
+            { id: "0905-ar1", name: "Band External Rotations", video: "https://player.vimeo.com/video/851488108", meta: "Band", desc: "2 × 12 each arm." },
+            { id: "0905-ar2", name: "Band Pull-Aparts", video: "https://player.vimeo.com/video/851488026", meta: "Band", desc: "2 × 15." },
+            { id: "0905-ar3", name: "Dead Hang", meta: "Pull-up bar", desc: "20–40 seconds if shoulders feel good." }
           ]},
-          { title: "4. Hitting – Higher Volume", exercises: [
-            { id: "0822-hit1", name: "Walk-Through Drill", video: "https://www.youtube.com/watch?v=9BsRj3u5HQs", meta: "Tee", desc: "3 swings each bat.", swings: true },
-            { id: "0822-hit2", name: "Rocker Drill", video: "https://www.youtube.com/watch?v=r3wazOZE-MQ", meta: "Tee", desc: "3 swings each bat.", swings: true },
-            { id: "0822-hit3", name: "Tee + Soft Toss + Machine", meta: "All three", desc: "Build volume with quality. Include curve work on the machine.", swings: true }
-          ]},
-          { title: "5. Recovery + Notes", exercises: [
-            { id: "0822-rec1", name: "Full Recovery + Arm Care", meta: "Band + bodyweight", desc: "Take care of the body after the week." }
+          { title: "4. Recover Hard", exercises: [
+            { id: "0905-rc1", name: "Protein + fluids all day", meta: "Kitchen", desc: "Hit protein. Keep a bottle in hand." },
+            { id: "0905-rc2", name: "Nap or 9 hours tonight", meta: "Bed", desc: "This is the training. No extra lift today." }
           ], notes: true }
         ]
       },
       {
-        id: "2026-08-23", label: "Sun 23", full: "Sunday, Aug 23", type: "Full Recovery", off: true,
-        message: "Champions are made when no one is watching.\n\n“I can do all things through him who strengthens me.” — Philippians 4:13 (ESV)\n\nMom and Dad are proud of you, Caynan.\nRest well. Recover fully. Come back stronger Monday."
+        id: "2026-09-06", label: "Sun 6", full: "Sunday, Sep 6", type: "Full Recovery", off: true,
+        message: "Week 3 is in the books.\\n\\nScout Day and Logan are done. Let the tissues catch up.\\nSleep, water, protein, optional sunlight walk. Nothing in the weight room.\\n\\n“I can do all things through him who strengthens me.” — Philippians 4:13 (ESV)\\n\\nMom and Dad are proud of you, Caynan.\\nNext up: Puma Classic, Saturday Sep 12 at Grand Park."
       }
     ];
 
-    let currentDayId = localStorage.getItem("caynan_curDay") || "2026-08-17";
+    let currentDayId = localStorage.getItem("caynan_curDay_w3") || "2026-08-31";
     let state = loadState();
     let pendingSkipId = null;
 
     function loadState() {
       try {
-        const raw = localStorage.getItem("caynan_v3");
+        const raw = localStorage.getItem("caynan_v3_w3");
         return raw ? JSON.parse(raw) : { status: {}, forceOpen: {}, secCollapsed: {}, swings: {}, notes: {}, bodyweight: {}, skipReason: {} };
       } catch (e) {
         return { status: {}, forceOpen: {}, secCollapsed: {}, swings: {}, notes: {}, bodyweight: {}, skipReason: {} };
       }
     }
     function save() {
-      localStorage.setItem("caynan_v3", JSON.stringify(state));
-      localStorage.setItem("caynan_curDay", currentDayId);
+      localStorage.setItem("caynan_v3_w3", JSON.stringify(state));
+      localStorage.setItem("caynan_curDay_w3", currentDayId);
     }
     function getStatus(id) { return state.status[id] || null; }
     function isForceOpen(id) { return !!state.forceOpen[id]; }
@@ -866,7 +869,8 @@
         const st = dayStatus(d);
         const tab = document.createElement("button");
         tab.className = "day-tab" + (d.id === currentDayId ? " active" : "") + (st === "done" ? " done" : st === "partial" ? " partial" : "");
-        tab.innerHTML = d.label + (st === "done" ? " ✓" : "");
+        const tag = d.type && d.type.indexOf("Scout") !== -1 ? " ★" : (d.type && d.type.indexOf("Game") !== -1 ? " ◆" : "");
+        tab.innerHTML = d.label + tag + (st === "done" ? " ✓" : "");
         tab.onclick = () => { currentDayId = d.id; save(); render(); };
         tabs.appendChild(tab);
       });
@@ -1140,7 +1144,7 @@
       const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
       const a = document.createElement("a");
       a.href = URL.createObjectURL(blob);
-      a.download = "caynan-week1-" + new Date().toISOString().slice(0,10) + ".json";
+      a.download = "caynan-week3-" + new Date().toISOString().slice(0,10) + ".json";
       a.click();
       showToast("Exported");
     }
