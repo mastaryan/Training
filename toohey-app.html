@@ -256,6 +256,64 @@
     .hint { font-size: 0.72rem; color: #9ca3af; text-align: center; margin-top: 20px; }
     .hidden { display: none !important; }
     .readonly-banner { background: #e0f2fe; color: #075985; font-size: 0.78rem; font-weight: 600; padding: 8px 12px; border-radius: 8px; margin-bottom: 10px; }
+    .name-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+    .vid-chip {
+      flex-shrink: 0;
+      background: #0c1a2e;
+      color: #f5e6a8;
+      border: none;
+      border-radius: 7px;
+      padding: 5px 9px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+    }
+    .set-grid { margin-top: 10px; }
+    .set-head, .set-row {
+      display: grid;
+      grid-template-columns: 48px 1fr 1fr;
+      gap: 6px;
+      align-items: center;
+    }
+    .set-head { font-size: 0.68rem; font-weight: 700; color: var(--muted); letter-spacing: 0.06em; text-align: center; margin-bottom: 4px; }
+    .set-row { margin-bottom: 6px; }
+    .set-num { text-align: center; font-weight: 700; color: var(--navy); font-size: 0.9rem; }
+    .set-row input {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 8px 6px;
+      text-align: center;
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+    .ex-page { background: #0b0f14; min-height: 100vh; color: #fff; padding-bottom: 88px; }
+    .ex-top { display: flex; justify-content: space-between; align-items: center; padding: 10px 12px; }
+    .ex-top button { background: transparent; border: 1px solid rgba(255,255,255,0.3); color: #fff; border-radius: 8px; padding: 6px 10px; font-weight: 600; }
+    .vid-wrap { position: relative; width: 100%; padding-top: 56.25%; background: #000; }
+    .vid-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+    .vid-fallback { padding: 40px 16px; text-align: center; color: #9ca3af; }
+    .ex-body { background: var(--bg); color: var(--text); border-radius: 16px 16px 0 0; margin-top: -8px; padding: 16px 14px 24px; min-height: 55vh; }
+    .ex-title { font-size: 1.25rem; font-weight: 800; color: var(--navy); }
+    .ex-max { font-size: 0.8rem; color: var(--muted); margin: 2px 0 12px; }
+    .ex-actions { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 14px; }
+    .ex-actions button {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 6px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--navy);
+      cursor: pointer;
+    }
+    .ex-nav {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      background: #fff; border-top: 1px solid var(--border);
+      display: flex; gap: 8px; padding: 10px 14px 16px;
+    }
+    .ex-nav button { flex: 1; }
   </style>
 </head>
 <body>
@@ -440,6 +498,23 @@
   </div>
 </div>
 
+<div id="screenExercise" class="screen">
+  <div class="ex-page">
+    <div class="ex-top">
+      <button type="button" onclick="closeExercise()">← Back</button>
+      <div class="brand-mini">TOOHEY</div>
+      <button type="button" onclick="closeExercise()">✕</button>
+    </div>
+    <div id="exVideo"></div>
+    <div class="ex-body" id="exBody"></div>
+    <div class="ex-nav">
+      <button class="btn btn-light" onclick="stepExercise(-1)">←</button>
+      <button class="btn btn-navy" onclick="closeExercise()">Close</button>
+      <button class="btn btn-light" onclick="stepExercise(1)">→</button>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 <div id="skipModal" class="modal-overlay hidden"></div>
 <input type="file" id="importFile" accept="application/json" class="hidden" onchange="handleImport(event)" />
@@ -447,7 +522,7 @@
 <script>
 const SPORTS = ["Baseball","Softball","Volleyball","Basketball","Soccer","Football","Tennis"];
 const MALE_TEMPLATES = [
-  { id:"golden-spikes", name:"Golden Spikes Phase 1", weeks:"6 weeks", sport:"Baseball", blurb:"College baseball. Dynamic → MP → primer → power → eccentric strength → ACC." },
+  { id:"golden-spikes", name:"Golden Spikes Phase 1", weeks:"6 weeks", sport:"Baseball", blurb:"College baseball. Dynamic → MP → primer → power → eccentric strength → ACC.", pdf:"Golden-Spikes-Phase-1.pdf" },
   { id:"d1-bound", name:"D1 Bound Phase 1", weeks:"6 weeks", sport:"Baseball", blurb:"Same skeleton as Golden Spikes plus Arm Farm." },
   { id:"exit-velo", name:"Elite Exit Velo Phase 1", weeks:"6 weeks", sport:"Baseball", blurb:"Hitter EV. Weekly test day. Written as published." },
   { id:"velo-code", name:"Velo Code", weeks:"10 weeks", sport:"Baseball", blurb:"Throwing velocity. Hybrid / plyo / recovery / pulldowns." },
@@ -473,7 +548,7 @@ let trackerReady = false;
 function loadStateSafe() {
   try {
     const raw = localStorage.getItem("caynan_v3_w3");
-    return raw ? JSON.parse(raw) : { status: {}, forceOpen: {}, secCollapsed: {}, swings: {}, notes: {}, bodyweight: {}, skipReason: {} };
+    return raw ? Object.assign({ status: {}, forceOpen: {}, secCollapsed: {}, swings: {}, notes: {}, bodyweight: {}, skipReason: {}, sets: {}, exNotes: {} }, JSON.parse(raw)) : { status: {}, forceOpen: {}, secCollapsed: {}, swings: {}, notes: {}, bodyweight: {}, skipReason: {}, sets: {}, exNotes: {} };
   } catch (e) {
     return { status: {}, forceOpen: {}, secCollapsed: {}, swings: {}, notes: {}, bodyweight: {}, skipReason: {} };
   }
@@ -509,7 +584,7 @@ function doLogin() {
   const err = document.getElementById("loginErr");
   err.textContent = "";
   if (email === "caynan@toohey" && pass === "caynan") {
-    session = { role: "athlete", name: "Caynan Sizemore", email: email, program: "custom" };
+    session = { role: "athlete", name: "Caynan Sizemore", email: email, program: "custom", sex: "male", sports: ["Baseball"] };
     localStorage.setItem("toohey_session", JSON.stringify(session));
     enterToday();
     return;
@@ -561,7 +636,10 @@ function renderShop() {
   html += '<div class="shop-card"><h3>Custom</h3><div class="shop-meta">Coach writes every lift, sprint, and skill block. You cannot build this yourself.</div><span class="tag custom">COACH ONLY</span><div class="btn-row"><button class="btn btn-navy" onclick="requestCustom()">Request Custom</button></div></div>';
   if (who.sex === "male" && sports.includes("Baseball")) {
     MALE_TEMPLATES.forEach(t => {
-      html += '<div class="shop-card"><h3>' + t.name + '</h3><div class="shop-meta">' + t.weeks + ' · ' + t.blurb + '</div><span class="tag male">MALE AS WRITTEN</span><span class="tag">' + t.sport.toUpperCase() + '</span><div class="btn-row"><button class="btn btn-ghost" onclick="toastPdf(\'' + t.name + '\')">Download PDF / ebook</button></div></div>';
+      var pdfBtn = t.pdf
+        ? '<a class="btn btn-ghost" style="text-align:center;text-decoration:none;display:block;" href="' + t.pdf + '" target="_blank" rel="noopener" download>Download PDF / ebook</a>'
+        : '<button class="btn btn-ghost" onclick="toastPdf(\'' + t.name.replace(/'/g, "\\'") + '\')">Download PDF / ebook</button>';
+      html += '<div class="shop-card"><h3>' + t.name + '</h3><div class="shop-meta">' + t.weeks + ' · ' + t.blurb + '</div><span class="tag male">MALE AS WRITTEN</span><span class="tag">' + t.sport.toUpperCase() + '</span><div class="btn-row">' + pdfBtn + '</div></div>';
     });
     ADDONS.forEach(a => {
       html += '<div class="shop-card"><h3>' + a.name + '</h3><div class="shop-meta">' + a.blurb + '</div><span class="tag add">ADD-ON</span><div class="btn-row"><button class="btn btn-ghost" onclick="toastPdf(\'' + a.name + '\')">Add on</button></div></div>';
@@ -610,7 +688,7 @@ function copyShare() {
 function openShare() { showScreen("screenShare"); }
 
 function loginAsCaynanFromCoach() {
-  session = { role: "athlete", name: "Caynan Sizemore", email: "caynan@toohey", program: "custom" };
+  session = { role: "athlete", name: "Caynan Sizemore", email: "caynan@toohey", program: "custom", sex: "male", sports: ["Baseball"] };
   localStorage.setItem("toohey_session", JSON.stringify(session));
   enterToday();
 }
@@ -680,11 +758,10 @@ if (location.search.indexOf("share=caynan") !== -1) {
             { id: "0901-sp2", name: "Falling Starts → 10 yd", video: "https://player.vimeo.com/video/714737550", meta: "Open field", desc: "4 × 10 yd. Full recovery. Pop, don't grind." }
           ]},
           { title: "3. Extra Lift — Lower Power", exercises: [
-            { id: "0901-st1", name: "Trap-Bar Deadlift", video: "https://player.vimeo.com/video/863271987", meta: "Trap bar", desc: "4 × 4 @ 2 RIR. Fast off the floor. This is the extra lower day." },
-            { id: "0901-st2", name: "Rear-Foot Elevated Split Squat", video: "https://player.vimeo.com/video/863301232", meta: "DB or KB", desc: "3 × 6 each @ 2 RIR. Front heel stays down." },
+            { id: "0901-st1", name: "Front Squat", meta: "BB or goblet", desc: "3 × 4 @ 2 RIR. High elbows, sit between the hips. One working squat session this week. Scout Day was yesterday — leave 2 reps in the tank." },
+            { id: "0901-st2", name: "Reverse Lunge", meta: "DB or goblet", desc: "3 × 5 each @ 2 RIR. Long reverse step, front heel down, torso tall. Single-leg work for the week. Stop if the quad is cooked." },
             { id: "0901-st3", name: "Romanian Deadlift (RDL)", video: "https://player.vimeo.com/video/863274606", meta: "DB or BB", desc: "3 × 6 @ 2 RIR. Soft knee, push hips back. Last heavy hinge until after Friday." },
-            { id: "0901-st4", name: "Standing Calf Raise", meta: "DB or machine", desc: "3 × 10. Pause 1 sec at the top." },
-            { id: "0901-st5", name: "Side Plank", meta: "Bodyweight", desc: "3 × 25–30 sec each side." }
+            { id: "0901-st4", name: "Side Plank", meta: "Bodyweight", desc: "3 × 25–30 sec each side." }
           ]},
           { title: "4. Hitting — Quality", exercises: [
             { id: "0901-hit1", name: "Walk-Through Drill", video: "https://www.youtube.com/watch?v=9BsRj3u5HQs", meta: "Tee", desc: "3 swings each bat = 12 total.", swings: true },
@@ -747,11 +824,16 @@ if (location.search.indexOf("share=caynan") !== -1) {
             { id: "0903-sp2", name: "Starts", video: "https://player.vimeo.com/video/714737550", meta: "Open field", desc: "2 × 10 yd at 90%. Full recovery. Stop there." },
             { id: "0903-sp3", name: "Med-Ball Scoop Toss", video: "https://player.vimeo.com/video/641277377", meta: "Light med ball", desc: "2 × 4. Crisp, not a workout." }
           ]},
-          { title: "3. Short Hitting", exercises: [
+          { title: "3. Pattern Primer (light)", exercises: [
+            { id: "0903-pt1", name: "Goblet / Front Squat", meta: "Light KB or empty bar", desc: "2 × 3. Easy. Groove the Toohey squat. If yesterday's legs are heavy, skip the bar and do bodyweight to a box." },
+            { id: "0903-pt2", name: "Reverse Lunge", meta: "Bodyweight or light DB", desc: "2 × 4 each. Slow down, tall finish. This is activation, not Tuesday." },
+            { id: "0903-pt3", name: "Pistol Squat to Box", meta: "High box + pole", desc: "1 × 3 each. Hold the rack. One clean rep is enough. No extra sets." }
+          ]},
+          { title: "4. Short Hitting", exercises: [
             { id: "0903-hit1", name: "Walk-Through + Rocker", meta: "Tee", desc: "2 swings each bat on each drill. Feel the barrel.", swings: true },
             { id: "0903-hit2", name: "Tee – Middle", meta: "Tee", desc: "2–3 swings each bat. Done when it feels right.", swings: true }
           ]},
-          { title: "4. Visualize + Stop", exercises: [
+          { title: "5. Visualize + Stop", exercises: [
             { id: "0903-vs1", name: "3-minute visualization", meta: "Quiet", desc: "See the first at-bat at Logan. See a clean first-step on a 5-hopper. See yourself jogging on and off." },
             { id: "0903-vs2", name: "Hard stop", meta: "Done", desc: "No extra lift. No extra cages. Eat, hydrate, lights out on time." }
           ], notes: true }
@@ -819,7 +901,7 @@ if (location.search.indexOf("share=caynan") !== -1) {
     function loadState() {
       try {
         const raw = localStorage.getItem("caynan_v3_w3");
-        return raw ? JSON.parse(raw) : { status: {}, forceOpen: {}, secCollapsed: {}, swings: {}, notes: {}, bodyweight: {}, skipReason: {} };
+        return raw ? Object.assign({ status: {}, forceOpen: {}, secCollapsed: {}, swings: {}, notes: {}, bodyweight: {}, skipReason: {}, sets: {}, exNotes: {} }, JSON.parse(raw)) : { status: {}, forceOpen: {}, secCollapsed: {}, swings: {}, notes: {}, bodyweight: {}, skipReason: {}, sets: {}, exNotes: {} };
       } catch (e) {
         return { status: {}, forceOpen: {}, secCollapsed: {}, swings: {}, notes: {}, bodyweight: {}, skipReason: {} };
       }
@@ -988,12 +1070,15 @@ if (location.search.indexOf("share=caynan") !== -1) {
           } else {
             const card = document.createElement("div");
             card.className = "exercise-card" + (st ? " done-state" : "");
-            const nameHtml = ex.video ? '<a href="' + ex.video + '" target="_blank" rel="noopener">' + ex.name + '</a>' : ex.name;
-            let body = '<div class="exercise-name ' + (st === "complete" ? "completed-name" : "") + '">' + nameHtml + '</div>';
+            let body = '<div class="name-row"><div class="exercise-name ' + (st === "complete" ? "completed-name" : "") + '">' + ex.name + '</div>' +
+              (ex.video ? '<button type="button" class="vid-chip" onclick="openExercise(\'' + ex.id + '\', true)">VIDEO</button>' : '') +
+              '</div>';
             if (ex.meta) body += '<span class="equip-pill">' + ex.meta + '</span>';
             if (ex.settings) body += '<div class="settings-box">' + ex.settings + '</div>';
             if (ex.desc) body += '<div class="exercise-desc">' + ex.desc + '</div>';
+            if (isLift(ex)) body += renderSetGrid(ex, false);
             if (ex.swings) body += renderSwings(ex.id);
+            body += '<div style="margin-top:8px;"><button type="button" class="btn-collapse" onclick="openExercise(\'' + ex.id + '\', false)">Open exercise</button></div>';
             if (st === "complete" || st === "skip") {
               body += '<div class="card-actions"><button class="btn-undo" onclick="uncomplete(\'' + ex.id + '\')">Undo</button><button class="btn-collapse" onclick="collapseExercise(\'' + ex.id + '\')">Collapse</button></div>';
             } else {
@@ -1030,12 +1115,126 @@ if (location.search.indexOf("share=caynan") !== -1) {
         '<input type="number" min="0" value="' + s.U + '" onchange="updateSwing(\'' + exId + '\',\'U\',this.value)" placeholder="0">' +
         '<input type="number" min="0" value="' + s.R + '" onchange="updateSwing(\'' + exId + '\',\'R\',this.value)" placeholder="0"></div></div>';
     }
+    function isLift(ex) {
+      const t = ((ex.desc || "") + " " + (ex.meta || "")).toLowerCase();
+      return /×|x\s*\d|rir|deadlift|squat|bench|row|press|rdl|calf/.test(t) && !ex.swings;
+    }
+    function parseSetCount(ex) {
+      const t = (ex.desc || "") + " " + (ex.meta || "");
+      const m = t.match(/(\d+)\s*[×x]\s*(\d+)/);
+      return m ? { sets: parseInt(m[1], 10), reps: m[2] } : { sets: 3, reps: "" };
+    }
+    function ensureSets(ex) {
+      if (!state.sets) state.sets = {};
+      if (!state.sets[ex.id] || !state.sets[ex.id].length) {
+        const p = parseSetCount(ex);
+        const rows = [];
+        for (let i = 0; i < p.sets; i++) rows.push({ w: "", r: p.reps });
+        state.sets[ex.id] = rows;
+      }
+      return state.sets[ex.id];
+    }
+    function renderSetGrid(ex, large) {
+      const rows = ensureSets(ex);
+      let html = '<div class="set-grid"><div class="set-head"><div>SET</div><div>WEIGHT</div><div>REPS</div></div>';
+      rows.forEach(function(row, i) {
+        html += '<div class="set-row"><div class="set-num">' + (i + 1) + '</div>' +
+          '<input type="number" inputmode="decimal" value="' + (row.w || "") + '" placeholder="—" onchange="updateSet(\'' + ex.id + '\',' + i + ',\'w\',this.value)">' +
+          '<input type="number" inputmode="numeric" value="' + (row.r || "") + '" placeholder="—" onchange="updateSet(\'' + ex.id + '\',' + i + ',\'r\',this.value)">' +
+          '</div>';
+      });
+      html += '</div>';
+      return html;
+    }
+    function updateSet(exId, i, field, val) {
+      if (!state.sets) state.sets = {};
+      if (!state.sets[exId]) state.sets[exId] = [];
+      if (!state.sets[exId][i]) state.sets[exId][i] = { w: "", r: "" };
+      state.sets[exId][i][field] = val;
+      save();
+    }
+    function findEx(id) {
+      for (let d = 0; d < DAYS.length; d++) {
+        const day = DAYS[d];
+        if (day.off || !day.sections) continue;
+        const list = [];
+        day.sections.forEach(s => s.exercises.forEach(e => list.push(e)));
+        const idx = list.findIndex(e => e.id === id);
+        if (idx !== -1) return { ex: list[idx], list: list, idx: idx, day: day };
+      }
+      return null;
+    }
+    function videoEmbedHtml(url) {
+      if (!url) return '<div class="vid-fallback">No demo video for this one.</div>';
+      let src = "";
+      let m = url.match(/player\.vimeo\.com\/video\/(\d+)/) || url.match(/vimeo\.com\/(?:video\/)?(\d+)/);
+      if (m) src = "https://player.vimeo.com/video/" + m[1];
+      else {
+        m = url.match(/[?&]v=([^&]+)/) || url.match(/youtu\.be\/([^?]+)/);
+        if (m) src = "https://www.youtube.com/embed/" + m[1];
+      }
+      if (!src) return '<div class="vid-fallback"><a href="' + url + '" target="_blank" rel="noopener" style="color:#f5e6a8">Open demo</a></div>';
+      return '<div class="vid-wrap"><iframe src="' + src + '" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div>';
+    }
+    let currentExId = null;
+    function openExercise(id, showVideo) {
+      const found = findEx(id);
+      if (!found) return;
+      currentExId = id;
+      const ex = found.ex;
+      const st = getStatus(ex.id);
+      document.getElementById("exVideo").innerHTML = showVideo ? videoEmbedHtml(ex.video) : '<div class="vid-fallback">Video hidden — tap Media if you want the demo.</div>';
+      let html = '<div class="ex-title">' + ex.name + '</div>';
+      html += '<div class="ex-max">' + (ex.meta || "") + (ex.desc ? " · " + ex.desc : "") + '</div>';
+      html += '<div class="ex-actions">';
+      html += '<button type="button" onclick="openSkip(\'' + ex.id + '\')">Opt out</button>';
+      html += '<button type="button" onclick="toggleExJournal()">Journal</button>';
+      html += '<button type="button" onclick="openExercise(\'' + ex.id + '\', true)">Media</button>';
+      html += '</div>';
+      if (ex.settings) html += '<div class="settings-box">' + ex.settings + '</div>';
+      if (isLift(ex) || /×|x\s*\d|rir/.test((ex.desc||"")+(ex.meta||""))) html += renderSetGrid(ex, true);
+      if (ex.swings) html += renderSwings(ex.id);
+      html += '<div id="exJournal" class="' + ((state.exNotes && state.exNotes[ex.id]) ? "" : "hidden") + ' notes-area"><textarea placeholder="How did it feel?" onchange="saveExNote(\'' + ex.id + '\', this.value)">' + ((state.exNotes && state.exNotes[ex.id]) || "") + '</textarea></div>';
+      html += '<div class="card-actions" style="margin-top:14px;">';
+      if (st === "complete" || st === "skip") {
+        html += '<button class="btn-undo" onclick="uncomplete(\'' + ex.id + '\'); openExercise(\'' + ex.id + '\', false)">Undo</button>';
+      } else {
+        html += '<button class="btn-complete" onclick="complete(\'' + ex.id + '\')">Complete</button>';
+        html += '<button class="btn-skip" onclick="openSkip(\'' + ex.id + '\')">Skip</button>';
+      }
+      html += '</div>';
+      document.getElementById("exBody").innerHTML = html;
+      showScreen("screenExercise");
+    }
+    function toggleExJournal() {
+      const el = document.getElementById("exJournal");
+      if (el) el.classList.toggle("hidden");
+    }
+    function saveExNote(id, val) {
+      if (!state.exNotes) state.exNotes = {};
+      state.exNotes[id] = val;
+      save();
+    }
+    function closeExercise() {
+      currentExId = null;
+      showScreen("screenToday");
+      render();
+    }
+    function stepExercise(dir) {
+      const found = findEx(currentExId);
+      if (!found) return;
+      const next = found.list[found.idx + dir];
+      if (!next) { showToast(dir > 0 ? "Last exercise" : "First exercise"); return; }
+      openExercise(next.id, false);
+    }
     function complete(id) {
       state.status[id] = "complete";
       state.forceOpen[id] = false;
       delete state.skipReason[id];
-      render();
+      save();
       showToast("Completed");
+      if (document.getElementById("screenExercise").classList.contains("on")) openExercise(id, false);
+      else render();
     }
     function openSkip(id) {
       pendingSkipId = id;
@@ -1059,9 +1258,11 @@ if (location.search.indexOf("share=caynan") !== -1) {
       state.status[pendingSkipId] = "skip";
       state.skipReason[pendingSkipId] = reason;
       state.forceOpen[pendingSkipId] = false;
+      const skipped = pendingSkipId;
       closeSkip();
-      render();
       showToast("Skipped");
+      if (document.getElementById("screenExercise").classList.contains("on")) openExercise(skipped, false);
+      else render();
     }
     function closeSkip() {
       document.getElementById("skipModal").classList.add("hidden");
