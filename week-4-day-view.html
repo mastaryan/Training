@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Caynan Sizemore • Week 4 Puma + Mound</title>
+  <style>
+    :root {
+      --navy: #0c1a2e;
+      --navy2: #132337;
+      --bg: #f0f2f5;
+      --card: #ffffff;
+      --text: #1a1d21;
+      --muted: #6b7280;
+      --border: #e5e7eb;
+      --accent: #eab308;
+      --edit: #dc2626;
+      --edit-bg: #fef2f2;
+      --complete: #0d9488;
+      --skip: #64748b;
+      --warn: #b45309;
+      --warn-bg: #fffbeb;
+      --radius: 12px;
+      --shadow: 0 1px 3px rgba(0,0,0,0.06);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.45;
+      min-height: 100vh;
+      padding-bottom: 80px;
+    }
+    .site-header {
+      background: linear-gradient(180deg, var(--navy) 0%, var(--navy2) 100%);
+      color: #fff;
+      padding: 14px 16px 18px;
+    }
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+    .header-brand {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      opacity: 0.9;
+    }
+    .header-actions { display: flex; gap: 8px; }
+    .hdr-btn {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.35);
+      color: #fff;
+      border-radius: 8px;
+      padding: 6px 12px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .hdr-btn:active { background: rgba(255,255,255,0.1); }
+    .athlete-name {
+      font-size: 1.55rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 2px;
+    }
+    .plan-range {
+      font-size: 0.82rem;
+      opacity: 0.75;
+      margin-bottom: 16px;
+    }
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 8px;
+    }
+    @media (max-width: 520px) {
+      .metrics { grid-template-columns: repeat(3, 1fr); }
+    }
+    .metric {
+      background: rgba(255,255,255,0.08);
+      border-radius: 10px;
+      padding: 10px 6px;
+      text-align: center;
+    }
+    .metric-label {
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      opacity: 0.65;
+      margin-bottom: 3px;
+    }
+    .metric-value {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #f5e6a8;
+    }
+    .main { padding: 14px 14px 0; max-width: 560px; margin: 0 auto; }
+    .glossary {
+      background: white;
+      border-radius: 12px;
+      margin-bottom: 14px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .glossary-toggle {
+      width: 100%;
+      background: none;
+      border: none;
+      padding: 12px 14px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--navy);
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .glossary-body {
+      display: none;
+      padding: 0 14px 14px;
+      font-size: 0.82rem;
+      color: #374151;
+      line-height: 1.55;
+    }
+    .glossary.open .glossary-body { display: block; }
+    .glossary-body table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+      font-size: 0.78rem;
+    }
+    .glossary-body th, .glossary-body td {
+      border: 1px solid var(--border);
+      padding: 5px 7px;
+      text-align: left;
+    }
+    .glossary-body th { background: #f8fafc; }
+    .day-tabs {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding-bottom: 10px;
+      margin-bottom: 12px;
+      -webkit-overflow-scrolling: touch;
+    }
+    .day-tab {
+      flex: 0 0 auto;
+      padding: 8px 11px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: white;
+      font-size: 0.76rem;
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    .day-tab.active { background: var(--navy); color: white; border-color: var(--navy); }
+    .day-tab.partial { border-color: #fbbf24; }
+    .day-tab.done { border-color: #5eead4; background: #f0fdfa; color: #0f766e; }
+    .day-tab.active.done { background: #0f766e; color: white; border-color: #0f766e; }
+    .progress-card {
+      background: white;
+      border-radius: var(--radius);
+      padding: 12px 14px;
+      box-shadow: var(--shadow);
+      margin-bottom: 10px;
+    }
+    .progress-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 6px;
+    }
+    .progress-bar-wrap {
+      flex: 1;
+      height: 8px;
+      background: #e5e7eb;
+      border-radius: 99px;
+      overflow: hidden;
+    }
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #14b8a6, #0d9488);
+      border-radius: 99px;
+      transition: width 0.35s ease;
+    }
+    .progress-text {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    .whats-left { font-size: 0.78rem; color: var(--muted); }
+    .nudge {
+      background: var(--warn-bg);
+      color: var(--warn);
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 8px 12px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #fde68a;
+    }
+    .bw-card {
+      background: white;
+      border-radius: var(--radius);
+      padding: 10px 14px;
+      box-shadow: var(--shadow);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .bw-card label { font-size: 0.8rem; font-weight: 600; color: var(--muted); }
+    .bw-card input {
+      width: 80px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 6px 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+    .bw-last { font-size: 0.75rem; color: var(--muted); }
+    .day-actions { display: flex; gap: 8px; margin-bottom: 14px; }
+    .btn {
+      flex: 1;
+      border: none;
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn:active { transform: scale(0.97); }
+    .btn-dark { background: var(--navy); color: white; }
+    .btn-light { background: white; color: var(--navy); border: 1px solid var(--border); }
+    .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+    .day-meta {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-bottom: 12px;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .day-meta span {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 3px 8px;
+    }
+    .hit-summary {
+      background: white;
+      border-radius: 10px;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+      box-shadow: var(--shadow);
+      font-size: 0.8rem;
+    }
+    .hit-summary-title { font-weight: 700; margin-bottom: 6px; color: var(--navy); }
+    .hit-pills { display: flex; gap: 8px; flex-wrap: wrap; }
+    .hit-pill {
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 0.78rem;
+    }
+    .hit-pill.bl { background: #fecdd3; color: #9f1239; }
+    .hit-pill.hl { background: #d9f99d; color: #3f6212; }
+    .hit-pill.u { background: #bae6fd; color: #075985; }
+    .hit-pill.r { background: #e2e8f0; color: #334155; }
+    .thin-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: white;
+      border-radius: 10px;
+      padding: 10px 12px;
+      box-shadow: var(--shadow);
+      margin-bottom: 7px;
+      border-left: 4px solid var(--complete);
+      gap: 8px;
+    }
+    .thin-bar.incomplete {
+      border-left-color: var(--warn);
+      background: var(--warn-bg);
+    }
+    .thin-bar.skipped { border-left-color: var(--skip); }
+    .thin-bar .name { font-size: 0.86rem; font-weight: 600; flex: 1; }
+    .thin-bar.complete .name { text-decoration: line-through; opacity: 0.7; }
+    .thin-bar .warn-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--warn);
+      background: #fef3c7;
+      padding: 2px 7px;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+    .thin-bar .skip-reason {
+      font-size: 0.72rem;
+      color: var(--skip);
+      font-style: italic;
+    }
+    .thin-bar .edit-btn {
+      background: var(--edit-bg);
+      color: var(--edit);
+      border: none;
+      border-radius: 6px;
+      padding: 5px 10px;
+      font-size: 0.74rem;
+      font-weight: 600;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .section { margin-bottom: 14px; }
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      padding: 4px 2px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .section-title {
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: var(--navy);
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .section-title .line {
+      width: 16px;
+      height: 3px;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+    .section-actions { display: flex; gap: 6px; align-items: center; }
+    .mark-section-btn, .toggle-sec-btn {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      border-radius: 6px;
+      padding: 3px 8px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .exercise-card {
+      background: white;
+      border-radius: var(--radius);
+      padding: 13px 14px;
+      margin-bottom: 8px;
+      box-shadow: var(--shadow);
+    }
+    .exercise-card.done-state { opacity: 0.7; }
+    .exercise-name { font-size: 0.95rem; font-weight: 600; margin-bottom: 3px; }
+    .exercise-name a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+    .exercise-name.completed-name {
+      text-decoration: underline;
+      text-decoration-color: var(--accent);
+      text-decoration-thickness: 2px;
+      text-underline-offset: 3px;
+    }
+    .equip-pill {
+      display: inline-block;
+      background: #f1f5f9;
+      color: #334155;
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 99px;
+      margin-bottom: 4px;
+    }
+    .exercise-desc { font-size: 0.82rem; color: #4b5563; margin-top: 4px; }
+    .settings-box {
+      background: #ecfdf5;
+      border: 1px solid #a7f3d0;
+      border-radius: 8px;
+      padding: 8px 10px;
+      margin: 8px 0 6px;
+      font-size: 0.8rem;
+      color: #065f46;
+      line-height: 1.4;
+      white-space: pre-line;
+    }
+    .swing-block { margin-top: 10px; }
+    .swing-header {
+      display: grid;
+      grid-template-columns: 52px repeat(4, 1fr);
+      gap: 4px;
+      margin-bottom: 4px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-align: center;
+    }
+    .bat-bl { background: #fecdd3; color: #9f1239; border-radius: 5px; padding: 3px 0; }
+    .bat-hl { background: #d9f99d; color: #3f6212; border-radius: 5px; padding: 3px 0; }
+    .bat-u { background: #bae6fd; color: #075985; border-radius: 5px; padding: 3px 0; }
+    .bat-r { background: #e2e8f0; color: #334155; border-radius: 5px; padding: 3px 0; }
+    .swing-inputs {
+      display: grid;
+      grid-template-columns: 52px repeat(4, 1fr);
+      gap: 4px;
+    }
+    .swing-inputs input {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 6px 2px;
+      text-align: center;
+      font-size: 0.85rem;
+    }
+    .swing-label { font-size: 0.75rem; font-weight: 600; color: var(--muted); align-self: center; }
+    .card-actions { display: flex; gap: 8px; margin-top: 12px; }
+    .btn-complete {
+      flex: 1;
+      background: #0d9488;
+      color: white;
+      border: none;
+      border-radius: 9px;
+      padding: 9px 12px;
+      font-size: 0.84rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn-skip {
+      flex: 1;
+      background: #f1f5f9;
+      color: #475569;
+      border: none;
+      border-radius: 9px;
+      padding: 9px 12px;
+      font-size: 0.84rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn-undo, .btn-collapse {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      border-radius: 8px;
+      padding: 7px 12px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .notes-area { margin-top: 10px; }
+    .notes-area textarea {
+      width: 100%;
+      min-height: 58px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 8px 10px;
+      font-size: 0.85rem;
+      font-family: inherit;
+      resize: vertical;
+    }
+    .day-done-msg {
+      text-align: center;
+      padding: 20px 12px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    .day-done-msg strong {
+      color: #0f766e;
+      display: block;
+      font-size: 1.1rem;
+      margin-bottom: 4px;
+    }
+    .off-day {
+      background: white;
+      border-radius: var(--radius);
+      padding: 28px 18px;
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+    .off-day h2 { font-size: 1.15rem; margin-bottom: 8px; }
+    .off-day p { color: var(--muted); font-size: 0.9rem; line-height: 1.55; }
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.4);
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      z-index: 200;
+      padding: 16px;
+    }
+    .modal {
+      background: white;
+      border-radius: 16px 16px 12px 12px;
+      padding: 18px;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 -4px 24px rgba(0,0,0,0.15);
+    }
+    .modal h3 { font-size: 1rem; margin-bottom: 12px; }
+    .reason-list { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
+    .reason-btn {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 0.88rem;
+      font-weight: 500;
+      text-align: left;
+      cursor: pointer;
+    }
+    .reason-btn:active, .reason-btn.selected { background: #e0f2fe; border-color: #38bdf8; }
+    .modal input[type=text] {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 9px 10px;
+      font-size: 0.88rem;
+      margin-bottom: 12px;
+    }
+    .modal-actions { display: flex; gap: 8px; }
+    .modal-actions button { flex: 1; }
+    .toast {
+      position: fixed;
+      bottom: 22px;
+      left: 50%;
+      transform: translateX(-50%) translateY(70px);
+      background: var(--navy);
+      color: white;
+      padding: 11px 18px;
+      border-radius: 10px;
+      font-size: 0.84rem;
+      font-weight: 500;
+      opacity: 0;
+      transition: all 0.28s ease;
+      z-index: 300;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+    .hint {
+      font-size: 0.72rem;
+      color: #9ca3af;
+      text-align: center;
+      margin-top: 20px;
+      padding: 0 12px;
+    }
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-top">
+      <div class="header-brand">REND LAKE WARRIORS • FALL 2026</div>
+      <div class="header-actions">
+        <button class="hdr-btn" onclick="doExport()">Export</button>
+        <button class="hdr-btn" onclick="doImport()">Import</button>
+      </div>
+    </div>
+    <div class="athlete-name">Caynan Sizemore</div>
+    <div class="plan-range">Week 4 • Sep 7 – 13 • Puma Classic + 1 inning</div>
+    <div class="metrics">
+      <div class="metric"><div class="metric-label">HEIGHT</div><div class="metric-value">6'2"</div></div>
+      <div class="metric"><div class="metric-label">WEIGHT</div><div class="metric-value">210</div></div>
+      <div class="metric"><div class="metric-label">MAX EV</div><div class="metric-value">100.5</div></div>
+      <div class="metric"><div class="metric-label">60-YD</div><div class="metric-value">7.22</div></div>
+      <div class="metric"><div class="metric-label">INF VELO</div><div class="metric-value">91</div></div>
+      <div class="metric"><div class="metric-label">BAT SPD</div><div class="metric-value">88</div></div>
+    </div>
+  </header>
+
+  <div class="main">
+    <div class="glossary" id="glossary">
+      <button class="glossary-toggle" onclick="toggleGlossary()">▶ Glossary • Abbreviations • Machine Settings</button>
+      <div class="glossary-body">
+        <p><strong>BL</strong> – Barrel-Loaded overload bat &nbsp; <strong>HL</strong> – Hand-Loaded / End-Loaded overload bat<br>
+        <strong>U</strong> – Underload bat &nbsp; <strong>R</strong> – Regular game bat<br>
+        <strong>CARs</strong> – Controlled Articular Rotations &nbsp; <strong>RIR</strong> – Reps In Reserve<br>
+        <strong>DB</strong> Dumbbell &nbsp; <strong>BB</strong> Barbell &nbsp; <strong>KB</strong> Kettlebell<br>
+        <strong>Hybrid B</strong> – medium throw day 70–80% &nbsp; <strong>Mound Blend B</strong> – Hybrid B + 15–20 pitch short box<br>
+        <strong>ON ITS OWN</strong> – lift / extra mobility away from team time<br>
+        <strong>BEFORE PRACTICE</strong> – J-Bands first, then plyos, then catch / long toss / short box<br>
+        <strong>AFTER PRACTICE</strong> – post-throw circuit, flush, feed, notes</p>
+        <p style="margin-top:10px;font-weight:700;">PlyoCare balls — color + weight</p>
+        <table>
+          <tr><th>Color</th><th>Weight</th><th>This week</th></tr>
+          <tr><td>Purple</td><td>1500g / 3.3 lb</td><td>Do not use</td></tr>
+          <tr><td>Blue</td><td>1000g / 2.2 lb</td><td>Reverse + pivot @ 50%</td></tr>
+          <tr><td>Green</td><td>450g / 1.0 lb</td><td>Reverse, pivot, rocker</td></tr>
+          <tr><td>Yellow</td><td>225g / 8 oz</td><td>Rocker / roll-in / wind-up</td></tr>
+          <tr><td>Orange</td><td>150g / 5.3 oz</td><td>Rocker / roll-in / wind-up</td></tr>
+          <tr><td>Red</td><td>100g / 3.5 oz</td><td>Lightest finish ball</td></tr>
+          <tr><td>White baseball</td><td>5 oz</td><td>Long toss, INF, mound</td></tr>
+        </table>
+        <p style="margin-top:8px;font-size:0.78rem;">Older Velo Code colors: Black ≈ Blue 1000g &nbsp; Gray ≈ Red 100g. Leather weighted baseballs: 6 oz then 4 oz then 5 oz for catch warm-up only.</p>
+        <p style="margin-top:10px;font-weight:700;">Jr. Hack Attack Dial Settings</p>
+        <table>
+          <tr><th>Pitch</th><th>Left</th><th>Right</th><th>Bottom</th><th>MPH</th></tr>
+          <tr><td>Fastball</td><td>7.5</td><td>7.5</td><td>10</td><td>70+</td></tr>
+          <tr><td>RH Curve</td><td>5</td><td>10</td><td>3</td><td>55±</td></tr>
+          <tr><td>LH Curve</td><td>10</td><td>5</td><td>3</td><td>55±</td></tr>
+          <tr><td>RH Slider</td><td>7</td><td>10</td><td>5</td><td>60±</td></tr>
+          <tr><td>LH Slider</td><td>10</td><td>7</td><td>5</td><td>60±</td></tr>
+        </table>
+        <p style="margin-top:6px;font-size:0.75rem;color:#6b7280;">Settings can be ±1. Never change pitches while a batter is in the box.</p>
+      </div>
+    </div>
+
+    <div class="day-tabs" id="dayTabs"></div>
+    <div id="dayContent"></div>
+    <div class="hint">Tap the yellow line or section title to minimize/expand. Completed & skipped items collapse automatically.</div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+  <div id="skipModal" class="modal-overlay hidden"></div>
+  <input type="file" id="importFile" accept=".json,application/json" class="hidden" onchange="handleImport(event)">
+
+  <script>
+    const DAYS = [
+      {
+        id: "2026-09-07", label: "Mon 7", full: "Monday, Sep 7", type: "Recovery Throw • Tissue",
+        sections: [
+          { title: "ON ITS OWN — Tissue + Knee", exercises: [
+            { id: "0907-own1", name: "90/90 Floss", video: "https://player.vimeo.com/video/851486713", meta: "Bodyweight", desc: "2 x 45-60 sec each side. Do this in the room if practice is already long." },
+            { id: "0907-own2", name: "Terminal Knee Extension", meta: "Light band", desc: "2 x 12 each. Band behind the knee, squeeze the quad straight. No pain through the load." },
+            { id: "0907-own3", name: "Side-lying hip abduction hold", meta: "Bodyweight", desc: "2 x 20-25 sec each. Quiet core. Skip if the hip is already cooked from practice." }
+          ]},
+          { title: "BEFORE PRACTICE — J-Bands + Easy Plyos", exercises: [
+            { id: "0907-jb1", name: "Jaeger J-Bands — 11-exercise circuit", meta: "J-Band • 1 x 15-20", desc: "Always before the first throw. Dual-arm: overhead extensions, side + diagonal stretch holds, forward fly, reverse fly. Throwing arm: IR, ER, elevated IR, elevated ER, reverse throw, forward throw. Walk closer to the fence if it is heavy. Do not stretch the band more than 2-3x length." },
+            { id: "0907-pl1", name: "Reverse Throw", meta: "BLUE 1000g / 2.2 lb + GREEN 450g / 1.0 lb • 50%", desc: "8 each. Face away from the target, reverse the arm path, stay long. Recovery, not velo." },
+            { id: "0907-pl2", name: "Pivot Pick", meta: "BLUE 1000g / 2.2 lb + GREEN 450g / 1.0 lb • 50%", desc: "8 each. Pivot, pick the ball, easy flip. No grunt." }
+          ]},
+          { title: "BEFORE PRACTICE — Catch Only", exercises: [
+            { id: "0907-th1", name: "Catch warm-up", meta: "White 5 oz • 40-50 throws", desc: "If you have leather weighted balls: 6 oz x 8, 4 oz x 8, then white 5 oz. Stay at 50-60%. No long toss today. No crow-hop maxes." }
+          ]},
+          { title: "AFTER PRACTICE — Post-Throw + Notes", exercises: [
+            { id: "0907-af1", name: "Post-throw circuit x 3", meta: "Light", desc: "Rebounders / plyo-ball drops 10, band pull-aparts 12, waiter walks 15 yd, upward tosses 8. Easy." },
+            { id: "0907-af2", name: "10-min nasal walk + feed", meta: "Outside + kitchen", desc: "Protein + carbs within 60 min. Keep sipping." }
+          ], notes: true }
+        ]
+      },
+      {
+        id: "2026-09-08", label: "Tue 8", full: "Tuesday, Sep 8", type: "Hybrid B • Speed + Lower Control",
+        sections: [
+          { title: "ON ITS OWN — Speed + Lower", exercises: [
+            { id: "0908-wu1", name: "Everyday Dynamic Warm-up", video: "https://player.vimeo.com/video/862985494", meta: "Bodyweight • 10 min", desc: "Full movement prep. Look springy, not tired." },
+            { id: "0908-sp1", name: "A-Skip + falling starts", video: "https://player.vimeo.com/video/714737550", meta: "Open field", desc: "2 x 15 yd A-skip. Then 4 x 10-20 yd accel. Full walk-back. This is the speed day — 60 still has to get under 7.00." },
+            { id: "0908-st1", name: "Front Squat", meta: "BB or goblet • 3 x 4 @ 2 RIR", desc: "High elbows. Leave 2 reps in the tank. One working squat session this week." },
+            { id: "0908-st2", name: "Reverse Lunge", meta: "DB • 3 x 5 each @ 2 RIR", desc: "Long reverse step, front heel down, torso tall. Control the knee — do not sink into a depth you cannot own." },
+            { id: "0908-st3", name: "Romanian Deadlift", video: "https://player.vimeo.com/video/863274606", meta: "DB or BB • 3 x 6 @ 2 RIR", desc: "Soft knee, hips back. Posterior chain without pounding the knee." },
+            { id: "0908-st4", name: "Spanish squat or wall-sit iso", meta: "Band or wall • 3 x 20-30 sec", desc: "Knee-friendly strength. Stop if it pinches." },
+            { id: "0908-st5", name: "Copenhagen + dead bug", meta: "Bodyweight", desc: "Copenhagen 2 x 20-25 sec each. Dead bug 2 x 6 each. Core has been a little soft — anti-extension first." }
+          ]},
+          { title: "BEFORE PRACTICE — J-Bands + Hybrid B Plyos", exercises: [
+            { id: "0908-jb1", name: "Jaeger J-Bands — 11-exercise circuit", meta: "J-Band • 1 x 20", desc: "Before the first throw. Controlled pace. Fatigue, not failure." },
+            { id: "0908-pl1", name: "Reverse Throw @ 50%", meta: "BLUE 1000g / 2.2 lb + GREEN 450g / 1.0 lb • 8 each", desc: "Long, quiet arm. Heavy ball first, then the 450g." },
+            { id: "0908-pl2", name: "Pivot Pick @ 50%", meta: "BLUE 1000g / 2.2 lb + GREEN 450g / 1.0 lb • 8 each", desc: "Same two balls. Easy pick and throw." },
+            { id: "0908-pl3", name: "Rocker series @ 70-80%", meta: "GREEN 450g • YELLOW 225g • ORANGE 150g • RED 100g", desc: "3 each color, no rest between colors. One pass. Stay on plane. No purple / 1500g." },
+            { id: "0908-pl4", name: "Walking wind-up @ 70-80%", meta: "YELLOW 225g / 8 oz • ORANGE 150g / 5.3 oz • RED 100g / 3.5 oz", desc: "3 each. Step and throw. Command over grunt." }
+          ]},
+          { title: "BEFORE PRACTICE — Long Toss + INF", exercises: [
+            { id: "0908-th1", name: "Jaeger long toss — extension only", meta: "White 5 oz • 10-12 min", desc: "Work out, get air under it, work back in. No pulldowns. No throws on a line at max. This is Hybrid B." },
+            { id: "0908-th2", name: "INF feeds", meta: "White 5 oz • 8-10 throws", desc: "Forehand, backhand, one DP turn. 70-80%. Keep the 91. Do not airmail it in warm-ups." }
+          ]},
+          { title: "HITTING — If the team did not already cover it", exercises: [
+            { id: "0908-hit1", name: "Walk-Through Drill", video: "https://www.youtube.com/watch?v=9BsRj3u5HQs", meta: "Tee", desc: "3 swings each bat = 12.", swings: true },
+            { id: "0908-hit2", name: "Rocker Drill", video: "https://www.youtube.com/watch?v=r3wazOZE-MQ", meta: "Tee", desc: "3 swings each bat = 12.", swings: true },
+            { id: "0908-hit3", name: "Tee – Middle", meta: "Tee", desc: "3 swings each bat. Hunt the barrel. EV still chasing 105.", swings: true },
+            { id: "0908-hit4", name: "Front Toss – Middle / Away", meta: "Soft Toss", desc: "3-4 each bat.", swings: true },
+            { id: "0908-hit5", name: "Machine – FB + Slider mix", meta: "Jr. Hack Attack", desc: "Regular bat. 8-10 FB + 8-10 slider. Stop when quality drops.", swings: true, settings: "FB 7.5 / 7.5 / 10\\nRH Slider 7 / 10 / 5\\nLH Slider 10 / 7 / 5" }
+          ]},
+          { title: "AFTER PRACTICE — Recover the Arm", exercises: [
+            { id: "0908-af1", name: "Post-throw circuit x 3", meta: "Light", desc: "Rebounders / plyo drops 10, pull-aparts 12, waiter walks 15 yd, upward tosses 8." },
+            { id: "0908-af2", name: "Band ER + 90/90", video: "https://player.vimeo.com/video/851488108", meta: "Band", desc: "ER 2 x 12 each. 90/90 floss 2 x 45 sec." }
+          ], notes: true }
+        ]
+      },
+      {
+        id: "2026-09-09", label: "Wed 9", full: "Wednesday, Sep 9", type: "Mound Blend B • Upper + EV",
+        sections: [
+          { title: "ON ITS OWN — Upper + Rotation", exercises: [
+            { id: "0909-wu1", name: "Everyday Dynamic + shoulder CARs", video: "https://player.vimeo.com/video/862985494", meta: "10 min", desc: "Add 6 slow CARs each shoulder before the press work." },
+            { id: "0909-st1", name: "Dumbbell Bench Press", video: "https://player.vimeo.com/video/863300945", meta: "4 x 6 @ 2 RIR", desc: "Do this after throwing if the arm is hot — or before if you throw later. Leave 2 in the tank." },
+            { id: "0909-st2", name: "Chest-Supported Row", video: "https://player.vimeo.com/video/812800937", meta: "4 x 8 @ 2 RIR", desc: "Squeeze the scaps. Do not shrug." },
+            { id: "0909-st3", name: "Landmine or half-kneeling press", meta: "3 x 8 each @ 2 RIR", desc: "Own the ribcage. This feeds the throw and the swing." },
+            { id: "0909-st4", name: "Face pull + Pallof press", meta: "3 x 12 face / 3 x 8 each Pallof", desc: "Anti-rotation for the soft core. Pause the Pallof." },
+            { id: "0909-st5", name: "Med-Ball rotational throw", video: "https://player.vimeo.com/video/641277377", meta: "6-10 lb • 3 x 4 each", desc: "Max intent, stick the finish. EV work lives here too." }
+          ]},
+          { title: "BEFORE PRACTICE — J-Bands + 50% Plyos", exercises: [
+            { id: "0909-jb1", name: "Jaeger J-Bands — 11-exercise circuit", meta: "J-Band • 1 x 20", desc: "Before the first throw. Same circuit as Tuesday." },
+            { id: "0909-pl1", name: "Reverse Throw @ 50%", meta: "BLUE 1000g / 2.2 lb + GREEN 450g / 1.0 lb • 8 each", desc: "No rocker series today. Save the arm for the short box." },
+            { id: "0909-pl2", name: "Pivot Pick @ 50%", meta: "BLUE 1000g / 2.2 lb + GREEN 450g / 1.0 lb • 8 each", desc: "Easy. Then go catch." }
+          ]},
+          { title: "BEFORE PRACTICE — Catch + 15-20 Pitch Short Box", exercises: [
+            { id: "0909-th1", name: "Catch + short extension toss", meta: "White 5 oz • 8 min", desc: "Get out to a comfortable extension distance. Work back in. No pulldowns." },
+            { id: "0909-th2", name: "Short box / light pen — 15-20 pitches", meta: "White 5 oz • 70-80%", desc: "Catcher in front of the plate or a shortened mound. Mix FB / slider / one change if you have it. Command the glove. Last 4-5 at game effort — then stop. This is Mound Blend B, not a starter bullpen." },
+            { id: "0909-th3", name: "INF only if the arm is quiet", meta: "White 5 oz • 6 throws max", desc: "If the pen left the arm buzzed, skip INF extra. The 91 shows up Saturday, not in extra feeds." }
+          ]},
+          { title: "HITTING — Keep the Barrel", exercises: [
+            { id: "0909-hit1", name: "Walk-Through + Rocker", meta: "Tee", desc: "3 each bat on each drill.", swings: true },
+            { id: "0909-hit2", name: "Tee – Away", meta: "Tee", desc: "3-4 each bat.", swings: true },
+            { id: "0909-hit3", name: "Machine – FB / curve mix", meta: "Jr. Hack Attack", desc: "Regular bat. 16-20 total. Puma will mix looks.", swings: true, settings: "FB 7.5 / 7.5 / 10\\nRH Curve 5 / 10 / 3\\nLH Curve 10 / 5 / 3" }
+          ]},
+          { title: "AFTER PRACTICE — Post-Throw", exercises: [
+            { id: "0909-af1", name: "Post-throw circuit x 3", meta: "Light", desc: "Rebounders, pull-aparts, waiter walks, upward tosses." },
+            { id: "0909-af2", name: "Forearm + ER extras", meta: "Band + light DB", desc: "Band ER 2 x 12. Wrist pro/sup 2 x 12. You touched the mound — take care of the elbow." }
+          ], notes: true }
+        ]
+      },
+      {
+        id: "2026-09-10", label: "Thu 10", full: "Thursday, Sep 10", type: "Recovery Throw • No Lift",
+        sections: [
+          { title: "ON ITS OWN — Optional Core + TKE", exercises: [
+            { id: "0910-own1", name: "Dead bug + side plank", meta: "Bodyweight", desc: "Dead bug 2 x 6 each. Side plank 2 x 20-25 sec each. Stop there." },
+            { id: "0910-own2", name: "Terminal Knee Extension", meta: "Light band • 2 x 12 each", desc: "Only if the knee is calm. No extra squat or hinge today." }
+          ]},
+          { title: "BEFORE PRACTICE — J-Bands + Recovery Plyos", exercises: [
+            { id: "0910-jb1", name: "Jaeger J-Bands — short circuit", meta: "J-Band • 1 x 15", desc: "Full 11 if you have time. If not: forward fly, reverse fly, IR, ER, elevated IR, elevated ER." },
+            { id: "0910-pl1", name: "Reverse Throw @ 50%", meta: "GREEN 450g / 1.0 lb + YELLOW 225g / 8 oz • 8 each", desc: "Leave the 1000g in the bag today." },
+            { id: "0910-pl2", name: "Pivot Pick @ 50%", meta: "GREEN 450g / 1.0 lb + YELLOW 225g / 8 oz • 8 each", desc: "Recovery day = reverse + pivot only. No rocker. No wind-up." }
+          ]},
+          { title: "BEFORE PRACTICE — Light Catch, No Long Toss", exercises: [
+            { id: "0910-th1", name: "Catch play 40-50 throws", meta: "White 5 oz • 50-60%", desc: "Recovery day: light catch is plenty. No long toss. No mound." }
+          ]},
+          { title: "HITTING — Short", exercises: [
+            { id: "0910-hit1", name: "Walk-Through + Tee middle", meta: "Tee", desc: "2-3 each bat. Done when it feels right.", swings: true }
+          ]},
+          { title: "AFTER PRACTICE — Tissue", exercises: [
+            { id: "0910-af1", name: "Post-throw circuit x 2", meta: "Easy", desc: "Pull-aparts, waiter walks, upward tosses. Two rounds is enough." },
+            { id: "0910-af2", name: "Couch stretch + 90/90", meta: "2 x 45-60 sec each", desc: "Lights out on time. Friday is a hard stop." }
+          ], notes: true }
+        ]
+      },
+      {
+        id: "2026-09-11", label: "Fri 11", full: "Friday, Sep 11", type: "Primer • Travel Ready",
+        sections: [
+          { title: "ON ITS OWN — Pattern Primer Only", exercises: [
+            { id: "0911-pt1", name: "Everyday Dynamic", video: "https://player.vimeo.com/video/862985494", meta: "8-10 min", desc: "Just enough to feel springy." },
+            { id: "0911-pt2", name: "Build-ups + 2 starts", meta: "Open field", desc: "3 x 15 yd at 70-80%, then 2 x 10 yd at 90%. Full recovery. Stop." },
+            { id: "0911-pt3", name: "Goblet squat + reverse lunge groove", meta: "Light", desc: "Goblet 2 x 3. Reverse lunge 2 x 4 each. Activation, not Tuesday." }
+          ]},
+          { title: "BEFORE PRACTICE — J-Bands + Short Catch", exercises: [
+            { id: "0911-jb1", name: "Jaeger J-Bands — short circuit", meta: "J-Band • 1 x 15", desc: "Same six: flies + IR/ER up and down." },
+            { id: "0911-th1", name: "Easy catch 25-40 throws", meta: "White 5 oz", desc: "If the arm is fresh and you have a catcher, 8-12 easy short-box pitches at 60-70% is allowed. If anything is tight — catch only. No long toss." },
+            { id: "0911-th2", name: "4-6 easy INF", meta: "White 5 oz", desc: "Feel the hop. Save the firm throw for tomorrow." }
+          ]},
+          { title: "HITTING — Short + Visualize", exercises: [
+            { id: "0911-hit1", name: "Walk-Through + Rocker", meta: "Tee", desc: "2 each bat on each drill.", swings: true },
+            { id: "0911-hit2", name: "3-minute visualization", meta: "Quiet", desc: "See the first at-bat at Grand Park. See a clean first-step. See the 1-2-3 inning — strike one, weak contact, get the out." }
+          ]},
+          { title: "AFTER — Hard Stop + Bag", exercises: [
+            { id: "0911-af1", name: "Bag check", meta: "Locker / car", desc: "Cleats, game bat, J-Band, plyos if coaches allow them at the park, extra socks, snacks, water." },
+            { id: "0911-af2", name: "Hard stop", meta: "Done", desc: "No extra lift. No extra cages. Eat, hydrate, lights out." }
+          ], notes: true }
+        ]
+      },
+      {
+        id: "2026-09-12", label: "Sat 12", full: "Saturday, Sep 12", type: "Game • Puma Classic INF + 1 inning",
+        sections: [
+          { title: "ON ITS OWN — AM Checklist", exercises: [
+            { id: "0912-am1", name: "Sleep + wake check", meta: "Night before", desc: "8-9 hours. Two alarms on the road." },
+            { id: "0912-am2", name: "Hydration + breakfast", meta: "Kitchen / travel", desc: "16-24 oz water. Protein + carb 2.5-3 hrs before first pitch." },
+            { id: "0912-am3", name: "Weigh-in if you can", meta: "Scale", desc: "Log it. Same protocol as Scout Day." }
+          ]},
+          { title: "BEFORE THE GAME — J-Bands + Field Primer", exercises: [
+            { id: "0912-jb1", name: "Jaeger J-Bands", meta: "J-Band • 1 x 15-20", desc: "Before the first official throw. Do not skip this because it is a game day." },
+            { id: "0912-pr1", name: "Everyday Dynamic + build-ups", video: "https://player.vimeo.com/video/862985494", meta: "12-min primer", desc: "Team warm-up + 2-3 x 15 yd at 70-80% + 2 x 10 yd at 90%." },
+            { id: "0912-th1", name: "Catch + INF as the team does it", meta: "White 5 oz", desc: "Do not long-toss the arm out before the inning. Get loose, show the arm on the throws you need, then sit. If you pitch Game 1, treat pregame catch like a reliever — enough to be sharp, not a second pen." }
+          ]},
+          { title: "COMPETE", exercises: [
+            { id: "0912-cue1", name: "INF — first step, not first look", meta: "SS/3B", desc: "Quiet feet into the pitch. Beat the ball. Show 91 when you have the throw — do not force it." },
+            { id: "0912-cue2", name: "Swing — see it, stay through it", meta: "RHH", desc: "One swing thought. Middle-away is still damage. Loud contact over pretty misses." },
+            { id: "0912-cue3", name: "The inning", meta: "Mound", desc: "Strike one. Work fast. Attack the zone you warmed up. Get the three outs and go back to short." },
+            { id: "0912-gm1", name: "Puma Classic — Game 1", meta: "Grand Park", desc: "Play the inning. Play the infield. Extra swings only if a coach asks." }
+          ]},
+          { title: "AFTER THE GAME — Full Post-Throw", exercises: [
+            { id: "0912-af1", name: "10-20 min flush walk", meta: "Outside", desc: "Nasal. Shake the inning out before the next game or the bus." },
+            { id: "0912-af2", name: "High-intent post-throw circuit", meta: "Arm care", desc: "Because you pitched: band IR + ER 2 x 10, prone Y 2 x 8, rebounders / drops 10, pull-aparts 12, waiter walks, forearm pro/sup 2 x 12. Then feed." },
+            { id: "0912-af3", name: "Feed + fluids + W/L/T", meta: "Notes", desc: "Protein + carbs within 60 min. Write: body, at-bats, the inning, one cleanup for Dinger Classic." }
+          ], notes: true }
+        ]
+      },
+      {
+        id: "2026-09-13", label: "Sun 13", full: "Sunday, Sep 13", type: "Full Recovery • No Throw",
+        sections: [
+          { title: "ON ITS OWN — Recover Hard", exercises: [
+            { id: "0913-fl1", name: "20-min easy flush", meta: "Walk or bike", desc: "Nasal only. Conversation pace. Off days are off days. Do not throw." },
+            { id: "0913-fl2", name: "4-6-8 breathing", meta: "Seated or lying", desc: "In 4, hold 6, out 8. 6-8 rounds." },
+            { id: "0913-mo1", name: "90/90 + couch + worlds greatest", video: "https://player.vimeo.com/video/851486713", meta: "2 x 60 sec each", desc: "Slow. Soft tissue hips / T-spine / feet 6-8 min if you want it." },
+            { id: "0913-ar1", name: "Easy band ER + pull-aparts only", meta: "No full J-Band circuit required", desc: "2 x 12 ER, 2 x 15 pull-aparts. Blood flow, not a workout." },
+            { id: "0913-rc1", name: "Protein + fluids + 9 hours", meta: "Kitchen / bed", desc: "This is the training. Next up: Dinger Classic, Friday Sep 18." }
+          ], notes: true }
+        ]
+      }
+    ];
+
+    let currentDayId = localStorage.getItem("caynan_curDay_w4") || "2026-09-08";
+    let state = loadState();
+    let pendingSkipId = null;
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem("caynan_v3_w4");
+        return raw ? JSON.parse(raw) : { status: {}, forceOpen: {}, secCollapsed: {}, swings: {}, notes: {}, bodyweight: {}, skipReason: {} };
+      } catch (e) {
+        return { status: {}, forceOpen: {}, secCollapsed: {}, swings: {}, notes: {}, bodyweight: {}, skipReason: {} };
+      }
+    }
+    function save() {
+      localStorage.setItem("caynan_v3_w4", JSON.stringify(state));
+      localStorage.setItem("caynan_curDay_w4", currentDayId);
+    }
+    function getStatus(id) { return state.status[id] || null; }
+    function isForceOpen(id) { return !!state.forceOpen[id]; }
+    function isSecCollapsed(dayId, sIdx) { return !!state.secCollapsed[dayId + "-" + sIdx]; }
+    function sectionFullyDone(section) {
+      return section.exercises.every(e => getStatus(e.id) === "complete" || getStatus(e.id) === "skip");
+    }
+    function countDay(day) {
+      if (day.off) return { done: 0, total: 0, left: [] };
+      let total = 0, done = 0;
+      const left = [];
+      day.sections.forEach(s => {
+        s.exercises.forEach(e => {
+          total++;
+          if (getStatus(e.id) === "complete" || getStatus(e.id) === "skip") done++;
+          else left.push({ section: s.title, name: e.name });
+        });
+      });
+      return { done, total, left };
+    }
+    function dayStatus(day) {
+      if (day.off) return "off";
+      const { done, total } = countDay(day);
+      if (done === 0) return "none";
+      if (done === total) return "done";
+      return "partial";
+    }
+    function hitTotals(day) {
+      const totals = { BL: 0, HL: 0, U: 0, R: 0 };
+      if (day.off) return totals;
+      day.sections.forEach(s => {
+        if (!s.title.toLowerCase().includes("hitting")) return;
+        s.exercises.forEach(e => {
+          if (!e.swings) return;
+          const sw = state.swings[e.id] || {};
+          ["BL","HL","U","R"].forEach(b => { totals[b] += parseInt(sw[b] || 0, 10) || 0; });
+        });
+      });
+      return totals;
+    }
+    function showToast(msg) {
+      const t = document.getElementById("toast");
+      t.textContent = msg;
+      t.classList.add("show");
+      setTimeout(() => t.classList.remove("show"), 2000);
+    }
+    function toggleGlossary() {
+      document.getElementById("glossary").classList.toggle("open");
+      const btn = document.querySelector(".glossary-toggle");
+      btn.textContent = document.getElementById("glossary").classList.contains("open")
+        ? "▼ Glossary • Abbreviations • Machine Settings"
+        : "▶ Glossary • Abbreviations • Machine Settings";
+    }
+    function renderTabs() {
+      const tabs = document.getElementById("dayTabs");
+      tabs.innerHTML = "";
+      DAYS.forEach(d => {
+        const st = dayStatus(d);
+        const tab = document.createElement("button");
+        tab.className = "day-tab" + (d.id === currentDayId ? " active" : "") + (st === "done" ? " done" : st === "partial" ? " partial" : "");
+        const tag = d.type && d.type.indexOf("Scout") !== -1 ? " ★" : (d.type && d.type.indexOf("Game") !== -1 ? " ◆" : "");
+        tab.innerHTML = d.label + tag + (st === "done" ? " ✓" : "");
+        tab.onclick = () => { currentDayId = d.id; save(); render(); };
+        tabs.appendChild(tab);
+      });
+    }
+    function render() {
+      renderTabs();
+      const day = DAYS.find(d => d.id === currentDayId);
+      const content = document.getElementById("dayContent");
+      content.innerHTML = "";
+      if (day.off) {
+        content.innerHTML = '<div class="off-day"><h2>' + day.full + '</h2><p style="margin:10px 0 6px;font-weight:600;color:#0f766e;">' + day.type + '</p><p style="white-space:pre-line;">' + day.message.replace(/\\n/g, "\n") + '</p></div>';
+        return;
+      }
+      const { done, total, left } = countDay(day);
+      const pct = total ? Math.round((done / total) * 100) : 0;
+      const hits = hitTotals(day);
+      const hasHits = hits.BL + hits.HL + hits.U + hits.R > 0;
+
+      const prog = document.createElement("div");
+      prog.className = "progress-card";
+      let leftText = "";
+      if (left.length > 0 && left.length <= 4) leftText = left.map(l => l.name).join(", ");
+      else if (left.length > 4) leftText = left.length + " exercises remaining";
+      prog.innerHTML = '<div class="progress-row"><div class="progress-bar-wrap"><div class="progress-bar" style="width:' + pct + '%"></div></div><div class="progress-text">' + done + ' / ' + total + '</div></div>' +
+        (leftText ? '<div class="whats-left">What’s left: ' + leftText + '</div>' : (done === total ? '<div class="whats-left" style="color:#0f766e;font-weight:600;">Day complete</div>' : ""));
+      content.appendChild(prog);
+
+      if (done >= total - 3 && done < total && left.length > 0) {
+        const nudge = document.createElement("div");
+        nudge.className = "nudge";
+        nudge.textContent = left.length === 1 ? "Almost done — 1 exercise still open." : "Almost done — " + left.length + " exercises still open.";
+        content.appendChild(nudge);
+      }
+
+      const bw = document.createElement("div");
+      bw.className = "bw-card";
+      const lastBw = state.bodyweight[day.id] || "";
+      const prevKeys = Object.keys(state.bodyweight).filter(k => k < day.id).sort();
+      const prevBw = prevKeys.length ? state.bodyweight[prevKeys[prevKeys.length - 1]] : null;
+      bw.innerHTML = '<label>Body Weight (lbs)</label><input type="number" step="0.1" min="0" value="' + lastBw + '" placeholder="—" onchange="saveBW(this.value)">' +
+        (prevBw ? '<span class="bw-last">Last logged: ' + prevBw + '</span>' : "");
+      content.appendChild(bw);
+
+      const actions = document.createElement("div");
+      actions.className = "day-actions";
+      actions.innerHTML = '<button class="btn btn-light" ' + (done === total ? "disabled" : "") + ' onclick="markDayComplete()">Mark Day Complete</button><button class="btn btn-dark" onclick="resetDay()">Reset Day</button>';
+      content.appendChild(actions);
+
+      const meta = document.createElement("div");
+      meta.className = "day-meta";
+      meta.innerHTML = '<span>' + day.full + '</span><span>' + day.type + '</span>';
+      content.appendChild(meta);
+
+      if (hasHits) {
+        const hs = document.createElement("div");
+        hs.className = "hit-summary";
+        hs.innerHTML = '<div class="hit-summary-title">Swing totals today</div><div class="hit-pills">' +
+          '<span class="hit-pill bl">BL ' + hits.BL + '</span><span class="hit-pill hl">HL ' + hits.HL + '</span>' +
+          '<span class="hit-pill u">U ' + hits.U + '</span><span class="hit-pill r">R ' + hits.R + '</span></div>';
+        content.appendChild(hs);
+      }
+
+      day.sections.forEach((section, sIdx) => {
+        const fullyDone = sectionFullyDone(section);
+        const collapsed = isSecCollapsed(day.id, sIdx);
+        const showCollapsed = (fullyDone && !isForceOpen("sec-" + day.id + "-" + sIdx)) || collapsed;
+
+        if (showCollapsed) {
+          const bar = document.createElement("div");
+          bar.className = "thin-bar section-bar" + (fullyDone ? " complete" : " incomplete");
+          bar.innerHTML = '<span class="name">' + section.title + '</span>' +
+            (!fullyDone ? '<span class="warn-label">Not completed</span>' : "") +
+            '<button class="edit-btn" onclick="expandSection(' + sIdx + ')">Edit</button>';
+          content.appendChild(bar);
+          return;
+        }
+
+        const secEl = document.createElement("div");
+        secEl.className = "section";
+        const header = document.createElement("div");
+        header.className = "section-header";
+        header.onclick = function(e) { if (e.target.closest("button")) return; toggleSection(sIdx); };
+        header.innerHTML = '<div class="section-title"><span class="line"></span>' + section.title + '</div><div class="section-actions">' +
+          (!fullyDone ? '<button class="mark-section-btn" onclick="event.stopPropagation();markSectionComplete(' + sIdx + ')">Mark section complete</button>' : "") +
+          '<button class="toggle-sec-btn" onclick="event.stopPropagation();toggleSection(' + sIdx + ')">Minimize</button></div>';
+        secEl.appendChild(header);
+
+        section.exercises.forEach(function(ex) {
+          const st = getStatus(ex.id);
+          const force = isForceOpen(ex.id);
+          if ((st === "complete" || st === "skip") && !force) {
+            const bar = document.createElement("div");
+            bar.className = "thin-bar " + (st === "skip" ? "skipped" : "complete");
+            const reason = state.skipReason[ex.id] ? '<span class="skip-reason">(' + state.skipReason[ex.id] + ')</span>' : "";
+            bar.innerHTML = '<span class="name">' + ex.name + ' ' + reason + '</span><button class="edit-btn" onclick="expandExercise(\'' + ex.id + '\')">Edit</button>';
+            secEl.appendChild(bar);
+          } else {
+            const card = document.createElement("div");
+            card.className = "exercise-card" + (st ? " done-state" : "");
+            const nameHtml = ex.video ? '<a href="' + ex.video + '" target="_blank" rel="noopener">' + ex.name + '</a>' : ex.name;
+            let body = '<div class="exercise-name ' + (st === "complete" ? "completed-name" : "") + '">' + nameHtml + '</div>';
+            if (ex.meta) body += '<span class="equip-pill">' + ex.meta + '</span>';
+            if (ex.settings) body += '<div class="settings-box">' + ex.settings + '</div>';
+            if (ex.desc) body += '<div class="exercise-desc">' + ex.desc + '</div>';
+            if (ex.swings) body += renderSwings(ex.id);
+            if (st === "complete" || st === "skip") {
+              body += '<div class="card-actions"><button class="btn-undo" onclick="uncomplete(\'' + ex.id + '\')">Undo</button><button class="btn-collapse" onclick="collapseExercise(\'' + ex.id + '\')">Collapse</button></div>';
+            } else {
+              body += '<div class="card-actions"><button class="btn-complete" onclick="complete(\'' + ex.id + '\')">Complete</button><button class="btn-skip" onclick="openSkip(\'' + ex.id + '\')">Skip</button></div>';
+            }
+            card.innerHTML = body;
+            secEl.appendChild(card);
+          }
+        });
+
+        if (section.notes) {
+          const notesWrap = document.createElement("div");
+          notesWrap.className = "notes-area";
+          notesWrap.innerHTML = '<div style="font-size:0.78rem;font-weight:700;margin-bottom:4px;color:var(--muted);">Day Notes</div><textarea placeholder="Notes for the day..." onchange="saveNotes(this.value)">' + (state.notes[day.id] || "") + '</textarea>';
+          secEl.appendChild(notesWrap);
+        }
+        content.appendChild(secEl);
+      });
+
+      if (done === total && total > 0) {
+        const doneEl = document.createElement("div");
+        doneEl.className = "day-done-msg";
+        doneEl.innerHTML = "<strong>Day complete</strong>Everything collapsed. Tap any Edit to review.";
+        content.appendChild(doneEl);
+      }
+      save();
+    }
+    function renderSwings(exId) {
+      const s = state.swings[exId] || { BL: "", HL: "", U: "", R: "" };
+      return '<div class="swing-block"><div class="swing-header"><div class="swing-label">Swings</div><div class="bat-bl">BL</div><div class="bat-hl">HL</div><div class="bat-u">U</div><div class="bat-r">R</div></div>' +
+        '<div class="swing-inputs"><div></div>' +
+        '<input type="number" min="0" value="' + s.BL + '" onchange="updateSwing(\'' + exId + '\',\'BL\',this.value)" placeholder="0">' +
+        '<input type="number" min="0" value="' + s.HL + '" onchange="updateSwing(\'' + exId + '\',\'HL\',this.value)" placeholder="0">' +
+        '<input type="number" min="0" value="' + s.U + '" onchange="updateSwing(\'' + exId + '\',\'U\',this.value)" placeholder="0">' +
+        '<input type="number" min="0" value="' + s.R + '" onchange="updateSwing(\'' + exId + '\',\'R\',this.value)" placeholder="0"></div></div>';
+    }
+    function complete(id) {
+      state.status[id] = "complete";
+      state.forceOpen[id] = false;
+      delete state.skipReason[id];
+      render();
+      showToast("Completed");
+    }
+    function openSkip(id) {
+      pendingSkipId = id;
+      const modal = document.getElementById("skipModal");
+      modal.classList.remove("hidden");
+      modal.innerHTML = '<div class="modal"><h3>Why are you skipping?</h3><div class="reason-list">' +
+        '<button class="reason-btn" onclick="chooseReason(\'Sore\')">Sore / Pain</button>' +
+        '<button class="reason-btn" onclick="chooseReason(\'No equipment\')">No equipment</button>' +
+        '<button class="reason-btn" onclick="chooseReason(\'Time\')">Short on time</button>' +
+        '<button class="reason-btn" onclick="chooseReason(\'Other\')">Other</button></div>' +
+        '<input type="text" id="customReason" placeholder="Or type a reason..."><div class="modal-actions">' +
+        '<button class="btn btn-light" onclick="closeSkip()">Cancel</button><button class="btn btn-dark" onclick="confirmSkip()">Skip</button></div></div>';
+    }
+    function chooseReason(r) {
+      document.querySelectorAll(".reason-btn").forEach(function(b) { b.classList.remove("selected"); });
+      event.target.classList.add("selected");
+      document.getElementById("customReason").value = r;
+    }
+    function confirmSkip() {
+      const reason = (document.getElementById("customReason").value || "Skipped").trim();
+      state.status[pendingSkipId] = "skip";
+      state.skipReason[pendingSkipId] = reason;
+      state.forceOpen[pendingSkipId] = false;
+      closeSkip();
+      render();
+      showToast("Skipped");
+    }
+    function closeSkip() {
+      document.getElementById("skipModal").classList.add("hidden");
+      pendingSkipId = null;
+    }
+    function uncomplete(id) {
+      delete state.status[id];
+      delete state.skipReason[id];
+      state.forceOpen[id] = true;
+      render();
+    }
+    function expandExercise(id) {
+      state.forceOpen[id] = true;
+      const day = DAYS.find(function(d) { return d.id === currentDayId; });
+      day.sections.forEach(function(s, i) {
+        if (s.exercises.some(function(e) { return e.id === id; })) {
+          state.forceOpen["sec-" + day.id + "-" + i] = true;
+          delete state.secCollapsed[day.id + "-" + i];
+        }
+      });
+      render();
+    }
+    function collapseExercise(id) {
+      state.forceOpen[id] = false;
+      render();
+    }
+    function expandSection(sIdx) {
+      const day = DAYS.find(function(d) { return d.id === currentDayId; });
+      state.forceOpen["sec-" + day.id + "-" + sIdx] = true;
+      delete state.secCollapsed[day.id + "-" + sIdx];
+      day.sections[sIdx].exercises.forEach(function(e) { state.forceOpen[e.id] = true; });
+      render();
+    }
+    function toggleSection(sIdx) {
+      const day = DAYS.find(function(d) { return d.id === currentDayId; });
+      const key = day.id + "-" + sIdx;
+      if (state.secCollapsed[key]) {
+        delete state.secCollapsed[key];
+        state.forceOpen["sec-" + day.id + "-" + sIdx] = true;
+      } else {
+        state.secCollapsed[key] = true;
+        state.forceOpen["sec-" + day.id + "-" + sIdx] = false;
+      }
+      render();
+    }
+    function markSectionComplete(sIdx) {
+      const day = DAYS.find(function(d) { return d.id === currentDayId; });
+      day.sections[sIdx].exercises.forEach(function(e) {
+        if (!state.status[e.id]) state.status[e.id] = "complete";
+        state.forceOpen[e.id] = false;
+      });
+      state.forceOpen["sec-" + day.id + "-" + sIdx] = false;
+      delete state.secCollapsed[day.id + "-" + sIdx];
+      render();
+      showToast("Section complete");
+    }
+    function markDayComplete() {
+      const day = DAYS.find(function(d) { return d.id === currentDayId; });
+      day.sections.forEach(function(s, i) {
+        s.exercises.forEach(function(e) {
+          if (!state.status[e.id]) state.status[e.id] = "complete";
+          state.forceOpen[e.id] = false;
+        });
+        state.forceOpen["sec-" + day.id + "-" + i] = false;
+        delete state.secCollapsed[day.id + "-" + i];
+      });
+      render();
+      showToast("Day complete");
+    }
+    function resetDay() {
+      if (!confirm("Reset all progress for this day?")) return;
+      const day = DAYS.find(function(d) { return d.id === currentDayId; });
+      day.sections.forEach(function(s, i) {
+        s.exercises.forEach(function(e) {
+          delete state.status[e.id];
+          delete state.forceOpen[e.id];
+          delete state.swings[e.id];
+          delete state.skipReason[e.id];
+        });
+        delete state.forceOpen["sec-" + day.id + "-" + i];
+        delete state.secCollapsed[day.id + "-" + i];
+      });
+      delete state.notes[day.id];
+      delete state.bodyweight[day.id];
+      render();
+      showToast("Day reset");
+    }
+    function updateSwing(exId, bat, val) {
+      if (!state.swings[exId]) state.swings[exId] = {};
+      state.swings[exId][bat] = val;
+      save();
+      render();
+    }
+    function saveNotes(val) { state.notes[currentDayId] = val; save(); }
+    function saveBW(val) { state.bodyweight[currentDayId] = val; save(); }
+    function doExport() {
+      const data = { version: 3, exported: new Date().toISOString(), state: state, currentDayId: currentDayId };
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "caynan-week4-" + new Date().toISOString().slice(0,10) + ".json";
+      a.click();
+      showToast("Exported");
+    }
+    function doImport() { document.getElementById("importFile").click(); }
+    function handleImport(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(ev) {
+        try {
+          const data = JSON.parse(ev.target.result);
+          if (data.state) {
+            state = data.state;
+            if (data.currentDayId) currentDayId = data.currentDayId;
+            save();
+            render();
+            showToast("Imported");
+          } else showToast("Invalid file");
+        } catch (err) { showToast("Import failed"); }
+      };
+      reader.readAsText(file);
+      e.target.value = "";
+    }
+    render();
+  </script>
+</body>
+</html>
