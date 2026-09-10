@@ -1,0 +1,55 @@
+{
+  "templates": [
+    {
+      "id": "golden-spikes",
+      "name": "Golden Spikes Phase 1",
+      "weeks": 6,
+      "sport": "Baseball",
+      "blurb": "College baseball. Dynamic → MP → primer → power. DEMO — Summers Method, not for sale.",
+      "weekFile": "data/week-gs-w1.json",
+      "pdf": "Golden-Spikes-Phase-1.pdf",
+      "demo": true
+    },
+    {
+      "id": "exit-velo",
+      "name": "Elite Exit Velo Phase 1",
+      "weeks": 6,
+      "sport": "Baseball",
+      "blurb": "Hitter EV. Weekly test day. DEMO shelf — in-app week uses the GS skeleton until a dedicated file exists.",
+      "weekFile": "data/week-gs-w1.json",
+      "demo": true
+    },
+    {
+      "id": "velo-code",
+      "name": "Velo Code / throw pattern",
+      "weeks": 10,
+      "sport": "Baseball",
+      "blurb": "Hybrid / plyo / recovery. Driveline-style DEMO.",
+      "weekFile": "data/week-gs-w1.json",
+      "demo": true
+    },
+    {
+      "id": "speed",
+      "name": "Baseball Speed System",
+      "weeks": 8,
+      "sport": "Baseball",
+      "blurb": "Linear speed + 60 days. DEMO.",
+      "weekFile": "data/week-gs-w1.json",
+      "demo": true
+    },
+    {
+      "id": "grind",
+      "name": "In-Season Grind Phase 1",
+      "weeks": 6,
+      "sport": "Baseball",
+      "blurb": "Travel week template. DEMO.",
+      "weekFile": "data/week-gs-w1.json",
+      "demo": true
+    }
+  ],
+  "softball": [],
+  "addons": [
+    { "id": "hitting", "name": "Hitting pack", "blurb": "Stacks on your Active base program.", "stack": true },
+    { "id": "arm-care", "name": "Throwing / arm care", "blurb": "Stacks on your Active base program.", "stack": true }
+  ]
+}

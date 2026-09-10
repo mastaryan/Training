@@ -1,0 +1,53 @@
+{
+  "id": "gs-w1",
+  "kind": "template",
+  "title": "Golden Spikes P1 · Week 1",
+  "sport": "baseball",
+  "rules": ["DEMO week so Buy → Start → Today works. Replace with tenant weeks.", "PDF is view-in-app only."],
+  "days": [
+    { "offset": 0, "label": "D1", "type": "Dynamic + strength", "sections": [
+      { "title": "LIFT", "exercises": [
+        { "id": "gs-d1-1", "name": "Everyday Dynamic", "meta": "10 min", "desc": "Full movement prep." },
+        { "id": "gs-d1-2", "name": "Trap bar or squat pattern", "meta": "4 x 5 @ 2 RIR", "desc": "Leave 2 in the tank." },
+        { "id": "gs-d1-3", "name": "Split squat", "meta": "3 x 6 each", "desc": "Long stride, front heel down." },
+        { "id": "gs-d1-4", "name": "Med-ball rotational throw", "meta": "3 x 4 each", "desc": "Max intent, stick the finish." }
+      ]}
+    ]},
+    { "offset": 1, "label": "D2", "type": "Speed + upper", "sections": [
+      { "title": "SPEED + UPPER", "exercises": [
+        { "id": "gs-d2-1", "name": "A-skip + falling starts", "meta": "4 x 10-20 yd", "desc": "Full walk-back." },
+        { "id": "gs-d2-2", "name": "DB bench", "meta": "4 x 6 @ 2 RIR", "desc": "Use logged max when present." },
+        { "id": "gs-d2-3", "name": "Chest-supported row", "meta": "4 x 8", "desc": "Do not shrug." }
+      ]}
+    ]},
+    { "offset": 2, "label": "D3", "type": "Off / tissue", "sections": [
+      { "title": "RECOVER", "exercises": [
+        { "id": "gs-d3-1", "name": "Walk + nasal breathing", "meta": "20 min", "desc": "Conversation pace." },
+        { "id": "gs-d3-2", "name": "90/90 + couch stretch", "meta": "2 x 60 sec", "desc": "Slow." }
+      ]}
+    ]},
+    { "offset": 3, "label": "D4", "type": "Power + hinge", "sections": [
+      { "title": "POWER", "exercises": [
+        { "id": "gs-d4-1", "name": "Broad jump or bound", "meta": "4 x 3", "desc": "Quality contacts." },
+        { "id": "gs-d4-2", "name": "RDL", "meta": "3 x 6 @ 2 RIR", "desc": "Soft knee, hips back." },
+        { "id": "gs-d4-3", "name": "Pallof + dead bug", "meta": "3 x 8 / 2 x 6", "desc": "Anti-rotation." }
+      ]}
+    ]},
+    { "offset": 4, "label": "D5", "type": "Speed primer", "sections": [
+      { "title": "PRIMER", "exercises": [
+        { "id": "gs-d5-1", "name": "Build-ups", "meta": "4 x 15 yd", "desc": "70-90%." },
+        { "id": "gs-d5-2", "name": "Landmine press", "meta": "3 x 8 each", "desc": "Own the ribcage." }
+      ]}
+    ]},
+    { "offset": 5, "label": "D6", "type": "Compete or extra skill", "sections": [
+      { "title": "SKILL", "exercises": [
+        { "id": "gs-d6-1", "name": "On-field or cage quality", "meta": "Team time", "desc": "Do not stack a second max lift." }
+      ]}
+    ]},
+    { "offset": 6, "label": "D7", "type": "Off", "sections": [
+      { "title": "OFF", "exercises": [
+        { "id": "gs-d7-1", "name": "Sleep + protein + fluids", "meta": "Home", "desc": "This is the training." }
+      ]}
+    ]}
+  ]
+}
