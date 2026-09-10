@@ -1,0 +1,19 @@
+{
+  "id": "demo",
+  "name": "Toohey Sports Performance",
+  "tagline": "Demo tenant — Summers / Driveline used as visual examples only. Not for sale.",
+  "colors": {
+    "navy": "#0c1a2e",
+    "accent": "#eab308"
+  },
+  "videoPolicy": "Tenant supplies their own exercise URLs. Demo library may point at public Summers/Vimeo links.",
+  "programs": [
+    { "id": "custom", "name": "Custom", "kind": "custom", "sport": "any" },
+    { "id": "golden-spikes", "name": "Golden Spikes P1 (DEMO)", "kind": "template", "sport": "baseball", "demo": true },
+    { "id": "velo-code", "name": "Throw / Velo pattern (DEMO)", "kind": "template", "sport": "baseball", "demo": true }
+  ],
+  "addons": [
+    { "id": "hitting", "name": "Hitting design" },
+    { "id": "arm-care", "name": "Arm care" }
+  ]
+}

@@ -1,0 +1,750 @@
+{
+  "id": "w4-puma-mound",
+  "tenantId": "demo",
+  "kind": "custom",
+  "title": "Week 4 Puma + Mound",
+  "start": "2026-09-07",
+  "end": "2026-09-13",
+  "sport": "baseball",
+  "rules": [
+    "Saturday inning is the A-day",
+    "No purple 1500g",
+    "Do not dump INF velo 91",
+    "Speed + EV stay the training program"
+  ],
+  "days": [
+    {
+      "id": "2026-09-07",
+      "label": "Mon 7",
+      "full": "Monday, Sep 7",
+      "type": "Recovery Throw • Tissue",
+      "sections": [
+        {
+          "title": "ON ITS OWN — Tissue + Knee",
+          "exercises": [
+            {
+              "id": "0907-own1",
+              "name": "90/90 Floss",
+              "video": "https://player.vimeo.com/video/851486713",
+              "meta": "Bodyweight",
+              "desc": "2 x 45-60 sec each side. Do this in the room if practice is already long."
+            },
+            {
+              "id": "0907-own2",
+              "name": "Terminal Knee Extension",
+              "meta": "Light band",
+              "desc": "2 x 12 each. Band behind the knee, squeeze the quad straight. No pain through the load."
+            },
+            {
+              "id": "0907-own3",
+              "name": "Side-lying hip abduction hold",
+              "meta": "Bodyweight",
+              "desc": "2 x 20-25 sec each. Quiet core. Skip if the hip is already cooked from practice."
+            }
+          ]
+        },
+        {
+          "title": "BEFORE PRACTICE — J-Bands + Easy Plyos",
+          "exercises": [
+            {
+              "id": "0907-jb1",
+              "name": "Jaeger J-Bands — 11-exercise circuit",
+              "meta": "J-Band • 1 x 15-20",
+              "desc": "Always before the first throw. Dual-arm: overhead extensions, side + diagonal stretch holds, forward fly, reverse fly. Throwing arm: IR, ER, elevated IR, elevated ER, reverse throw, forward throw. Walk closer to the fence if it is heavy. Do not stretch the band more than 2-3x length."
+            },
+            {
+              "id": "0907-pl1",
+              "name": "Reverse Throw",
+              "meta": "BLUE 1000g / 2.2 lb + GREEN 450g / 1.0 lb • 50%",
+              "desc": "8 each. Face away from the target, reverse the arm path, stay long. Recovery, not velo."
+            },
+            {
+              "id": "0907-pl2",
+              "name": "Pivot Pick",
+              "meta": "BLUE 1000g / 2.2 lb + GREEN 450g / 1.0 lb • 50%",
+              "desc": "8 each. Pivot, pick the ball, easy flip. No grunt."
+            }
+          ]
+        },
+        {
+          "title": "BEFORE PRACTICE — Catch Only",
+          "exercises": [
+            {
+              "id": "0907-th1",
+              "name": "Catch warm-up",
+              "meta": "White 5 oz • 40-50 throws",
+              "desc": "If you have leather weighted balls: 6 oz x 8, 4 oz x 8, then white 5 oz. Stay at 50-60%. No long toss today. No crow-hop maxes."
+            }
+          ]
+        },
+        {
+          "title": "AFTER PRACTICE — Post-Throw + Notes",
+          "exercises": [
+            {
+              "id": "0907-af1",
+              "name": "Post-throw circuit x 3",
+              "meta": "Light",
+              "desc": "Rebounders / plyo-ball drops 10, band pull-aparts 12, waiter walks 15 yd, upward tosses 8. Easy."
+            },
+            {
+              "id": "0907-af2",
+              "name": "10-min nasal walk + feed",
+              "meta": "Outside + kitchen",
+              "desc": "Protein + carbs within 60 min. Keep sipping."
+            }
+          ],
+          "notes": true
+        }
+      ]
+    },
+    {
+      "id": "2026-09-08",
+      "label": "Tue 8",
+      "full": "Tuesday, Sep 8",
+      "type": "Hybrid B • Speed + Lower Control",
+      "sections": [
+        {
+          "title": "ON ITS OWN — Speed + Lower",
+          "exercises": [
+            {
+              "id": "0908-wu1",
+              "name": "Everyday Dynamic Warm-up",
+              "video": "https://player.vimeo.com/video/862985494",
+              "meta": "Bodyweight • 10 min",
+              "desc": "Full movement prep. Look springy, not tired."
+            },
+            {
+              "id": "0908-sp1",
+              "name": "A-Skip + falling starts",
+              "video": "https://player.vimeo.com/video/714737550",
+              "meta": "Open field",
+              "desc": "2 x 15 yd A-skip. Then 4 x 10-20 yd accel. Full walk-back. This is the speed day — 60 still has to get under 7.00."
+            },
+            {
+              "id": "0908-st1",
+              "name": "Front Squat",
+              "meta": "BB or goblet • 3 x 4 @ 2 RIR",
+              "desc": "High elbows. Leave 2 reps in the tank. One working squat session this week."
+            },
+            {
+              "id": "0908-st2",
+              "name": "Reverse Lunge",
+              "meta": "DB • 3 x 5 each @ 2 RIR",
+              "desc": "Long reverse step, front heel down, torso tall. Control the knee — do not sink into a depth you cannot own."
+            },
+            {
+              "id": "0908-st3",
+              "name": "Romanian Deadlift",
+              "video": "https://player.vimeo.com/video/863274606",
+              "meta": "DB or BB • 3 x 6 @ 2 RIR",
+              "desc": "Soft knee, hips back. Posterior chain without pounding the knee."
+            },
+            {
+              "id": "0908-st4",
+              "name": "Spanish squat or wall-sit iso",
+              "meta": "Band or wall • 3 x 20-30 sec",
+              "desc": "Knee-friendly strength. Stop if it pinches."
+            },
+            {
+              "id": "0908-st5",
+              "name": "Copenhagen + dead bug",
+              "meta": "Bodyweight",
+              "desc": "Copenhagen 2 x 20-25 sec each. Dead bug 2 x 6 each. Core has been a little soft — anti-extension first."
+            }
+          ]
+        },
+        {
+          "title": "BEFORE PRACTICE — J-Bands + Hybrid B Plyos",
+          "exercises": [
+            {
+              "id": "0908-jb1",
+              "name": "Jaeger J-Bands — 11-exercise circuit",
+              "meta": "J-Band • 1 x 20",
+              "desc": "Before the first throw. Controlled pace. Fatigue, not failure."
+            },
+            {
+              "id": "0908-pl1",
+              "name": "Reverse Throw @ 50%",
+              "meta": "BLUE 1000g / 2.2 lb + GREEN 450g / 1.0 lb • 8 each",
+              "desc": "Long, quiet arm. Heavy ball first, then the 450g."
+            },
+            {
+              "id": "0908-pl2",
+              "name": "Pivot Pick @ 50%",
+              "meta": "BLUE 1000g / 2.2 lb + GREEN 450g / 1.0 lb • 8 each",
+              "desc": "Same two balls. Easy pick and throw."
+            },
+            {
+              "id": "0908-pl3",
+              "name": "Rocker series @ 70-80%",
+              "meta": "GREEN 450g • YELLOW 225g • ORANGE 150g • RED 100g",
+              "desc": "3 each color, no rest between colors. One pass. Stay on plane. No purple / 1500g."
+            },
+            {
+              "id": "0908-pl4",
+              "name": "Walking wind-up @ 70-80%",
+              "meta": "YELLOW 225g / 8 oz • ORANGE 150g / 5.3 oz • RED 100g / 3.5 oz",
+              "desc": "3 each. Step and throw. Command over grunt."
+            }
+          ]
+        },
+        {
+          "title": "BEFORE PRACTICE — Long Toss + INF",
+          "exercises": [
+            {
+              "id": "0908-th1",
+              "name": "Jaeger long toss — extension only",
+              "meta": "White 5 oz • 10-12 min",
+              "desc": "Work out, get air under it, work back in. No pulldowns. No throws on a line at max. This is Hybrid B."
+            },
+            {
+              "id": "0908-th2",
+              "name": "INF feeds",
+              "meta": "White 5 oz • 8-10 throws",
+              "desc": "Forehand, backhand, one DP turn. 70-80%. Keep the 91. Do not airmail it in warm-ups."
+            }
+          ]
+        },
+        {
+          "title": "HITTING — If the team did not already cover it",
+          "exercises": [
+            {
+              "id": "0908-hit1",
+              "name": "Walk-Through Drill",
+              "video": "https://www.youtube.com/watch?v=9BsRj3u5HQs",
+              "meta": "Tee",
+              "desc": "3 swings each bat = 12.",
+              "swings": true
+            },
+            {
+              "id": "0908-hit2",
+              "name": "Rocker Drill",
+              "video": "https://www.youtube.com/watch?v=r3wazOZE-MQ",
+              "meta": "Tee",
+              "desc": "3 swings each bat = 12.",
+              "swings": true
+            },
+            {
+              "id": "0908-hit3",
+              "name": "Tee – Middle",
+              "meta": "Tee",
+              "desc": "3 swings each bat. Hunt the barrel. EV still chasing 105.",
+              "swings": true
+            },
+            {
+              "id": "0908-hit4",
+              "name": "Front Toss – Middle / Away",
+              "meta": "Soft Toss",
+              "desc": "3-4 each bat.",
+              "swings": true
+            },
+            {
+              "id": "0908-hit5",
+              "name": "Machine – FB + Slider mix",
+              "meta": "Jr. Hack Attack",
+              "desc": "Regular bat. 8-10 FB + 8-10 slider. Stop when quality drops.",
+              "swings": true,
+              "settings": "FB 7.5 / 7.5 / 10\\nRH Slider 7 / 10 / 5\\nLH Slider 10 / 7 / 5"
+            }
+          ]
+        },
+        {
+          "title": "AFTER PRACTICE — Recover the Arm",
+          "exercises": [
+            {
+              "id": "0908-af1",
+              "name": "Post-throw circuit x 3",
+              "meta": "Light",
+              "desc": "Rebounders / plyo drops 10, pull-aparts 12, waiter walks 15 yd, upward tosses 8."
+            },
+            {
+              "id": "0908-af2",
+              "name": "Band ER + 90/90",
+              "video": "https://player.vimeo.com/video/851488108",
+              "meta": "Band",
+              "desc": "ER 2 x 12 each. 90/90 floss 2 x 45 sec."
+            }
+          ],
+          "notes": true
+        }
+      ]
+    },
+    {
+      "id": "2026-09-09",
+      "label": "Wed 9",
+      "full": "Wednesday, Sep 9",
+      "type": "Mound Blend B • Upper + EV",
+      "sections": [
+        {
+          "title": "ON ITS OWN — Upper + Rotation",
+          "exercises": [
+            {
+              "id": "0909-wu1",
+              "name": "Everyday Dynamic + shoulder CARs",
+              "video": "https://player.vimeo.com/video/862985494",
+              "meta": "10 min",
+              "desc": "Add 6 slow CARs each shoulder before the press work."
+            },
+            {
+              "id": "0909-st1",
+              "name": "Dumbbell Bench Press",
+              "video": "https://player.vimeo.com/video/863300945",
+              "meta": "4 x 6 @ 2 RIR",
+              "desc": "Do this after throwing if the arm is hot — or before if you throw later. Leave 2 in the tank."
+            },
+            {
+              "id": "0909-st2",
+              "name": "Chest-Supported Row",
+              "video": "https://player.vimeo.com/video/812800937",
+              "meta": "4 x 8 @ 2 RIR",
+              "desc": "Squeeze the scaps. Do not shrug."
+            },
+            {
+              "id": "0909-st3",
+              "name": "Landmine or half-kneeling press",
+              "meta": "3 x 8 each @ 2 RIR",
+              "desc": "Own the ribcage. This feeds the throw and the swing."
+            },
+            {
+              "id": "0909-st4",
+              "name": "Face pull + Pallof press",
+              "meta": "3 x 12 face / 3 x 8 each Pallof",
+              "desc": "Anti-rotation for the soft core. Pause the Pallof."
+            },
+            {
+              "id": "0909-st5",
+              "name": "Med-Ball rotational throw",
+              "video": "https://player.vimeo.com/video/641277377",
+              "meta": "6-10 lb • 3 x 4 each",
+              "desc": "Max intent, stick the finish. EV work lives here too."
+            }
+          ]
+        },
+        {
+          "title": "BEFORE PRACTICE — J-Bands + 50% Plyos",
+          "exercises": [
+            {
+              "id": "0909-jb1",
+              "name": "Jaeger J-Bands — 11-exercise circuit",
+              "meta": "J-Band • 1 x 20",
+              "desc": "Before the first throw. Same circuit as Tuesday."
+            },
+            {
+              "id": "0909-pl1",
+              "name": "Reverse Throw @ 50%",
+              "meta": "BLUE 1000g / 2.2 lb + GREEN 450g / 1.0 lb • 8 each",
+              "desc": "No rocker series today. Save the arm for the short box."
+            },
+            {
+              "id": "0909-pl2",
+              "name": "Pivot Pick @ 50%",
+              "meta": "BLUE 1000g / 2.2 lb + GREEN 450g / 1.0 lb • 8 each",
+              "desc": "Easy. Then go catch."
+            }
+          ]
+        },
+        {
+          "title": "BEFORE PRACTICE — Catch + 15-20 Pitch Short Box",
+          "exercises": [
+            {
+              "id": "0909-th1",
+              "name": "Catch + short extension toss",
+              "meta": "White 5 oz • 8 min",
+              "desc": "Get out to a comfortable extension distance. Work back in. No pulldowns."
+            },
+            {
+              "id": "0909-th2",
+              "name": "Short box / light pen — 15-20 pitches",
+              "meta": "White 5 oz • 70-80%",
+              "desc": "Catcher in front of the plate or a shortened mound. Mix FB / slider / one change if you have it. Command the glove. Last 4-5 at game effort — then stop. This is Mound Blend B, not a starter bullpen."
+            },
+            {
+              "id": "0909-th3",
+              "name": "INF only if the arm is quiet",
+              "meta": "White 5 oz • 6 throws max",
+              "desc": "If the pen left the arm buzzed, skip INF extra. The 91 shows up Saturday, not in extra feeds."
+            }
+          ]
+        },
+        {
+          "title": "HITTING — Keep the Barrel",
+          "exercises": [
+            {
+              "id": "0909-hit1",
+              "name": "Walk-Through + Rocker",
+              "meta": "Tee",
+              "desc": "3 each bat on each drill.",
+              "swings": true
+            },
+            {
+              "id": "0909-hit2",
+              "name": "Tee – Away",
+              "meta": "Tee",
+              "desc": "3-4 each bat.",
+              "swings": true
+            },
+            {
+              "id": "0909-hit3",
+              "name": "Machine – FB / curve mix",
+              "meta": "Jr. Hack Attack",
+              "desc": "Regular bat. 16-20 total. Puma will mix looks.",
+              "swings": true,
+              "settings": "FB 7.5 / 7.5 / 10\\nRH Curve 5 / 10 / 3\\nLH Curve 10 / 5 / 3"
+            }
+          ]
+        },
+        {
+          "title": "AFTER PRACTICE — Post-Throw",
+          "exercises": [
+            {
+              "id": "0909-af1",
+              "name": "Post-throw circuit x 3",
+              "meta": "Light",
+              "desc": "Rebounders, pull-aparts, waiter walks, upward tosses."
+            },
+            {
+              "id": "0909-af2",
+              "name": "Forearm + ER extras",
+              "meta": "Band + light DB",
+              "desc": "Band ER 2 x 12. Wrist pro/sup 2 x 12. You touched the mound — take care of the elbow."
+            }
+          ],
+          "notes": true
+        }
+      ]
+    },
+    {
+      "id": "2026-09-10",
+      "label": "Thu 10",
+      "full": "Thursday, Sep 10",
+      "type": "Recovery Throw • No Lift",
+      "sections": [
+        {
+          "title": "ON ITS OWN — Optional Core + TKE",
+          "exercises": [
+            {
+              "id": "0910-own1",
+              "name": "Dead bug + side plank",
+              "meta": "Bodyweight",
+              "desc": "Dead bug 2 x 6 each. Side plank 2 x 20-25 sec each. Stop there."
+            },
+            {
+              "id": "0910-own2",
+              "name": "Terminal Knee Extension",
+              "meta": "Light band • 2 x 12 each",
+              "desc": "Only if the knee is calm. No extra squat or hinge today."
+            }
+          ]
+        },
+        {
+          "title": "BEFORE PRACTICE — J-Bands + Recovery Plyos",
+          "exercises": [
+            {
+              "id": "0910-jb1",
+              "name": "Jaeger J-Bands — short circuit",
+              "meta": "J-Band • 1 x 15",
+              "desc": "Full 11 if you have time. If not: forward fly, reverse fly, IR, ER, elevated IR, elevated ER."
+            },
+            {
+              "id": "0910-pl1",
+              "name": "Reverse Throw @ 50%",
+              "meta": "GREEN 450g / 1.0 lb + YELLOW 225g / 8 oz • 8 each",
+              "desc": "Leave the 1000g in the bag today."
+            },
+            {
+              "id": "0910-pl2",
+              "name": "Pivot Pick @ 50%",
+              "meta": "GREEN 450g / 1.0 lb + YELLOW 225g / 8 oz • 8 each",
+              "desc": "Recovery day = reverse + pivot only. No rocker. No wind-up."
+            }
+          ]
+        },
+        {
+          "title": "BEFORE PRACTICE — Light Catch, No Long Toss",
+          "exercises": [
+            {
+              "id": "0910-th1",
+              "name": "Catch play 40-50 throws",
+              "meta": "White 5 oz • 50-60%",
+              "desc": "Recovery day: light catch is plenty. No long toss. No mound."
+            }
+          ]
+        },
+        {
+          "title": "HITTING — Short",
+          "exercises": [
+            {
+              "id": "0910-hit1",
+              "name": "Walk-Through + Tee middle",
+              "meta": "Tee",
+              "desc": "2-3 each bat. Done when it feels right.",
+              "swings": true
+            }
+          ]
+        },
+        {
+          "title": "AFTER PRACTICE — Tissue",
+          "exercises": [
+            {
+              "id": "0910-af1",
+              "name": "Post-throw circuit x 2",
+              "meta": "Easy",
+              "desc": "Pull-aparts, waiter walks, upward tosses. Two rounds is enough."
+            },
+            {
+              "id": "0910-af2",
+              "name": "Couch stretch + 90/90",
+              "meta": "2 x 45-60 sec each",
+              "desc": "Lights out on time. Friday is a hard stop."
+            }
+          ],
+          "notes": true
+        }
+      ]
+    },
+    {
+      "id": "2026-09-11",
+      "label": "Fri 11",
+      "full": "Friday, Sep 11",
+      "type": "Primer • Travel Ready",
+      "sections": [
+        {
+          "title": "ON ITS OWN — Pattern Primer Only",
+          "exercises": [
+            {
+              "id": "0911-pt1",
+              "name": "Everyday Dynamic",
+              "video": "https://player.vimeo.com/video/862985494",
+              "meta": "8-10 min",
+              "desc": "Just enough to feel springy."
+            },
+            {
+              "id": "0911-pt2",
+              "name": "Build-ups + 2 starts",
+              "meta": "Open field",
+              "desc": "3 x 15 yd at 70-80%, then 2 x 10 yd at 90%. Full recovery. Stop."
+            },
+            {
+              "id": "0911-pt3",
+              "name": "Goblet squat + reverse lunge groove",
+              "meta": "Light",
+              "desc": "Goblet 2 x 3. Reverse lunge 2 x 4 each. Activation, not Tuesday."
+            }
+          ]
+        },
+        {
+          "title": "BEFORE PRACTICE — J-Bands + Short Catch",
+          "exercises": [
+            {
+              "id": "0911-jb1",
+              "name": "Jaeger J-Bands — short circuit",
+              "meta": "J-Band • 1 x 15",
+              "desc": "Same six: flies + IR/ER up and down."
+            },
+            {
+              "id": "0911-th1",
+              "name": "Easy catch 25-40 throws",
+              "meta": "White 5 oz",
+              "desc": "If the arm is fresh and you have a catcher, 8-12 easy short-box pitches at 60-70% is allowed. If anything is tight — catch only. No long toss."
+            },
+            {
+              "id": "0911-th2",
+              "name": "4-6 easy INF",
+              "meta": "White 5 oz",
+              "desc": "Feel the hop. Save the firm throw for tomorrow."
+            }
+          ]
+        },
+        {
+          "title": "HITTING — Short + Visualize",
+          "exercises": [
+            {
+              "id": "0911-hit1",
+              "name": "Walk-Through + Rocker",
+              "meta": "Tee",
+              "desc": "2 each bat on each drill.",
+              "swings": true
+            },
+            {
+              "id": "0911-hit2",
+              "name": "3-minute visualization",
+              "meta": "Quiet",
+              "desc": "See the first at-bat at Grand Park. See a clean first-step. See the 1-2-3 inning — strike one, weak contact, get the out."
+            }
+          ]
+        },
+        {
+          "title": "AFTER — Hard Stop + Bag",
+          "exercises": [
+            {
+              "id": "0911-af1",
+              "name": "Bag check",
+              "meta": "Locker / car",
+              "desc": "Cleats, game bat, J-Band, plyos if coaches allow them at the park, extra socks, snacks, water."
+            },
+            {
+              "id": "0911-af2",
+              "name": "Hard stop",
+              "meta": "Done",
+              "desc": "No extra lift. No extra cages. Eat, hydrate, lights out."
+            }
+          ],
+          "notes": true
+        }
+      ]
+    },
+    {
+      "id": "2026-09-12",
+      "label": "Sat 12",
+      "full": "Saturday, Sep 12",
+      "type": "Game • Puma Classic INF + 1 inning",
+      "sections": [
+        {
+          "title": "ON ITS OWN — AM Checklist",
+          "exercises": [
+            {
+              "id": "0912-am1",
+              "name": "Sleep + wake check",
+              "meta": "Night before",
+              "desc": "8-9 hours. Two alarms on the road."
+            },
+            {
+              "id": "0912-am2",
+              "name": "Hydration + breakfast",
+              "meta": "Kitchen / travel",
+              "desc": "16-24 oz water. Protein + carb 2.5-3 hrs before first pitch."
+            },
+            {
+              "id": "0912-am3",
+              "name": "Weigh-in if you can",
+              "meta": "Scale",
+              "desc": "Log it. Same protocol as Scout Day."
+            }
+          ]
+        },
+        {
+          "title": "BEFORE THE GAME — J-Bands + Field Primer",
+          "exercises": [
+            {
+              "id": "0912-jb1",
+              "name": "Jaeger J-Bands",
+              "meta": "J-Band • 1 x 15-20",
+              "desc": "Before the first official throw. Do not skip this because it is a game day."
+            },
+            {
+              "id": "0912-pr1",
+              "name": "Everyday Dynamic + build-ups",
+              "video": "https://player.vimeo.com/video/862985494",
+              "meta": "12-min primer",
+              "desc": "Team warm-up + 2-3 x 15 yd at 70-80% + 2 x 10 yd at 90%."
+            },
+            {
+              "id": "0912-th1",
+              "name": "Catch + INF as the team does it",
+              "meta": "White 5 oz",
+              "desc": "Do not long-toss the arm out before the inning. Get loose, show the arm on the throws you need, then sit. If you pitch Game 1, treat pregame catch like a reliever — enough to be sharp, not a second pen."
+            }
+          ]
+        },
+        {
+          "title": "COMPETE",
+          "exercises": [
+            {
+              "id": "0912-cue1",
+              "name": "INF — first step, not first look",
+              "meta": "SS/3B",
+              "desc": "Quiet feet into the pitch. Beat the ball. Show 91 when you have the throw — do not force it."
+            },
+            {
+              "id": "0912-cue2",
+              "name": "Swing — see it, stay through it",
+              "meta": "RHH",
+              "desc": "One swing thought. Middle-away is still damage. Loud contact over pretty misses."
+            },
+            {
+              "id": "0912-cue3",
+              "name": "The inning",
+              "meta": "Mound",
+              "desc": "Strike one. Work fast. Attack the zone you warmed up. Get the three outs and go back to short."
+            },
+            {
+              "id": "0912-gm1",
+              "name": "Puma Classic — Game 1",
+              "meta": "Grand Park",
+              "desc": "Play the inning. Play the infield. Extra swings only if a coach asks."
+            }
+          ]
+        },
+        {
+          "title": "AFTER THE GAME — Full Post-Throw",
+          "exercises": [
+            {
+              "id": "0912-af1",
+              "name": "10-20 min flush walk",
+              "meta": "Outside",
+              "desc": "Nasal. Shake the inning out before the next game or the bus."
+            },
+            {
+              "id": "0912-af2",
+              "name": "High-intent post-throw circuit",
+              "meta": "Arm care",
+              "desc": "Because you pitched: band IR + ER 2 x 10, prone Y 2 x 8, rebounders / drops 10, pull-aparts 12, waiter walks, forearm pro/sup 2 x 12. Then feed."
+            },
+            {
+              "id": "0912-af3",
+              "name": "Feed + fluids + W/L/T",
+              "meta": "Notes",
+              "desc": "Protein + carbs within 60 min. Write: body, at-bats, the inning, one cleanup for Dinger Classic."
+            }
+          ],
+          "notes": true
+        }
+      ]
+    },
+    {
+      "id": "2026-09-13",
+      "label": "Sun 13",
+      "full": "Sunday, Sep 13",
+      "type": "Full Recovery • No Throw",
+      "sections": [
+        {
+          "title": "ON ITS OWN — Recover Hard",
+          "exercises": [
+            {
+              "id": "0913-fl1",
+              "name": "20-min easy flush",
+              "meta": "Walk or bike",
+              "desc": "Nasal only. Conversation pace. Off days are off days. Do not throw."
+            },
+            {
+              "id": "0913-fl2",
+              "name": "4-6-8 breathing",
+              "meta": "Seated or lying",
+              "desc": "In 4, hold 6, out 8. 6-8 rounds."
+            },
+            {
+              "id": "0913-mo1",
+              "name": "90/90 + couch + worlds greatest",
+              "video": "https://player.vimeo.com/video/851486713",
+              "meta": "2 x 60 sec each",
+              "desc": "Slow. Soft tissue hips / T-spine / feet 6-8 min if you want it."
+            },
+            {
+              "id": "0913-ar1",
+              "name": "Easy band ER + pull-aparts only",
+              "meta": "No full J-Band circuit required",
+              "desc": "2 x 12 ER, 2 x 15 pull-aparts. Blood flow, not a workout."
+            },
+            {
+              "id": "0913-rc1",
+              "name": "Protein + fluids + 9 hours",
+              "meta": "Kitchen / bed",
+              "desc": "This is the training. Next up: Dinger Classic, Friday Sep 18."
+            }
+          ],
+          "notes": true
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "id": "caynan",
+  "tenantId": "demo",
+  "role": "athlete",
+  "email": "caynan@toohey",
+  "name": "Caynan Sizemore",
+  "pos": "SS/3B",
+  "team": "Rend Lake Warriors",
+  "height": "6-2",
+  "weight": 210,
+  "bats": "R",
+  "throws": "R",
+  "sports": ["baseball"],
+  "primarySport": "baseball",
+  "assignmentWeekId": "w4-puma-mound",
+  "maxes": {
+    "frontSquat": { "value": null, "reps": 4, "testedOn": null, "note": "Use 2 RIR until a true max is logged" },
+    "dbBench": { "value": null, "reps": 6, "testedOn": null },
+    "rdl": { "value": null, "reps": 6, "testedOn": null }
+  },
+  "tests": [
+    {
+      "date": "2026-08-31",
+      "source": "Scout Day HOME",
+      "sixty": 7.22,
+      "infVelo": 91,
+      "maxEV": 100.5,
+      "avgEV": 91.83,
+      "avgDist": 227.63,
+      "maxDist": 349.5,
+      "batSpeed": null,
+      "handSpeed": null
+    },
+    {
+      "date": "prior",
+      "source": "Listed prior",
+      "sixty": 7.14,
+      "infVelo": 87,
+      "maxEV": 99.2,
+      "batSpeed": 88
+    }
+  ],
+  "targets": {
+    "sixty": 6.99,
+    "maxEV": 105,
+    "holdInfVelo": 91
+  },
+  "flags": {
+    "knee": "monitor",
+    "elbow": "clear",
+    "shoulder": "clear"
+  },
+  "entitlements": [
+    { "id": "custom", "kind": "custom", "access": "assignment" }
+  ]
+}
