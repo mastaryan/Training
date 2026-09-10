@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Today • Training</title>
+  <style>
+    :root { --navy:#0c1a2e; --navy2:#132337; --bg:#f0f2f5; --text:#1a1d21; --muted:#6b7280; --border:#e5e7eb; --accent:#eab308; --ok:#0d9488; --skip:#64748b; }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; background:var(--bg); color:var(--text); line-height:1.45; padding-bottom:88px; }
+    header { background:linear-gradient(180deg,var(--navy),var(--navy2)); color:#fff; padding:14px 16px 16px; }
+    .brand { font-size:.72rem; letter-spacing:.08em; font-weight:700; opacity:.85; }
+    h1 { font-size:1.15rem; margin-top:6px; }
+    .sub { font-size:.82rem; opacity:.8; margin-top:4px; }
+    .tabs { display:flex; gap:8px; padding:10px 12px; overflow-x:auto; background:#fff; border-bottom:1px solid var(--border); position:sticky; top:0; z-index:5; }
+    .tabs button { border:1px solid var(--border); background:#fff; border-radius:999px; padding:6px 12px; font-weight:650; font-size:.8rem; }
+    .tabs button.on { background:var(--navy); color:#fff; border-color:var(--navy); }
+    .tabs button.done { outline:2px solid var(--ok); }
+    main { max-width:640px; margin:0 auto; padding:12px; }
+    .card { background:#fff; border:1px solid var(--border); border-radius:12px; padding:12px; margin-bottom:10px; }
+    .ex { display:flex; gap:10px; align-items:flex-start; padding:10px 0; border-bottom:1px solid var(--border); }
+    .ex:last-child { border-bottom:0; }
+    .ex h3 { font-size:.95rem; }
+    .meta { color:var(--muted); font-size:.78rem; }
+    .row { display:flex; gap:6px; margin-top:6px; flex-wrap:wrap; }
+    button.act { border:0; border-radius:8px; padding:6px 10px; font-weight:700; font-size:.78rem; cursor:pointer; }
+    .do { background:#d1fae5; color:#065f46; }
+    .sk { background:#e5e7eb; color:#374151; }
+    .done-row { opacity:.55; }
+    .banner { background:#fffbeb; border:1px solid #f59e0b; color:#92400e; padding:8px 12px; font-size:.8rem; }
+    nav.bottom { position:fixed; bottom:0; left:0; right:0; background:#fff; border-top:1px solid var(--border); display:flex; }
+    nav.bottom a { flex:1; text-align:center; padding:12px 8px; font-size:.78rem; font-weight:700; color:var(--navy); text-decoration:none; }
+    input, textarea { width:100%; border:1px solid var(--border); border-radius:8px; padding:8px; font:inherit; }
+    label { font-size:.72rem; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.04em; display:block; margin:8px 0 4px; }
+    .pct { font-size:.8rem; color:#0f766e; font-weight:650; }
+    a.vid { font-size:.78rem; color:#1d4ed8; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand" id="brand">DEMO TENANT</div>
+    <h1 id="who">Today</h1>
+    <div class="sub" id="sub">Loading week data…</div>
+  </header>
+  <div class="banner hidden" id="parentBanner">Parent / visitor view. Logging is locked.</div>
+  <div class="tabs" id="dayTabs"></div>
+  <main id="main"></main>
+  <nav class="bottom">
+    <a href="#today" onclick="showView('today');return false;">Today</a>
+    <a href="#profile" onclick="showView('profile');return false;">Profile</a>
+    <a href="week-4-day-view.html">Full week UI</a>
+    <a href="index.html">Home</a>
+  </nav>
+<script>
+const LOG_KEY = "platform_logs_v1";
+const PROF_KEY = "platform_profile_overlay_v1";
+const params = new URLSearchParams(location.search);
+const PARENT = params.get("view") === "parent";
+let week, profile, tenant, view = "today", currentDayId = null;
+
+function loadLogs(){ try { return JSON.parse(localStorage.getItem(LOG_KEY)||"{}"); } catch { return {}; } }
+function saveLogs(l){ localStorage.setItem(LOG_KEY, JSON.stringify(l)); }
+function overlayProfile(base){
+  try { return Object.assign({}, base, JSON.parse(localStorage.getItem(PROF_KEY)||"{}")); } catch { return base; }
+}
+function prescribed(ex, prof){
+  if (!ex.scheme || ex.scheme.pctMax == null) return null;
+  const m = prof.maxes && prof.maxes[ex.scheme.maxKey];
+  if (!m || !m.value) return "Needs a logged max";
+  return Math.round(m.value * ex.scheme.pctMax) + " lb (" + Math.round(ex.scheme.pctMax*100) + "% of " + m.value + ")";
+}
+function logKey(dayId, exId){ return profile.id + ":" + dayId + ":" + exId; }
+
+async function boot(){
+  if (PARENT) document.getElementById("parentBanner").classList.remove("hidden");
+  const [w,p,t] = await Promise.all([
+    fetch("data/week-4.json").then(r=>r.json()),
+    fetch("data/profile-caynan.json").then(r=>r.json()),
+    fetch("data/tenant-demo.json").then(r=>r.json())
+  ]);
+  week = w; profile = overlayProfile(p); tenant = t;
+  document.getElementById("brand").textContent = tenant.name.toUpperCase();
+  const today = new Date().toISOString().slice(0,10);
+  currentDayId = week.days.some(d=>d.id===today) ? today : week.days[0].id;
+  render();
+}
+
+function showView(v){ view = v; render(); }
+
+function setStatus(dayId, exId, status){
+  if (PARENT) return;
+  const logs = loadLogs();
+  logs[logKey(dayId,exId)] = { status, at: new Date().toISOString() };
+  saveLogs(logs); render();
+}
+
+function renderTabs(){
+  const el = document.getElementById("dayTabs");
+  el.style.display = view === "today" ? "flex" : "none";
+  el.innerHTML = "";
+  const logs = loadLogs();
+  week.days.forEach(d => {
+    const b = document.createElement("button");
+    const ids = d.sections.flatMap(s=>s.exercises.map(e=>e.id));
+    const done = ids.filter(id => {
+      const st = (logs[logKey(d.id,id)]||{}).status;
+      return st==="done"||st==="skip";
+    }).length;
+    b.textContent = d.label + (done===ids.length && ids.length ? " ✓" : "");
+    if (d.id===currentDayId) b.classList.add("on");
+    if (done===ids.length && ids.length) b.classList.add("done");
+    b.onclick = () => { currentDayId = d.id; render(); };
+    el.appendChild(b);
+  });
+}
+
+function renderToday(){
+  const day = week.days.find(d=>d.id===currentDayId);
+  document.getElementById("who").textContent = profile.name.split(" ")[0] + " • Today";
+  document.getElementById("sub").textContent = day.full + " · " + day.type;
+  const logs = loadLogs();
+  let html = '<div class="card"><strong>' + week.title + '</strong><div class="meta">' + week.kind + " · " + week.sport + '</div>';
+  html += "<ul>" + week.rules.map(r=>"<li class='meta'>"+r+"</li>").join("") + "</ul></div>";
+  day.sections.forEach(sec => {
+    html += '<div class="card"><div style="font-weight:800;font-size:.8rem;letter-spacing:.04em;color:#6b7280;">'+sec.title+'</div>';
+    sec.exercises.forEach(ex => {
+      const st = (logs[logKey(day.id,ex.id)]||{}).status;
+      const load = prescribed(ex, profile);
+      html += '<div class="ex '+(st||"")+'"><div style="flex:1"><h3>'+ex.name+'</h3>';
+      html += '<div class="meta">'+ (ex.meta||"") +'</div>';
+      if (ex.desc) html += '<div class="meta">'+ex.desc+'</div>';
+      if (load) html += '<div class="pct">'+load+'</div>';
+      if (ex.video) html += '<a class="vid" href="'+ex.video+'" target="_blank" rel="noopener">Video</a>';
+      if (!PARENT) {
+        html += '<div class="row"><button class="act do" onclick="setStatus(\''+day.id+'\',\''+ex.id+'\',\'done\')">Done</button>';
+        html += '<button class="act sk" onclick="setStatus(\''+day.id+'\',\''+ex.id+'\',\'skip\')">Skip</button></div>';
+      } else if (st) html += '<div class="meta">Logged: '+st+'</div>';
+      html += '</div></div>';
+    });
+    html += '</div>';
+  });
+  document.getElementById("main").innerHTML = html;
+}
+
+function saveMax(key, val){
+  if (PARENT) return;
+  const o = JSON.parse(localStorage.getItem(PROF_KEY)||"{}");
+  o.maxes = Object.assign({}, profile.maxes, o.maxes);
+  o.maxes[key] = Object.assign({}, (profile.maxes||{})[key], { value: val?Number(val):null, testedOn: new Date().toISOString().slice(0,10) });
+  localStorage.setItem(PROF_KEY, JSON.stringify(o));
+  profile = overlayProfile(JSON.parse(JSON.stringify(profile)));
+  render();
+}
+
+function renderProfile(){
+  document.getElementById("who").textContent = "Profile";
+  document.getElementById("sub").textContent = profile.pos + " · " + profile.team;
+  const t = (profile.tests||[])[0] || {};
+  let html = '<div class="card"><strong>'+profile.name+'</strong><div class="meta">'+profile.sports.join(", ")+' · '+profile.email+'</div>';
+  html += '<div class="meta">Assignment: '+profile.assignmentWeekId+' ('+week.kind+')</div></div>';
+  html += '<div class="card"><strong>Scout / tests</strong>';
+  html += '<div class="meta">'+ (t.source||"") +' '+ (t.date||"") +'</div>';
+  html += '<div>60: <strong>'+(t.sixty||"—")+'</strong> &nbsp; INF: <strong>'+(t.infVelo||"—")+'</strong> &nbsp; Max EV: <strong>'+(t.maxEV||"—")+'</strong></div>';
+  html += '<div class="meta">Targets: 60 '+profile.targets.sixty+' · EV '+profile.targets.maxEV+' · hold INF '+profile.targets.holdInfVelo+'</div></div>';
+  html += '<div class="card"><strong>Maxes (for % loads)</strong>';
+  Object.keys(profile.maxes||{}).forEach(k=>{
+    const m = profile.maxes[k];
+    html += '<label>'+k+'</label><input type="number" '+(PARENT?"disabled":"")+' value="'+(m.value||"")+'" onchange="saveMax(\''+k+'\', this.value)">';
+    html += '<div class="meta">'+(m.note||("Rep max basis: "+(m.reps||1)))+'</div>';
+  });
+  html += '</div>';
+  html += '<div class="card"><strong>Parent link</strong><div class="meta">Read-only token stub — append <code>?view=parent</code></div>';
+  html += '<a href="today.html?view=parent">Open parent view</a></div>';
+  document.getElementById("main").innerHTML = html;
+}
+
+function render(){
+  renderTabs();
+  if (view==="profile") renderProfile();
+  else renderToday();
+}
+boot().catch(err => { document.getElementById("sub").textContent = "Could not load data/ JSON. Serve from repo root."; console.error(err); });
+</script>
+</body>
+</html>
