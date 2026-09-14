@@ -423,6 +423,36 @@
       font-size: 0.85rem;
     }
     .swing-label { font-size: 0.75rem; font-weight: 600; color: var(--muted); align-self: center; }
+    .throw-block { margin-top: 10px; }
+    .throw-header, .throw-inputs {
+      display: grid;
+      gap: 4px;
+      margin-bottom: 4px;
+    }
+    .throw-header {
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-align: center;
+    }
+    .throw-inputs input {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 6px 2px;
+      text-align: center;
+      font-size: 0.85rem;
+    }
+    .throw-label { font-size: 0.75rem; font-weight: 600; color: var(--muted); align-self: center; }
+    .ball-blue { background: #1d4ed8; color: #fff; border-radius: 5px; padding: 3px 0; }
+    .ball-green { background: #16a34a; color: #fff; border-radius: 5px; padding: 3px 0; }
+    .ball-yellow { background: #eab308; color: #422006; border-radius: 5px; padding: 3px 0; }
+    .ball-orange { background: #ea580c; color: #fff; border-radius: 5px; padding: 3px 0; }
+    .ball-red { background: #dc2626; color: #fff; border-radius: 5px; padding: 3px 0; }
+    .throw-pill.blue { background: #dbeafe; color: #1e3a8a; }
+    .throw-pill.green { background: #dcfce7; color: #14532d; }
+    .throw-pill.yellow { background: #fef08a; color: #713f12; }
+    .throw-pill.orange { background: #ffedd5; color: #9a3412; }
+    .throw-pill.red { background: #fee2e2; color: #991b1b; }
     .card-actions { display: flex; gap: 8px; margin-top: 12px; }
     .btn-complete {
       flex: 1;
@@ -639,8 +669,8 @@
           ]},
           { title: "BEFORE PRACTICE — J-Bands + Easy Plyos", exercises: [
             { id: "0914-jb1", name: "Jaeger J-Bands — 11-exercise circuit", video: "https://www.youtube.com/watch?v=DadrSfSb9fw", meta: "J-Band • 1 x 15-20", desc: "Always before the first throw. Dual-arm: overhead extensions, side + diagonal stretch holds, forward fly, reverse fly. Throwing arm: IR, ER, elevated IR, elevated ER, reverse throw, forward throw. Walk closer if it is heavy." },
-            { id: "0914-pl1", name: "Reverse Throw", video: "https://www.youtube.com/watch?v=ra0fSlXTNmM", meta: "GREEN 450g / 1.0 lb + YELLOW 225g / 8 oz • 50%", desc: "8 each. Face away, reverse the arm path, stay long. Recovery, not velo. Leave the 1000g in the bag." },
-            { id: "0914-pl2", name: "Pivot Pick", video: "https://www.youtube.com/watch?v=WPOU8wji3FE", meta: "GREEN 450g / 1.0 lb + YELLOW 225g / 8 oz • 50%", desc: "8 each. Easy pick and flip. No grunt." }
+            { id: "0914-pl1", name: "Reverse Throw", video: "https://www.youtube.com/watch?v=ra0fSlXTNmM", meta: "GREEN 450g / 1.0 lb + YELLOW 225g / 8 oz • 50%", desc: "8 each. Face away, reverse the arm path, stay long. Recovery, not velo. Leave the 1000g in the bag.", throws: ["GREEN","YELLOW"] },
+            { id: "0914-pl2", name: "Pivot Pick", video: "https://www.youtube.com/watch?v=WPOU8wji3FE", meta: "GREEN 450g / 1.0 lb + YELLOW 225g / 8 oz • 50%", desc: "8 each. Easy pick and flip. No grunt.", throws: ["GREEN","YELLOW"] }
           ]},
           { title: "BEFORE PRACTICE — Catch Only", exercises: [
             { id: "0914-th1", name: "Catch warm-up", meta: "White 5 oz • 40-50 throws", desc: "If you have leather weighted balls: 6 oz x 8, 4 oz x 8, then white 5 oz. Stay at 50-60%. No long toss. No crow-hop maxes. Arm is coming off Puma." }
@@ -665,10 +695,10 @@
           ]},
           { title: "BEFORE PRACTICE — J-Bands + Hybrid B Plyos", exercises: [
             { id: "0915-jb1", name: "Jaeger J-Bands — 11-exercise circuit", video: "https://www.youtube.com/watch?v=DadrSfSb9fw", meta: "J-Band • 1 x 20", desc: "Before the first throw. Controlled pace. Fatigue, not failure." },
-            { id: "0915-pl1", name: "Reverse Throw @ 50%", video: "https://www.youtube.com/watch?v=ra0fSlXTNmM", meta: "BLUE 1000g / 2.2 lb + GREEN 450g / 1.0 lb • 8 each", desc: "Long, quiet arm. Heavy ball first, then the 450g. Only day the 1000g comes out." },
-            { id: "0915-pl2", name: "Pivot Pick @ 50%", video: "https://www.youtube.com/watch?v=WPOU8wji3FE", meta: "BLUE 1000g / 2.2 lb + GREEN 450g / 1.0 lb • 8 each", desc: "Same two balls. Easy pick and throw." },
-            { id: "0915-pl3", name: "Rocker series @ 70-80%", video: "https://www.youtube.com/watch?v=k142cK48f-w", meta: "GREEN 450g • YELLOW 225g • ORANGE 150g • RED 100g", desc: "3 each color, no rest between colors. One pass. Stay on plane. No purple / 1500g." },
-            { id: "0915-pl4", name: "Walking wind-up @ 70-80%", video: "https://www.youtube.com/watch?v=JnRsvjU2L2s", meta: "YELLOW 225g / 8 oz • ORANGE 150g / 5.3 oz • RED 100g / 3.5 oz", desc: "3 each. Step and throw. Command over grunt." }
+            { id: "0915-pl1", name: "Reverse Throw @ 50%", video: "https://www.youtube.com/watch?v=ra0fSlXTNmM", meta: "BLUE 1000g / 2.2 lb + GREEN 450g / 1.0 lb • 8 each", desc: "Long, quiet arm. Heavy ball first, then the 450g. Only day the 1000g comes out.", throws: ["BLUE","GREEN"] },
+            { id: "0915-pl2", name: "Pivot Pick @ 50%", video: "https://www.youtube.com/watch?v=WPOU8wji3FE", meta: "BLUE 1000g / 2.2 lb + GREEN 450g / 1.0 lb • 8 each", desc: "Same two balls. Easy pick and throw.", throws: ["BLUE","GREEN"] },
+            { id: "0915-pl3", name: "Rocker series @ 70-80%", video: "https://www.youtube.com/watch?v=k142cK48f-w", meta: "GREEN 450g • YELLOW 225g • ORANGE 150g • RED 100g", desc: "3 each color, no rest between colors. One pass. Stay on plane. No purple / 1500g.", throws: ["GREEN","YELLOW","ORANGE","RED"] },
+            { id: "0915-pl4", name: "Walking wind-up @ 70-80%", video: "https://www.youtube.com/watch?v=JnRsvjU2L2s", meta: "YELLOW 225g / 8 oz • ORANGE 150g / 5.3 oz • RED 100g / 3.5 oz", desc: "3 each. Step and throw. Command over grunt.", throws: ["YELLOW","ORANGE","RED"] }
           ]},
           { title: "BEFORE PRACTICE — Long Toss + INF", exercises: [
             { id: "0915-th1", name: "Jaeger long toss — extension only", meta: "White 5 oz • 10-12 min", desc: "Work out, get air under it, work back in. No pulldowns. Hybrid B." },
@@ -702,8 +732,8 @@
           ]},
           { title: "BEFORE PRACTICE — J-Bands + 50% Plyos", exercises: [
             { id: "0916-jb1", name: "Jaeger J-Bands — 11-exercise circuit", video: "https://www.youtube.com/watch?v=DadrSfSb9fw", meta: "J-Band • 1 x 20", desc: "Before the first throw." },
-            { id: "0916-pl1", name: "Reverse Throw @ 50%", video: "https://www.youtube.com/watch?v=ra0fSlXTNmM", meta: "GREEN 450g / 1.0 lb + YELLOW 225g / 8 oz • 8 each", desc: "No 1000g today. Save the arm for the short box." },
-            { id: "0916-pl2", name: "Pivot Pick @ 50%", video: "https://www.youtube.com/watch?v=WPOU8wji3FE", meta: "GREEN 450g / 1.0 lb + YELLOW 225g / 8 oz • 8 each", desc: "Easy. Then go catch." }
+            { id: "0916-pl1", name: "Reverse Throw @ 50%", video: "https://www.youtube.com/watch?v=ra0fSlXTNmM", meta: "GREEN 450g / 1.0 lb + YELLOW 225g / 8 oz • 8 each", desc: "No 1000g today. Save the arm for the short box.", throws: ["GREEN","YELLOW"] },
+            { id: "0916-pl2", name: "Pivot Pick @ 50%", video: "https://www.youtube.com/watch?v=WPOU8wji3FE", meta: "GREEN 450g / 1.0 lb + YELLOW 225g / 8 oz • 8 each", desc: "Easy. Then go catch.", throws: ["GREEN","YELLOW"] }
           ]},
           { title: "BEFORE PRACTICE — Catch + 12-15 Pitch Short Box", exercises: [
             { id: "0916-th1", name: "Catch + short extension toss", meta: "White 5 oz • 8 min", desc: "Comfortable extension. Work back in. No pulldowns." },
@@ -731,8 +761,8 @@
           ]},
           { title: "BEFORE PRACTICE — J-Bands + Recovery Plyos", exercises: [
             { id: "0917-jb1", name: "Jaeger J-Bands — short circuit", video: "https://www.youtube.com/watch?v=DadrSfSb9fw", meta: "J-Band • 1 x 15", desc: "Full 11 if you have time. If not: forward fly, reverse fly, IR, ER, elevated IR, elevated ER." },
-            { id: "0917-pl1", name: "Reverse Throw @ 50%", video: "https://www.youtube.com/watch?v=ra0fSlXTNmM", meta: "GREEN 450g / 1.0 lb + YELLOW 225g / 8 oz • 8 each", desc: "Leave the 1000g in the bag." },
-            { id: "0917-pl2", name: "Pivot Pick @ 50%", video: "https://www.youtube.com/watch?v=WPOU8wji3FE", meta: "GREEN 450g / 1.0 lb + YELLOW 225g / 8 oz • 8 each", desc: "Recovery day = reverse + pivot only. No rocker. No wind-up." }
+            { id: "0917-pl1", name: "Reverse Throw @ 50%", video: "https://www.youtube.com/watch?v=ra0fSlXTNmM", meta: "GREEN 450g / 1.0 lb + YELLOW 225g / 8 oz • 8 each", desc: "Leave the 1000g in the bag.", throws: ["GREEN","YELLOW"] },
+            { id: "0917-pl2", name: "Pivot Pick @ 50%", video: "https://www.youtube.com/watch?v=WPOU8wji3FE", meta: "GREEN 450g / 1.0 lb + YELLOW 225g / 8 oz • 8 each", desc: "Recovery day = reverse + pivot only. No rocker. No wind-up.", throws: ["GREEN","YELLOW"] }
           ]},
           { title: "BEFORE PRACTICE — Light Catch, No Long Toss", exercises: [
             { id: "0917-th1", name: "Catch play 30-40 throws", meta: "White 5 oz • 50-60%", desc: "Hard stop on volume. No long toss. No mound. If travel is early, this happens at the park after the pipe." }
@@ -809,9 +839,12 @@
     function loadState() {
       try {
         const raw = localStorage.getItem("caynan_v3_w5");
-        return raw ? JSON.parse(raw) : { status: {}, forceOpen: {}, secCollapsed: {}, swings: {}, notes: {}, bodyweight: {}, skipReason: {} };
+        const parsed = raw ? JSON.parse(raw) : { status: {}, forceOpen: {}, secCollapsed: {}, swings: {}, throws: {}, notes: {}, bodyweight: {}, skipReason: {} };
+        if (!parsed.throws) parsed.throws = {};
+        if (!parsed.swings) parsed.swings = {};
+        return parsed;
       } catch (e) {
-        return { status: {}, forceOpen: {}, secCollapsed: {}, swings: {}, notes: {}, bodyweight: {}, skipReason: {} };
+        return { status: {}, forceOpen: {}, secCollapsed: {}, swings: {}, throws: {}, notes: {}, bodyweight: {}, skipReason: {} };
       }
     }
     function save() {
@@ -843,6 +876,18 @@
       if (done === 0) return "none";
       if (done === total) return "done";
       return "partial";
+    }
+    function throwTotals(day) {
+      const totals = { BLUE: 0, GREEN: 0, YELLOW: 0, ORANGE: 0, RED: 0 };
+      if (day.off) return totals;
+      day.sections.forEach(s => {
+        s.exercises.forEach(e => {
+          if (!e.throws) return;
+          const th = state.throws[e.id] || {};
+          e.throws.forEach(c => { totals[c] += parseInt(th[c] || 0, 10) || 0; });
+        });
+      });
+      return totals;
     }
     function hitTotals(day) {
       const totals = { BL: 0, HL: 0, U: 0, R: 0 };
@@ -896,6 +941,8 @@
       const pct = total ? Math.round((done / total) * 100) : 0;
       const hits = hitTotals(day);
       const hasHits = hits.BL + hits.HL + hits.U + hits.R > 0;
+      const ths = throwTotals(day);
+      const hasThrows = ths.BLUE + ths.GREEN + ths.YELLOW + ths.ORANGE + ths.RED > 0;
 
       const prog = document.createElement("div");
       prog.className = "progress-card";
@@ -939,6 +986,16 @@
           '<span class="hit-pill bl">BL ' + hits.BL + '</span><span class="hit-pill hl">HL ' + hits.HL + '</span>' +
           '<span class="hit-pill u">U ' + hits.U + '</span><span class="hit-pill r">R ' + hits.R + '</span></div>';
         content.appendChild(hs);
+      }
+      if (hasThrows) {
+        const ts = document.createElement("div");
+        ts.className = "hit-summary";
+        let pills = "";
+        [["BLUE","blue"],["GREEN","green"],["YELLOW","yellow"],["ORANGE","orange"],["RED","red"]].forEach(function(pair) {
+          if (ths[pair[0]] > 0) pills += '<span class="hit-pill throw-pill ' + pair[1] + '">' + pair[0] + ' ' + ths[pair[0]] + '</span>';
+        });
+        ts.innerHTML = '<div class="hit-summary-title">Plyo throws today</div><div class="hit-pills">' + pills + '</div>';
+        content.appendChild(ts);
       }
 
       day.sections.forEach((section, sIdx) => {
@@ -984,6 +1041,7 @@
             if (ex.settings) body += '<div class="settings-box">' + ex.settings + '</div>';
             if (ex.desc) body += '<div class="exercise-desc">' + ex.desc + '</div>';
             if (ex.swings) body += renderSwings(ex.id);
+            if (ex.throws) body += renderThrows(ex.id, ex.throws);
             if (st === "complete" || st === "skip") {
               body += '<div class="card-actions"><button class="btn-undo" onclick="uncomplete(\'' + ex.id + '\')">Undo</button><button class="btn-collapse" onclick="collapseExercise(\'' + ex.id + '\')">Collapse</button></div>';
             } else {
@@ -1010,6 +1068,20 @@
         content.appendChild(doneEl);
       }
       save();
+    }
+    function renderThrows(exId, colors) {
+      const s = state.throws[exId] || {};
+      const n = colors.length;
+      const cols = "52px repeat(" + n + ", 1fr)";
+      let head = '<div class="throw-header" style="grid-template-columns:' + cols + '"><div class="throw-label">Throws</div>';
+      let inputs = '<div class="throw-inputs" style="grid-template-columns:' + cols + '"><div></div>';
+      colors.forEach(function(c) {
+        head += '<div class="ball-' + c.toLowerCase() + '">' + c + '</div>';
+        inputs += '<input type="number" min="0" value="' + (s[c] || "") + '" onchange="updateThrow(\'' + exId + '\',\'' + c + '\',this.value)" placeholder="0">';
+      });
+      head += "</div>";
+      inputs += "</div>";
+      return '<div class="throw-block">' + head + inputs + "</div>";
     }
     function renderSwings(exId) {
       const s = state.swings[exId] || { BL: "", HL: "", U: "", R: "" };
@@ -1129,6 +1201,7 @@
           delete state.status[e.id];
           delete state.forceOpen[e.id];
           delete state.swings[e.id];
+          delete state.throws[e.id];
           delete state.skipReason[e.id];
         });
         delete state.forceOpen["sec-" + day.id + "-" + i];
@@ -1138,6 +1211,13 @@
       delete state.bodyweight[day.id];
       render();
       showToast("Day reset");
+    }
+    function updateThrow(exId, color, val) {
+      if (!state.throws) state.throws = {};
+      if (!state.throws[exId]) state.throws[exId] = {};
+      state.throws[exId][color] = val;
+      save();
+      render();
     }
     function updateSwing(exId, bat, val) {
       if (!state.swings[exId]) state.swings[exId] = {};
